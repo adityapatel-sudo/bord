@@ -16,6 +16,8 @@
 		34EA241C2D0FBCF200D392CC /* bordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA241B2D0FBCF200D392CC /* bordTests.swift */; };
 		34EA24262D0FBCF200D392CC /* bordUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24252D0FBCF200D392CC /* bordUITests.swift */; };
 		34EA24282D0FBCF200D392CC /* bordUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24272D0FBCF200D392CC /* bordUITestsLaunchTests.swift */; };
+		34EA24382D0FBE6000D392CC /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24372D0FBE6000D392CC /* CanvasView.swift */; };
+		34EA243B2D0FDF2900D392CC /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA243A2D0FDF2900D392CC /* Line.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		34EA24212D0FBCF200D392CC /* bordUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bordUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		34EA24252D0FBCF200D392CC /* bordUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bordUITests.swift; sourceTree = "<group>"; };
 		34EA24272D0FBCF200D392CC /* bordUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bordUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		34EA24372D0FBE6000D392CC /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		34EA243A2D0FDF2900D392CC /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +103,9 @@
 		34EA24032D0FBCF000D392CC /* bord */ = {
 			isa = PBXGroup;
 			children = (
+				34EA24342D0FBD0400D392CC /* src */,
 				34EA24042D0FBCF000D392CC /* bordApp.swift */,
-				34EA24062D0FBCF000D392CC /* ContentView.swift */,
 				34EA24082D0FBCF100D392CC /* Assets.xcassets */,
-				34EA240D2D0FBCF100D392CC /* Persistence.swift */,
 				34EA24122D0FBCF100D392CC /* bord.entitlements */,
 				34EA240F2D0FBCF100D392CC /* bord.xcdatamodeld */,
 				34EA240A2D0FBCF100D392CC /* Preview Content */,
@@ -133,6 +136,41 @@
 				34EA24272D0FBCF200D392CC /* bordUITestsLaunchTests.swift */,
 			);
 			path = bordUITests;
+			sourceTree = "<group>";
+		};
+		34EA24342D0FBD0400D392CC /* src */ = {
+			isa = PBXGroup;
+			children = (
+				34EA24392D0FDF1600D392CC /* Models */,
+				34EA24362D0FBD8B00D392CC /* Controllers */,
+				34EA24352D0FBD6300D392CC /* Views */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		34EA24352D0FBD6300D392CC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				34EA24062D0FBCF000D392CC /* ContentView.swift */,
+				34EA24372D0FBE6000D392CC /* CanvasView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		34EA24362D0FBD8B00D392CC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				34EA240D2D0FBCF100D392CC /* Persistence.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		34EA24392D0FDF1600D392CC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				34EA243A2D0FDF2900D392CC /* Line.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,6 +305,8 @@
 			files = (
 				34EA24112D0FBCF100D392CC /* bord.xcdatamodeld in Sources */,
 				34EA240E2D0FBCF100D392CC /* Persistence.swift in Sources */,
+				34EA24382D0FBE6000D392CC /* CanvasView.swift in Sources */,
+				34EA243B2D0FDF2900D392CC /* Line.swift in Sources */,
 				34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */,
 				34EA24052D0FBCF000D392CC /* bordApp.swift in Sources */,
 			);

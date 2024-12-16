@@ -15,6 +15,7 @@ struct bordApp: App {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .frame(minWidth: 600, maxWidth: .infinity, minHeight: 400, maxHeight: .infinity)
         }
     }
 }
