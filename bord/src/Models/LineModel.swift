@@ -10,7 +10,8 @@ import SwiftUI
 
 class LineModel: Observable, Identifiable {
     let id = UUID()
-    @Published var points = [CGPoint]()
-    var color: Color = .red
-    var lineWidth: Double = 1.0
+    var points = [CGPoint]()
+    var path = Path()
+    var color: Color = .white
+    var lineWidth: Double = 5.0
 }

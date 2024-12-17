@@ -26,6 +26,9 @@ struct ContentView: View {
                     Button("Reset") {
                         canvasData.reset()
                     }
+                    Button("Undo") {
+                        canvasData.undo()
+                    }
                 }
                 .padding(16)
             }

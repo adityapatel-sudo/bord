@@ -12,9 +12,12 @@ struct CanvasView: View {
     var body: some View {
         Canvas { context, size in
             for line in data.lines {
-                var path = Path()
-                path.addLines(line.points)
-                context.stroke(path, with: .color(line.color), lineWidth: line.lineWidth)
+                let strokeStyle = StrokeStyle(lineWidth: line.lineWidth, lineCap: .round)
+                context.stroke(
+                    line.path,
+                    with: .color(line.color),
+                    style: strokeStyle
+                )
             }
         }
         .gesture(
