@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct CanvasView: View {
-    @State private var currentLine = Line()
-    @State private var lines: [Line] = []
+    @ObservedObject var data: CanvasData
     var body: some View {
         Canvas { context, size in
-            for line in lines {
+            for line in data.lines {
                 var path = Path()
                 path.addLines(line.points)
                 context.stroke(path, with: .color(line.color), lineWidth: line.lineWidth)
@@ -22,17 +21,17 @@ struct CanvasView: View {
             DragGesture(minimumDistance: 0, coordinateSpace: .local)
             .onChanged({ value in
                 let newPoint = value.location
-                currentLine.points.append(newPoint)
-                self.lines.append(currentLine)
+                data.currentLine.points.append(newPoint)
+                data.lines.append(data.currentLine)
               })
             .onEnded({ value in
-                self.lines.append(currentLine)
-                self.currentLine = Line(points: [])
+                data.lines.append(data.currentLine)
+                data.currentLine = Line(points: [])
             })
         )
     }
 }
 
 #Preview {
-    CanvasView()
+    CanvasView(data: CanvasData())
 }
