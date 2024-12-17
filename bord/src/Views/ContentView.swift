@@ -14,7 +14,7 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
-    @StateObject private var canvasData = CanvasData()
+    @StateObject private var canvasData = LineViewModel()
 
     var body: some View {
         ZStack {

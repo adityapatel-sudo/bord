@@ -8,8 +8,9 @@
 import Foundation
 import SwiftUI
 
-struct Line {
-    var points = [CGPoint]()
+class LineModel: Observable, Identifiable {
+    let id = UUID()
+    @Published var points = [CGPoint]()
     var color: Color = .red
     var lineWidth: Double = 1.0
 }
