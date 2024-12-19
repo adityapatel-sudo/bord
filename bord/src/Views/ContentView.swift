@@ -29,6 +29,17 @@ struct ContentView: View {
                     Button("Undo") {
                         canvasData.undo()
                     }
+                    Button("Draw") {
+                        mode.mode = .draw
+                        canvasData.setColor(color: .white)
+                    }
+                    Button("Erase") {
+                        mode.mode = .erase
+                        canvasData.setColor(color: .black)
+                    }
+                    Button("Pan") {
+                        mode.mode = .pan
+                    }
                 }
                 .padding(16)
             }
