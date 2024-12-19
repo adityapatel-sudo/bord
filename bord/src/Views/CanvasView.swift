@@ -16,7 +16,6 @@ struct CanvasView: View {
     
     var body: some View {
         Canvas { context, size in
-//            context.scaleBy(x: magnifyBy, y: magnifyBy)
             context.translateBy(x: currentPanOffset.width, y: currentPanOffset.height)
             for line in data.lines {
                 let strokeStyle = StrokeStyle(lineWidth: line.lineWidth, lineCap: .round)
@@ -31,7 +30,11 @@ struct CanvasView: View {
             DragGesture(minimumDistance: 0, coordinateSpace: .local)
                 .onChanged { value in
                     if mode.mode == .draw || mode.mode == .erase{
-                        data.newPoint(point: value.location)
+                        let offsetPoint = CGPoint(
+                                x: value.location.x - currentPanOffset.width,
+                                y: value.location.y - currentPanOffset.height
+                            )
+                        data.newPoint(point: offsetPoint)
                     } else if mode.mode == .pan {
                         currentPanOffset.width = panOffset.width + value.translation.width
                         currentPanOffset.height = panOffset.height + value.translation.height
