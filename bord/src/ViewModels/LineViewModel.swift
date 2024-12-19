@@ -10,7 +10,18 @@ import SwiftUI
 
 class LineViewModel: ObservableObject {
     @Published var lines: [LineModel] = []
-    var currentLine = LineModel()
+    @Published var zoomScale: CGFloat = 1.0
+    var currentLine: LineModel = LineModel()
+    var color: Color = .white
+    var size: Double = 5.0
+    
+    func setColor(newColor: Color) {
+        color = newColor
+    }
+    
+    func setSize(newSize: Double) {
+        size = newSize
+    }
     
     func reset() {
         lines.removeAll()
@@ -21,6 +32,8 @@ class LineViewModel: ObservableObject {
         if (currentLine.points.isEmpty) {
             lines.append(currentLine)
             currentLine.path.move(to: point)
+            currentLine.color = color
+            currentLine.lineWidth = size
         } else {
             let prev = currentLine.points.last
             let midPoint = CGPoint(
@@ -47,28 +60,6 @@ class LineViewModel: ObservableObject {
             objectWillChange.send()
         }
         currentLine = LineModel()
-    }
-    func getPath(line: LineModel) -> Path {
-        var path = Path()
-        if line.points.isEmpty {
-            return path
-        }
-        for index in 1..<line.points.count {
-            let previousPoint = line.points[index - 1]
-            let currentPoint = line.points[index]
-            let midPoint = CGPoint(
-                x: (previousPoint.x + currentPoint.x) / 2,
-                y: (previousPoint.y + currentPoint.y) / 2
-            )
-            if index == 1 {
-                path.move(to: previousPoint)
-            }
-            path.addQuadCurve(to: midPoint, control: previousPoint)
-            if index == line.points.count - 1 {
-                path.addQuadCurve(to: currentPoint, control: midPoint)
-            }
-        }
-        return path
     }
     func undo() {
         if (lines.count > 0) {

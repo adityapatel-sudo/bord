@@ -15,10 +15,11 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Item>
     @StateObject private var canvasData = LineViewModel()
-
+    @StateObject private var mode = CanvasModeViewModel()
+    @State private var backgroundColor: Color = .black
     var body: some View {
         ZStack {
-            CanvasView(data: canvasData)
+            CanvasView(data: canvasData, mode: mode)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             VStack {
                 Spacer()
@@ -30,12 +31,12 @@ struct ContentView: View {
                         canvasData.undo()
                     }
                     Button("Draw") {
+                        canvasData.setColor(newColor: .white)
                         mode.mode = .draw
-                        canvasData.setColor(color: .white)
                     }
                     Button("Erase") {
+                        canvasData.setColor(newColor: .black)
                         mode.mode = .erase
-                        canvasData.setColor(color: .black)
                     }
                     Button("Pan") {
                         mode.mode = .pan
@@ -44,6 +45,7 @@ struct ContentView: View {
                 .padding(16)
             }
         }
+        .background(backgroundColor)
     }
     private func hello() {
         print("hello")

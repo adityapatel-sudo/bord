@@ -9,8 +9,15 @@ import SwiftUI
 
 struct CanvasView: View {
     @ObservedObject var data: LineViewModel
+    @ObservedObject var mode: CanvasModeViewModel
+    
+    @State private var currentPanOffset: CGSize = .zero
+    @State private var panOffset: CGSize = .zero
+    
     var body: some View {
         Canvas { context, size in
+//            context.scaleBy(x: magnifyBy, y: magnifyBy)
+            context.translateBy(x: currentPanOffset.width, y: currentPanOffset.height)
             for line in data.lines {
                 let strokeStyle = StrokeStyle(lineWidth: line.lineWidth, lineCap: .round)
                 context.stroke(
@@ -22,16 +29,26 @@ struct CanvasView: View {
         }
         .gesture(
             DragGesture(minimumDistance: 0, coordinateSpace: .local)
-            .onChanged({ value in
-                data.newPoint(point: value.location)
-              })
-            .onEnded({ value in
-                data.lineEnded()
-            })
+                .onChanged { value in
+                    if mode.mode == .draw || mode.mode == .erase{
+                        data.newPoint(point: value.location)
+                    } else if mode.mode == .pan {
+                        currentPanOffset.width = panOffset.width + value.translation.width
+                        currentPanOffset.height = panOffset.height + value.translation.height
+                    }
+                }
+                .onEnded { value in
+                    if mode.mode == .draw || mode.mode == .erase {
+                        data.lineEnded()
+                    } else if mode.mode == .pan {
+                        panOffset.width += value.translation.width
+                        panOffset.height += value.translation.height
+                    }
+                }
         )
     }
 }
 
 #Preview {
-    CanvasView(data: LineViewModel())
+    CanvasView(data: LineViewModel(), mode: CanvasModeViewModel())
 }

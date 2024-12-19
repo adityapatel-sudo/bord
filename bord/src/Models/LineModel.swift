@@ -12,6 +12,12 @@ class LineModel: Observable, Identifiable {
     let id = UUID()
     var points = [CGPoint]()
     var path = Path()
-    var color: Color = .white
+    var color: Color
     var lineWidth: Double = 5.0
+    init () {
+        self.color = .black
+    }
+    init(color: Color) {
+        self.color = color
+    }
 }
