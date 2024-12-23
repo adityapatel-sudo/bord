@@ -12,6 +12,10 @@ struct BottomToolbarView: View {
     @ObservedObject var canvas: LineViewModel
     @State var prevColor: Color? = nil
     @State var clearConfirmation = false
+    
+    @State var hoverUndo = false
+    @State var hoverReset = false
+
     var body: some View {
         HStack(spacing: 0) {
             //draw
@@ -24,6 +28,7 @@ struct BottomToolbarView: View {
                     .frame(width: 45, height: 45)
                    
             }
+            .contentShape(Rectangle())
             .onTapGesture {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                     mode.mode = .draw
@@ -43,6 +48,7 @@ struct BottomToolbarView: View {
                     .fill(Color.orange.opacity(mode.mode == .erase ? 0.25 : 0))
                     .frame(width: 45, height: 45)
             }
+            .contentShape(Rectangle())
             .onTapGesture {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                     prevColor = canvas.color
@@ -61,6 +67,7 @@ struct BottomToolbarView: View {
                     .fill(Color.orange.opacity(mode.mode == .pan ? 0.25 : 0))
                     .frame(width: 45, height: 45)
             }
+            .contentShape(Rectangle())
             .onTapGesture {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                     mode.mode = .pan
@@ -72,27 +79,38 @@ struct BottomToolbarView: View {
                 Image(systemName: "arrow.uturn.backward")
                     .frame(width: 55, height: 55)
                     .imageScale(.large)
+                    .foregroundColor(hoverUndo ? .gray : .white)
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color.orange.opacity(0))
                     .frame(width: 45, height: 45)
             }
+            .contentShape(Rectangle())
             .onTapGesture {
                 canvas.undo()
             }
+            .onHover { hovering in
+                hoverUndo = hovering
+            }
+            
             
             //reset
             ZStack {
                 Image(systemName: "clear")
                     .frame(width: 55, height: 55)
                     .imageScale(.large)
+                    .foregroundColor(hoverReset ? .gray : .white)
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color.orange.opacity(0))
                     .frame(width: 45, height: 45)
 
             }
+            .contentShape(Rectangle())
             .onTapGesture {
                 clearConfirmation = true
             }
+            .onHover(perform: { hovering in
+                hoverReset = hovering
+            })
             .confirmationDialog("Erase all progress?", isPresented: $clearConfirmation) {
                 Button("Clear", role: .destructive) { canvas.reset() }
                 Button("Cancel", role: .cancel) { }
