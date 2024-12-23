@@ -9,10 +9,7 @@ import Foundation
 
 enum CanvasMode {
     case draw
+    case shape
     case erase
     case pan
-}
-
-class CanvasModeViewModel: ObservableObject {
-    @Published var mode: CanvasMode = .draw
 }

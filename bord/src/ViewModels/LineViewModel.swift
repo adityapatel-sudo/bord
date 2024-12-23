@@ -12,8 +12,8 @@ class LineViewModel: ObservableObject {
     @Published var lines: [LineModel] = []
     @Published var zoomScale: CGFloat = 1.0
     var currentLine: LineModel = LineModel()
-    var color: Color = .white
-    var size: Double = 5.0
+    var color: Color = .blue
+    var size: Double = 2.0
     
     func setColor(newColor: Color) {
         color = newColor

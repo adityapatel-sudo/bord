@@ -22,6 +22,8 @@ struct ContentView: View {
             CanvasView(data: canvasData, mode: mode)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             VStack {
+                ColorPickerView(setColor: canvasData.setColor)
+                    .padding(10)
                 Spacer()
                 HStack(spacing: 16) {
                     Button("Reset") {
@@ -31,11 +33,13 @@ struct ContentView: View {
                         canvasData.undo()
                     }
                     Button("Draw") {
+                        canvasData.setSize(newSize: 2.0)
                         canvasData.setColor(newColor: .white)
                         mode.mode = .draw
                     }
                     Button("Erase") {
-                        canvasData.setColor(newColor: .black)
+                        canvasData.setSize(newSize: 15.0)
+                        canvasData.setColor(newColor: ColorManager.backgroundColor)
                         mode.mode = .erase
                     }
                     Button("Pan") {
@@ -45,10 +49,7 @@ struct ContentView: View {
                 .padding(16)
             }
         }
-        .background(backgroundColor)
-    }
-    private func hello() {
-        print("hello")
+        .background(ColorManager.backgroundColor)
     }
 }
 

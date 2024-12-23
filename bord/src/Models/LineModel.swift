@@ -13,7 +13,7 @@ class LineModel: Observable, Identifiable {
     var points = [CGPoint]()
     var path = Path()
     var color: Color
-    var lineWidth: Double = 5.0
+    var lineWidth: Double = 1.0
     init () {
         self.color = .black
     }

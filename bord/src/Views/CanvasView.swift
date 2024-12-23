@@ -28,27 +28,35 @@ struct CanvasView: View {
         }
         .gesture(
             DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                .onChanged { value in
-                    if mode.mode == .draw || mode.mode == .erase{
-                        let offsetPoint = CGPoint(
-                                x: value.location.x - currentPanOffset.width,
-                                y: value.location.y - currentPanOffset.height
-                            )
-                        data.newPoint(point: offsetPoint)
-                    } else if mode.mode == .pan {
-                        currentPanOffset.width = panOffset.width + value.translation.width
-                        currentPanOffset.height = panOffset.height + value.translation.height
-                    }
-                }
-                .onEnded { value in
-                    if mode.mode == .draw || mode.mode == .erase {
-                        data.lineEnded()
-                    } else if mode.mode == .pan {
-                        panOffset.width += value.translation.width
-                        panOffset.height += value.translation.height
-                    }
-                }
+                .onChanged(handleDragChanged)
+                .onEnded(handleDragEnded)
         )
+    }
+    private func handleDragChanged(_ value: DragGesture.Value) {
+        if mode.mode == .draw || mode.mode == .erase{
+            let offsetPoint = CGPoint(
+                    x: value.location.x - currentPanOffset.width,
+                    y: value.location.y - currentPanOffset.height
+                )
+            data.newPoint(point: offsetPoint)
+        } else if mode.mode == .pan {
+            currentPanOffset.width = panOffset.width + value.translation.width
+            currentPanOffset.height = panOffset.height + value.translation.height
+        }
+
+    }
+    private func handleDragEnded(_ value: DragGesture.Value) {
+        if mode.mode == .draw || mode.mode == .erase {
+            data.lineEnded()
+        } else if mode.mode == .pan {
+            panOffset.width += value.translation.width
+            panOffset.height += value.translation.height
+        }
+    }
+    private func handleScroll(delta: CGSize) {
+        currentPanOffset.width += delta.width
+        currentPanOffset.height += delta.height
+        print("Scrolling handling")
     }
 }
 

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		34146C7E2D138A19000B7328 /* CanvasMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34146C7D2D138A19000B7328 /* CanvasMode.swift */; };
+		349F09C62D15462C00FB16E4 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 349F09C52D15462C00FB16E4 /* Colors.xcassets */; };
+		349F09C92D154F0100FB16E4 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09C82D154F0100FB16E4 /* ColorManager.swift */; };
+		349F09CB2D154F5C00FB16E4 /* CanvasModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09CA2D154F5C00FB16E4 /* CanvasModeViewModel.swift */; };
+		349F09CD2D18E49C00FB16E4 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09CC2D18E49C00FB16E4 /* ColorPickerView.swift */; };
 		34EA24052D0FBCF000D392CC /* bordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24042D0FBCF000D392CC /* bordApp.swift */; };
 		34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24062D0FBCF000D392CC /* ContentView.swift */; };
 		34EA24092D0FBCF100D392CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34EA24082D0FBCF100D392CC /* Assets.xcassets */; };
@@ -41,6 +45,10 @@
 
 /* Begin PBXFileReference section */
 		34146C7D2D138A19000B7328 /* CanvasMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasMode.swift; sourceTree = "<group>"; };
+		349F09C52D15462C00FB16E4 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		349F09C82D154F0100FB16E4 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		349F09CA2D154F5C00FB16E4 /* CanvasModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasModeViewModel.swift; sourceTree = "<group>"; };
+		349F09CC2D18E49C00FB16E4 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
 		34EA24012D0FBCF000D392CC /* bord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34EA24042D0FBCF000D392CC /* bordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bordApp.swift; sourceTree = "<group>"; };
 		34EA24062D0FBCF000D392CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -84,6 +92,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		349F09C72D154B2700FB16E4 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				34EA24082D0FBCF100D392CC /* Assets.xcassets */,
+				349F09C52D15462C00FB16E4 /* Colors.xcassets */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
 		34EA23F82D0FBCF000D392CC = {
 			isa = PBXGroup;
 			children = (
@@ -107,9 +124,9 @@
 		34EA24032D0FBCF000D392CC /* bord */ = {
 			isa = PBXGroup;
 			children = (
+				349F09C72D154B2700FB16E4 /* assets */,
 				34EA24342D0FBD0400D392CC /* src */,
 				34EA24042D0FBCF000D392CC /* bordApp.swift */,
-				34EA24082D0FBCF100D392CC /* Assets.xcassets */,
 				34EA24122D0FBCF100D392CC /* bord.entitlements */,
 				34EA240F2D0FBCF100D392CC /* bord.xcdatamodeld */,
 				34EA240A2D0FBCF100D392CC /* Preview Content */,
@@ -157,6 +174,7 @@
 			children = (
 				34EA24062D0FBCF000D392CC /* ContentView.swift */,
 				34EA24372D0FBE6000D392CC /* CanvasView.swift */,
+				349F09CC2D18E49C00FB16E4 /* ColorPickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -166,6 +184,8 @@
 			children = (
 				34EA243C2D1108BD00D392CC /* LineViewModel.swift */,
 				34EA240D2D0FBCF100D392CC /* Persistence.swift */,
+				349F09C82D154F0100FB16E4 /* ColorManager.swift */,
+				349F09CA2D154F5C00FB16E4 /* CanvasModeViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -283,6 +303,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				349F09C62D15462C00FB16E4 /* Colors.xcassets in Resources */,
 				34EA240C2D0FBCF100D392CC /* Preview Assets.xcassets in Resources */,
 				34EA24092D0FBCF100D392CC /* Assets.xcassets in Resources */,
 			);
@@ -314,7 +335,10 @@
 				34EA240E2D0FBCF100D392CC /* Persistence.swift in Sources */,
 				34EA24382D0FBE6000D392CC /* CanvasView.swift in Sources */,
 				34146C7E2D138A19000B7328 /* CanvasMode.swift in Sources */,
+				349F09CB2D154F5C00FB16E4 /* CanvasModeViewModel.swift in Sources */,
 				34EA243B2D0FDF2900D392CC /* LineModel.swift in Sources */,
+				349F09CD2D18E49C00FB16E4 /* ColorPickerView.swift in Sources */,
+				349F09C92D154F0100FB16E4 /* ColorManager.swift in Sources */,
 				34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */,
 				34EA24052D0FBCF000D392CC /* bordApp.swift in Sources */,
 			);
