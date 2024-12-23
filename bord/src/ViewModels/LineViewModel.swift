@@ -11,8 +11,8 @@ import SwiftUI
 class LineViewModel: ObservableObject {
     @Published var lines: [LineModel] = []
     @Published var zoomScale: CGFloat = 1.0
+    var color: Color = .white
     var currentLine: LineModel = LineModel()
-    var color: Color = .blue
     var size: Double = 2.0
     
     func setColor(newColor: Color) {

@@ -10,27 +10,35 @@ import SwiftUI
 struct ColorPickerView: View {
     let colors: [Color] = [.red, .orange, .yellow, .green, .blue, .gray, .white]
     let setColor: (Color) -> Void
-    @State private var selectedColor: Color? = nil
+    @State var highlightedColor: Color = .white
 
     var body: some View {
-        VStack {
+        HStack {
             HStack(spacing: 10) {
                 ForEach(colors, id: \.self) { color in
-                    RoundedRectangle(cornerRadius: selectedColor == color ? 5 : 10)
+                    RoundedRectangle(cornerRadius: highlightedColor == color ? 5 : 10)
                         .fill(color)
-                        .padding(selectedColor == color ? 10 : 0)
-                        .frame(width: 40, height: 40)
+                        .padding(highlightedColor == color ? 5 : 0)
+                        .frame(width: 30, height: 30)
                         .onTapGesture {
                             withAnimation(.spring()) {
-                                selectedColor = color
+                                highlightedColor = color
                                 setColor(color)
                             }
                         }
                 }
             }
-            .padding(10)
-            .background(ColorManager.lighterGrey)
-            .cornerRadius(15)
+                .padding(10)
+                .background(ColorManager.lighterGrey)
+                .cornerRadius(15)
+            
+            CustomColorPicker() { color in
+                setColor(color)
+                highlightedColor = color
+            }
+                .frame(width: 30, height: 30)
+                .padding(0)
+                .cornerRadius(10)
         }
     }
 }

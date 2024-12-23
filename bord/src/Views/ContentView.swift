@@ -16,7 +16,6 @@ struct ContentView: View {
     private var items: FetchedResults<Item>
     @StateObject private var canvasData = LineViewModel()
     @StateObject private var mode = CanvasModeViewModel()
-    @State private var backgroundColor: Color = .black
     var body: some View {
         ZStack {
             CanvasView(data: canvasData, mode: mode)
