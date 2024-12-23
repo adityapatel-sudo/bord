@@ -17,10 +17,12 @@ class LineViewModel: ObservableObject {
     
     func setColor(newColor: Color) {
         color = newColor
+        objectWillChange.send()
     }
     
     func setSize(newSize: Double) {
         size = newSize
+        objectWillChange.send()
     }
     
     func reset() {

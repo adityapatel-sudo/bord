@@ -9,21 +9,19 @@ import SwiftUI
 
 struct ColorPickerView: View {
     let colors: [Color] = [.red, .orange, .yellow, .green, .blue, .gray, .white]
-    let setColor: (Color) -> Void
-    @State var highlightedColor: Color = .white
+    @ObservedObject var canvas: LineViewModel
 
     var body: some View {
         HStack {
             HStack(spacing: 10) {
                 ForEach(colors, id: \.self) { color in
-                    RoundedRectangle(cornerRadius: highlightedColor == color ? 5 : 8)
+                    RoundedRectangle(cornerRadius: canvas.color == color ? 5 : 8)
                         .fill(color)
-                        .padding(highlightedColor == color ? 5 : 0)
+                        .padding(canvas.color == color ? 5 : 0)
                         .frame(width: 30, height: 30)
                         .onTapGesture {
                             withAnimation(.spring()) {
-                                highlightedColor = color
-                                setColor(color)
+                                canvas.setColor(newColor: color)
                             }
                         }
                 }
@@ -33,8 +31,7 @@ struct ColorPickerView: View {
             .cornerRadius(15)
             
             CustomColorPicker() { color in
-                setColor(color)
-                highlightedColor = color
+                canvas.setColor(newColor: color)
             }
             .frame(width: 30, height: 30)
             .cornerRadius(5)
@@ -43,8 +40,9 @@ struct ColorPickerView: View {
 }
 
 struct ColorPickerView_Previews: PreviewProvider {
+    static var canvas = LineViewModel()
     static var previews: some View {
-        ColorPickerView(setColor: setColor)
+        ColorPickerView(canvas: canvas)
             .preferredColorScheme(.dark)
     }
     static private func setColor(_ color: Color) -> Void {

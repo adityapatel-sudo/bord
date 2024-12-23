@@ -21,7 +21,7 @@ struct ContentView: View {
             CanvasView(data: canvasData, mode: mode)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             VStack {
-                ColorPickerView(setColor: canvasData.setColor)
+                ColorPickerView(canvas: canvasData)
                     .padding(10)
                 Spacer()
                 BottomToolbarView(mode: mode, canvas: canvasData)
