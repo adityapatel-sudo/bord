@@ -16,7 +16,7 @@ struct ColorPickerView: View {
         HStack {
             HStack(spacing: 10) {
                 ForEach(colors, id: \.self) { color in
-                    RoundedRectangle(cornerRadius: highlightedColor == color ? 5 : 10)
+                    RoundedRectangle(cornerRadius: highlightedColor == color ? 5 : 8)
                         .fill(color)
                         .padding(highlightedColor == color ? 5 : 0)
                         .frame(width: 30, height: 30)
@@ -28,17 +28,16 @@ struct ColorPickerView: View {
                         }
                 }
             }
-                .padding(10)
-                .background(ColorManager.lighterGrey)
-                .cornerRadius(15)
+            .padding(10)
+            .background(ColorManager.lighterGrey)
+            .cornerRadius(15)
             
             CustomColorPicker() { color in
                 setColor(color)
                 highlightedColor = color
             }
-                .frame(width: 30, height: 30)
-                .padding(0)
-                .cornerRadius(10)
+            .frame(width: 30, height: 30)
+            .cornerRadius(5)
         }
     }
 }

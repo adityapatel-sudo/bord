@@ -24,29 +24,8 @@ struct ContentView: View {
                 ColorPickerView(setColor: canvasData.setColor)
                     .padding(10)
                 Spacer()
-                HStack(spacing: 16) {
-                    Button("Reset") {
-                        canvasData.reset()
-                    }
-                    Button("Undo") {
-                        canvasData.undo()
-                    }
-                    Button("Draw") {
-                        canvasData.setSize(newSize: 2.0)
-                        canvasData.setColor(newColor: .white)
-                        mode.mode = .draw
-                    }
-                    Button("Erase") {
-                        canvasData.setSize(newSize: 15.0)
-                        canvasData.setColor(newColor: ColorManager.backgroundColor)
-                        mode.mode = .erase
-                    }
-                    Button("Pan") {
-                        mode.mode = .pan
-                    }
-                }
-                .padding(16)
-            }
+                BottomToolbarView(mode: mode, canvas: canvasData)
+                    .padding(10)}
         }
         .background(ColorManager.backgroundColor)
     }
