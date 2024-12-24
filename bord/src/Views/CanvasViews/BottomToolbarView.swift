@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BottomToolbarView: View {
     @ObservedObject var mode: CanvasModeViewModel
-    @ObservedObject var canvas: LineViewModel
+    @ObservedObject var lineViewModel: LineViewModel
     @State var prevColor: Color? = nil
     @State var clearConfirmation = false
     
@@ -32,9 +32,9 @@ struct BottomToolbarView: View {
             .onTapGesture {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                     mode.mode = .draw
-                    canvas.setSize(newSize: 2)
+                    lineViewModel.setSize(newSize: 2)
                     if ((prevColor) != nil) {
-                        canvas.setColor(newColor: prevColor!)
+                        lineViewModel.setColor(newColor: prevColor!)
                     }
                 }
             }
@@ -51,9 +51,9 @@ struct BottomToolbarView: View {
             .contentShape(Rectangle())
             .onTapGesture {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                    prevColor = canvas.color
-                    canvas.setSize(newSize: 15.0)
-                    canvas.setColor(newColor: ColorManager.backgroundColor)
+                    prevColor = lineViewModel.color
+                    lineViewModel.setSize(newSize: 15.0)
+                    lineViewModel.setColor(newColor: ColorManager.backgroundColor)
                     mode.mode = .erase
                 }
             }
@@ -86,7 +86,7 @@ struct BottomToolbarView: View {
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                canvas.undo()
+                lineViewModel.undo()
             }
             .onHover { hovering in
                 hoverUndo = hovering
@@ -112,7 +112,7 @@ struct BottomToolbarView: View {
                 hoverReset = hovering
             })
             .confirmationDialog("Erase all progress?", isPresented: $clearConfirmation) {
-                Button("Clear", role: .destructive) { canvas.reset() }
+                Button("Clear", role: .destructive) { lineViewModel.reset() }
                 Button("Cancel", role: .cancel) { }
             } message: {
                 Text("Do you want to reset all progress?")
@@ -126,9 +126,9 @@ struct BottomToolbarView: View {
 }
 
 struct BottomToolbarView_Previews: PreviewProvider {
-    @StateObject static var mode = CanvasModeViewModel()
-    @StateObject static var canvas = LineViewModel()
+    @StateObject static var canvasModeVM = CanvasModeViewModel()
+    @StateObject static var lineViewModel = LineViewModel()
     static var previews: some View {
-        BottomToolbarView(mode: mode, canvas: canvas)
+        BottomToolbarView(mode: canvasModeVM, lineViewModel: lineViewModel)
     }
 }

@@ -14,19 +14,19 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
-    @StateObject private var canvasData = LineViewModel()
+    @StateObject private var lineViewModel = LineViewModel()
     @StateObject private var mode = CanvasModeViewModel()
     var body: some View {
         ZStack {
-            CanvasView(data: canvasData, mode: mode)
+            CanvasView(lineVM: lineViewModel, modeVM: mode)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             VStack {
-                ColorPickerView(canvas: canvasData)
+                ColorPickerView(lineViewModel: lineViewModel)
                     .padding(10)
                     .offset(y: mode.mode != .draw ? -100 : 0) // Move off-screen upwards
                     .animation(.easeInOut, value: mode.mode != .draw) // Animate the transition
                 Spacer()
-                BottomToolbarView(mode: mode, canvas: canvasData)
+                BottomToolbarView(mode: mode, lineViewModel: lineViewModel)
                     .padding(10)}
         }
         .background(ColorManager.backgroundColor)

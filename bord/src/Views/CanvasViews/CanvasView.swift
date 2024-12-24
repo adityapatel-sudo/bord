@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CanvasView: View {
-    @ObservedObject var data: LineViewModel
-    @ObservedObject var mode: CanvasModeViewModel
+    @ObservedObject var lineVM: LineViewModel
+    @ObservedObject var modeVM: CanvasModeViewModel
     
     @State private var currentPanOffset: CGSize = .zero
     @State private var panOffset: CGSize = .zero
@@ -17,7 +17,7 @@ struct CanvasView: View {
     var body: some View {
         Canvas { context, size in
             context.translateBy(x: currentPanOffset.width, y: currentPanOffset.height)
-            for line in data.lines {
+            for line in lineVM.lines {
                 let strokeStyle = StrokeStyle(lineWidth: line.lineWidth, lineCap: .round)
                 context.stroke(
                     line.path,
@@ -33,22 +33,22 @@ struct CanvasView: View {
         )
     }
     private func handleDragChanged(_ value: DragGesture.Value) {
-        if mode.mode == .draw || mode.mode == .erase{
+        if modeVM.mode == .draw || modeVM.mode == .erase{
             let offsetPoint = CGPoint(
                     x: value.location.x - currentPanOffset.width,
                     y: value.location.y - currentPanOffset.height
                 )
-            data.newPoint(point: offsetPoint)
-        } else if mode.mode == .pan {
+            lineVM.newPoint(point: offsetPoint)
+        } else if modeVM.mode == .pan {
             currentPanOffset.width = panOffset.width + value.translation.width
             currentPanOffset.height = panOffset.height + value.translation.height
         }
 
     }
     private func handleDragEnded(_ value: DragGesture.Value) {
-        if mode.mode == .draw || mode.mode == .erase {
-            data.lineEnded()
-        } else if mode.mode == .pan {
+        if modeVM.mode == .draw || modeVM.mode == .erase {
+            lineVM.lineEnded()
+        } else if modeVM.mode == .pan {
             panOffset.width += value.translation.width
             panOffset.height += value.translation.height
         }
@@ -61,5 +61,5 @@ struct CanvasView: View {
 }
 
 #Preview {
-    CanvasView(data: LineViewModel(), mode: CanvasModeViewModel())
+    CanvasView(lineVM: LineViewModel(), modeVM: CanvasModeViewModel())
 }

@@ -37,12 +37,12 @@ class LineViewModel: ObservableObject {
             currentLine.color = color
             currentLine.lineWidth = size
         } else {
-            let prev = currentLine.points.last
+            let prev = currentLine.points.last!
             let midPoint = CGPoint(
-                x: (prev!.x + point.x) / 2,
-                y: (prev!.y + point.y) / 2
+                x: (prev.x + point.x) / 2,
+                y: (prev.y + point.y) / 2
             )
-            currentLine.path.addQuadCurve(to: midPoint, control: prev!)
+            currentLine.path.addQuadCurve(to: midPoint, control: prev)
         }
         currentLine.points.append(point)
         objectWillChange.send()
