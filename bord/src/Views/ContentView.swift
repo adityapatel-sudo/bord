@@ -23,6 +23,8 @@ struct ContentView: View {
             VStack {
                 ColorPickerView(canvas: canvasData)
                     .padding(10)
+                    .offset(y: mode.mode != .draw ? -100 : 0) // Move off-screen upwards
+                    .animation(.easeInOut, value: mode.mode != .draw) // Animate the transition
                 Spacer()
                 BottomToolbarView(mode: mode, canvas: canvasData)
                     .padding(10)}

@@ -34,7 +34,7 @@ struct BottomToolbarView: View {
                     mode.mode = .draw
                     canvas.setSize(newSize: 2)
                     if ((prevColor) != nil) {
-                        canvas.color = prevColor!
+                        canvas.setColor(newColor: prevColor!)
                     }
                 }
             }
