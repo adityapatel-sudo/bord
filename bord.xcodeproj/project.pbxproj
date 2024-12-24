@@ -55,6 +55,7 @@
 		349F09CE2D19B50500FB16E4 /* CustomColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColorPicker.swift; sourceTree = "<group>"; };
 		349F09D02D19BB4E00FB16E4 /* BottomToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToolbarView.swift; sourceTree = "<group>"; };
 		349F09D32D19C0E200FB16E4 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		349F09D52D1A65D600FB16E4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		34EA24012D0FBCF000D392CC /* bord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34EA24042D0FBCF000D392CC /* bordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bordApp.swift; sourceTree = "<group>"; };
 		34EA24062D0FBCF000D392CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -122,6 +123,7 @@
 		34EA23F82D0FBCF000D392CC = {
 			isa = PBXGroup;
 			children = (
+				349F09D52D1A65D600FB16E4 /* README.md */,
 				34EA24032D0FBCF000D392CC /* bord */,
 				34EA241A2D0FBCF200D392CC /* bordTests */,
 				34EA24242D0FBCF200D392CC /* bordUITests */,
