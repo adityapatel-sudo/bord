@@ -52,8 +52,8 @@ struct CanvasView: View {
                     .onChanged(handleDragChanged)
                     .onEnded(handleDragEnded)
             )
+            .background(ColorManager.backgroundColor)
         }
-
     }
     private func handleDragChanged(_ value: DragGesture.Value) {
         if modeVM.mode == .draw || modeVM.mode == .erase{

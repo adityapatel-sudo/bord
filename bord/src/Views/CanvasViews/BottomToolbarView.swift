@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct BottomToolbarView: View {
-    @ObservedObject var mode: CanvasModeViewModel
-    @ObservedObject var lineViewModel: LineViewModel
+    @ObservedObject var canvasModeVM: CanvasModeViewModel
+    @ObservedObject var lineVM: LineViewModel
     @State var prevColor: Color? = nil
     @State var clearConfirmation = false
     
@@ -21,20 +21,20 @@ struct BottomToolbarView: View {
             //draw
             ZStack {
                 Image(systemName: "pencil.and.scribble")
-                    .frame(width: 55, height: 55)
+                    .frame(width: 50, height: 50)
                     .imageScale(.large)
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.orange.opacity(mode.mode == .draw ? 0.25 : 0))
-                    .frame(width: 45, height: 45)
+                    .fill(Color.orange.opacity(canvasModeVM.mode == .draw ? 0.25 : 0))
+                    .frame(width: 40, height: 40)
                    
             }
             .contentShape(Rectangle())
             .onTapGesture {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                    mode.mode = .draw
-                    lineViewModel.setSize(newSize: 2)
+                    canvasModeVM.mode = .draw
+                    lineVM.setSize(newSize: 2)
                     if ((prevColor) != nil) {
-                        lineViewModel.setColor(newColor: prevColor!)
+                        lineVM.setColor(newColor: prevColor!)
                     }
                 }
             }
@@ -42,51 +42,51 @@ struct BottomToolbarView: View {
             //erase
             ZStack {
                 Image(systemName: "eraser.line.dashed")
-                    .frame(width: 55, height: 55)
+                    .frame(width: 50, height: 50)
                     .imageScale(.large)
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.orange.opacity(mode.mode == .erase ? 0.25 : 0))
-                    .frame(width: 45, height: 45)
+                    .fill(Color.orange.opacity(canvasModeVM.mode == .erase ? 0.25 : 0))
+                    .frame(width: 40, height: 40)
             }
             .contentShape(Rectangle())
             .onTapGesture {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                    prevColor = lineViewModel.color
-                    lineViewModel.setSize(newSize: 15.0)
-                    lineViewModel.setColor(newColor: ColorManager.backgroundColor)
-                    mode.mode = .erase
+                    prevColor = lineVM.color
+                    lineVM.setSize(newSize: 15.0)
+                    lineVM.setColor(newColor: ColorManager.backgroundColor)
+                    canvasModeVM.mode = .erase
                 }
             }
             
             //pan
             ZStack {
                 Image(systemName: "arrow.up.and.down.and.arrow.left.and.right")
-                    .frame(width: 55, height: 55)
+                    .frame(width: 50, height: 50)
                     .imageScale(.large)
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.orange.opacity(mode.mode == .pan ? 0.25 : 0))
-                    .frame(width: 45, height: 45)
+                    .fill(Color.orange.opacity(canvasModeVM.mode == .pan ? 0.25 : 0))
+                    .frame(width: 40, height: 40)
             }
             .contentShape(Rectangle())
             .onTapGesture {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                    mode.mode = .pan
+                    canvasModeVM.mode = .pan
                 }
             }
             
             //undo
             ZStack {
                 Image(systemName: "arrow.uturn.backward")
-                    .frame(width: 55, height: 55)
+                    .frame(width: 50, height: 50)
                     .imageScale(.large)
                     .foregroundColor(hoverUndo ? .gray : .white)
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color.orange.opacity(0))
-                    .frame(width: 45, height: 45)
+                    .frame(width: 40, height: 40)
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                lineViewModel.undo()
+                lineVM.undo()
             }
             .onHover { hovering in
                 hoverUndo = hovering
@@ -96,12 +96,12 @@ struct BottomToolbarView: View {
             //reset
             ZStack {
                 Image(systemName: "clear")
-                    .frame(width: 55, height: 55)
+                    .frame(width: 50, height: 50)
                     .imageScale(.large)
                     .foregroundColor(hoverReset ? .gray : .white)
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color.orange.opacity(0))
-                    .frame(width: 45, height: 45)
+                    .frame(width: 40, height: 40)
 
             }
             .contentShape(Rectangle())
@@ -112,7 +112,7 @@ struct BottomToolbarView: View {
                 hoverReset = hovering
             })
             .confirmationDialog("Erase all progress?", isPresented: $clearConfirmation) {
-                Button("Clear", role: .destructive) { lineViewModel.reset() }
+                Button("Clear", role: .destructive) { lineVM.reset() }
                 Button("Cancel", role: .cancel) { }
             } message: {
                 Text("Do you want to reset all progress?")
@@ -129,6 +129,6 @@ struct BottomToolbarView_Previews: PreviewProvider {
     @StateObject static var canvasModeVM = CanvasModeViewModel()
     @StateObject static var lineViewModel = LineViewModel()
     static var previews: some View {
-        BottomToolbarView(mode: canvasModeVM, lineViewModel: lineViewModel)
+        BottomToolbarView(canvasModeVM: canvasModeVM, lineVM: lineViewModel)
     }
 }

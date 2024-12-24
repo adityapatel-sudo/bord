@@ -20,16 +20,27 @@ struct ContentView: View {
         ZStack {
             CanvasView(lineVM: lineViewModel, modeVM: mode)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+           
             VStack {
                 ColorPickerView(lineViewModel: lineViewModel)
                     .padding(10)
                     .offset(y: mode.mode != .draw ? -100 : 0) // Move off-screen upwards
                     .animation(.easeInOut, value: mode.mode != .draw) // Animate the transition
                 Spacer()
-                BottomToolbarView(mode: mode, lineViewModel: lineViewModel)
-                    .padding(10)}
+
+                ZStack(alignment: .bottom) {
+                    BottomToolbarView(canvasModeVM: mode, lineVM: lineViewModel)
+                        .padding(10)
+                    HStack {
+                        if mode.panOffset != .zero {
+                            CenterCanvasView(canvasModeVM: mode)
+                                .padding(10)
+                        }
+                        Spacer()
+                    }
+                }
+            }
         }
-        .background(ColorManager.backgroundColor)
     }
 }
 

@@ -16,6 +16,7 @@
 		349F09D12D19BB4E00FB16E4 /* BottomToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D02D19BB4E00FB16E4 /* BottomToolbarView.swift */; };
 		349F09D42D19C0E200FB16E4 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 349F09D32D19C0E200FB16E4 /* Icons.xcassets */; };
 		349F09D72D1B344500FB16E4 /* GridPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D62D1B344500FB16E4 /* GridPickerView.swift */; };
+		349F09D92D1B672400FB16E4 /* CenterCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */; };
 		34EA24052D0FBCF000D392CC /* bordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24042D0FBCF000D392CC /* bordApp.swift */; };
 		34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24062D0FBCF000D392CC /* ContentView.swift */; };
 		34EA24092D0FBCF100D392CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34EA24082D0FBCF100D392CC /* Assets.xcassets */; };
@@ -58,6 +59,7 @@
 		349F09D32D19C0E200FB16E4 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		349F09D52D1A65D600FB16E4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		349F09D62D1B344500FB16E4 /* GridPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPickerView.swift; sourceTree = "<group>"; };
+		349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCanvasView.swift; sourceTree = "<group>"; };
 		34EA24012D0FBCF000D392CC /* bord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34EA24042D0FBCF000D392CC /* bordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bordApp.swift; sourceTree = "<group>"; };
 		34EA24062D0FBCF000D392CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -114,11 +116,11 @@
 		349F09D22D19BBAD00FB16E4 /* CanvasViews */ = {
 			isa = PBXGroup;
 			children = (
-				34EA24372D0FBE6000D392CC /* CanvasView.swift */,
 				349F09CC2D18E49C00FB16E4 /* ColorPickerView.swift */,
 				349F09CE2D19B50500FB16E4 /* CustomColorPicker.swift */,
 				349F09D02D19BB4E00FB16E4 /* BottomToolbarView.swift */,
 				349F09D62D1B344500FB16E4 /* GridPickerView.swift */,
+				349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */,
 			);
 			path = CanvasViews;
 			sourceTree = "<group>";
@@ -195,8 +197,9 @@
 		34EA24352D0FBD6300D392CC /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				349F09D22D19BBAD00FB16E4 /* CanvasViews */,
+				34EA24372D0FBE6000D392CC /* CanvasView.swift */,
 				34EA24062D0FBCF000D392CC /* ContentView.swift */,
+				349F09D22D19BBAD00FB16E4 /* CanvasViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				34EA243B2D0FDF2900D392CC /* LineModel.swift in Sources */,
 				349F09D72D1B344500FB16E4 /* GridPickerView.swift in Sources */,
 				349F09CD2D18E49C00FB16E4 /* ColorPickerView.swift in Sources */,
+				349F09D92D1B672400FB16E4 /* CenterCanvasView.swift in Sources */,
 				349F09D12D19BB4E00FB16E4 /* BottomToolbarView.swift in Sources */,
 				349F09C92D154F0100FB16E4 /* ColorManager.swift in Sources */,
 				34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */,
