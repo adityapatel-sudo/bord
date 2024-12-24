@@ -9,4 +9,6 @@ import Foundation
 
 class CanvasModeViewModel: ObservableObject {
     @Published var mode: CanvasMode = .draw
+    @Published var currentPanOffset: CGSize = .zero
+    @Published var panOffset: CGSize = .zero
 }
