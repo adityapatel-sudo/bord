@@ -21,7 +21,7 @@
 		349F09D42D19C0E200FB16E4 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 349F09D32D19C0E200FB16E4 /* Icons.xcassets */; };
 		349F09D72D1B344500FB16E4 /* GridPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D62D1B344500FB16E4 /* GridPickerView.swift */; };
 		349F09D92D1B672400FB16E4 /* CenterCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */; };
-		34EA24052D0FBCF000D392CC /* bordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24042D0FBCF000D392CC /* bordApp.swift */; };
+		34EA24052D0FBCF000D392CC /* BordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24042D0FBCF000D392CC /* BordApp.swift */; };
 		34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24062D0FBCF000D392CC /* ContentView.swift */; };
 		34EA24092D0FBCF100D392CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34EA24082D0FBCF100D392CC /* Assets.xcassets */; };
 		34EA240C2D0FBCF100D392CC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34EA240B2D0FBCF100D392CC /* Preview Assets.xcassets */; };
@@ -69,7 +69,7 @@
 		349F09D62D1B344500FB16E4 /* GridPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPickerView.swift; sourceTree = "<group>"; };
 		349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCanvasView.swift; sourceTree = "<group>"; };
 		34EA24012D0FBCF000D392CC /* bord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bord.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		34EA24042D0FBCF000D392CC /* bordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bordApp.swift; sourceTree = "<group>"; };
+		34EA24042D0FBCF000D392CC /* BordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BordApp.swift; sourceTree = "<group>"; };
 		34EA24062D0FBCF000D392CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		34EA24082D0FBCF100D392CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		34EA240B2D0FBCF100D392CC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 			children = (
 				349F09C72D154B2700FB16E4 /* assets */,
 				34EA24342D0FBD0400D392CC /* src */,
-				34EA24042D0FBCF000D392CC /* bordApp.swift */,
+				34EA24042D0FBCF000D392CC /* BordApp.swift */,
 				34EA24122D0FBCF100D392CC /* bord.entitlements */,
 				34EA240F2D0FBCF100D392CC /* bord.xcdatamodeld */,
 				34EA240A2D0FBCF100D392CC /* Preview Content */,
@@ -258,6 +258,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				34A559A82D1C8F2E00D2476B /* PBXTargetDependency */,
 			);
 			name = bord;
 			productName = bord;
@@ -332,6 +333,9 @@
 				Base,
 			);
 			mainGroup = 34EA23F82D0FBCF000D392CC;
+			packageReferences = (
+				34A559A62D1C8F1800D2476B /* XCRemoteSwiftPackageReference "SwiftLint" */,
+			);
 			productRefGroup = 34EA24022D0FBCF000D392CC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -394,7 +398,7 @@
 				344596592D1BBD3500EC76D4 /* CanvasButton.swift in Sources */,
 				34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */,
 				3445965D2D1C77E400EC76D4 /* CanvasItemModel.swift in Sources */,
-				34EA24052D0FBCF000D392CC /* bordApp.swift in Sources */,
+				34EA24052D0FBCF000D392CC /* BordApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +422,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		34A559A82D1C8F2E00D2476B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 34A559A72D1C8F2E00D2476B /* SwiftLintBuildToolPlugin */;
+		};
 		34EA24192D0FBCF200D392CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 34EA24002D0FBCF000D392CC /* bord */;
@@ -715,6 +723,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		34A559A62D1C8F1800D2476B /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.57.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		34A559A72D1C8F2E00D2476B /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 34A559A62D1C8F1800D2476B /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		34EA240F2D0FBCF100D392CC /* bord.xcdatamodeld */ = {

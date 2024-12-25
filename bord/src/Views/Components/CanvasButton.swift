@@ -13,7 +13,7 @@ struct CanvasButton: View {
     var onTap: () -> Void
     var orange: Bool = false
     var imageSize: Image.Scale = .large
-    var shortcut: KeyboardShortcut? = nil
+    var shortcut: KeyboardShortcut?
     @State private var isHovered = false
     var body: some View {
         Button {

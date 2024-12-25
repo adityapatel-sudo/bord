@@ -10,7 +10,7 @@ import SwiftUI
 struct CanvasView: View {
     @ObservedObject var canvasVM: CanvasItemsViewModel
     @ObservedObject var modeVM: CanvasModeViewModel
-    
+
     var canvasSize: CGSize = CGSize(
         width: NSScreen.main?.frame.width ?? 1600,
         height: NSScreen.main?.frame.height ?? 900
@@ -19,7 +19,7 @@ struct CanvasView: View {
     var body: some View {
         GeometryReader { geometry in
             let screenSize = geometry.size
-            Canvas { context, size in
+            Canvas { context, _ in
                 // Draw the lines, translated by the current pan offset
                 context.translateBy(x: modeVM.currentPanOffset.width, y: modeVM.currentPanOffset.height)
                 for item in canvasVM.items {
@@ -59,7 +59,7 @@ struct CanvasView: View {
         }
     }
     private func handleDragChanged(_ value: DragGesture.Value) {
-        if modeVM.mode == .draw || modeVM.mode == .erase{
+        if modeVM.mode == .draw || modeVM.mode == .erase {
             let offsetPoint = CGPoint(
                     x: value.location.x - modeVM.currentPanOffset.width,
                     y: value.location.y - modeVM.currentPanOffset.height
@@ -71,7 +71,7 @@ struct CanvasView: View {
                     y: value.location.y - modeVM.currentPanOffset.height
                 )
             canvasVM.newLine(point: offsetPoint)
-        } else if modeVM.mode == .rectangle{
+        } else if modeVM.mode == .rectangle {
             let offsetPoint = CGPoint(
                     x: value.location.x - modeVM.currentPanOffset.width,
                     y: value.location.y - modeVM.currentPanOffset.height
@@ -98,7 +98,7 @@ struct CanvasView: View {
             canvasVM.endDraw()
         } else if modeVM.mode == .line {
             canvasVM.endLine(point: offsetPoint)
-        } else if modeVM.mode == .rectangle{
+        } else if modeVM.mode == .rectangle {
             canvasVM.endRectangle(point: offsetPoint)
         } else if modeVM.mode == .pan {
             modeVM.panOffset.width += value.translation.width

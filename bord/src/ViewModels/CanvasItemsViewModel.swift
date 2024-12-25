@@ -15,24 +15,24 @@ class CanvasItemsViewModel: ObservableObject {
     var currentLine: LineModel = LineModel()
     var size: Double = 1.5
     var drawing: Bool = false
-    
+
     func setColor(newColor: Color) {
         color = newColor
         objectWillChange.send()
     }
-    
+
     func setSize(newSize: Double) {
         size = newSize
         objectWillChange.send()
     }
-    
+
     func reset() {
         items.removeAll()
         currentLine = LineModel()
     }
-    
+
     func newDraw(point: CGPoint) {
-        if (!drawing) {
+        if !drawing {
             drawing = true
             currentLine = LineModel()
             items.append(currentLine)
@@ -50,7 +50,7 @@ class CanvasItemsViewModel: ObservableObject {
         currentLine.points.append(point)
         objectWillChange.send()
     }
-    
+
     func endDraw() {
         if currentLine.points.count > 1 {
             let prev = currentLine.points[currentLine.points.count - 2]
@@ -67,9 +67,9 @@ class CanvasItemsViewModel: ObservableObject {
         }
         drawing = false
     }
-    
+
     func newLine(point: CGPoint) {
-        if (!drawing) {
+        if !drawing {
             drawing = true
             currentLine = LineModel()
             items.append(currentLine)
@@ -89,7 +89,7 @@ class CanvasItemsViewModel: ObservableObject {
         }
         objectWillChange.send()
     }
-    
+
     func endLine(point: CGPoint) {
         if currentLine.points.count > 0 {
             currentLine.path.addLine(to: point)
@@ -97,9 +97,9 @@ class CanvasItemsViewModel: ObservableObject {
         }
         drawing = false
     }
-    
+
     func newRectangle(point: CGPoint) {
-        if (!drawing) {
+        if !drawing {
             drawing = true
             currentLine = LineModel()
             items.append(currentLine)
@@ -130,13 +130,13 @@ class CanvasItemsViewModel: ObservableObject {
         objectWillChange.send()
 
     }
-    
+
     func endRectangle(point: CGPoint) {
         drawing = false
     }
 
     func undo() {
-        if (items.count > 0) {
+        if items.count > 0 {
             items.removeAll()
         }
     }

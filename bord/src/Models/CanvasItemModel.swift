@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
-class CanvasItemModel: Observable, Identifiable{
+class CanvasItemModel: Observable, Identifiable {
     let id = UUID()
     var color: Color
-    
+
     init () {
         self.color = .black
     }

@@ -10,63 +10,60 @@ import SwiftUI
 struct DrawingToolbarView: View {
     @ObservedObject var canvasModeVM: CanvasModeViewModel
     @ObservedObject var canvasVM: CanvasItemsViewModel
-    @State var prevColor: Color? = nil
-    @State var prevSize: CGFloat? = nil
+    @State var prevColor: Color?
+    @State var prevSize: CGFloat?
 
     var body: some View {
         HStack(spacing: 0) {
-            //draw
+            // draw
             CanvasButton(
                 imageName: "pencil.and.scribble",
                 isSelected: canvasModeVM.mode == .draw,
                 onTap: {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         canvasModeVM.mode = .draw
-                        if ((prevColor) != nil) {
+                        if prevColor != nil {
                             canvasVM.setColor(newColor: prevColor!)
                         }
-                        if (prevSize != nil) {
+                        if prevSize != nil {
                             canvasVM.setSize(newSize: prevSize!)
                         }
                     }
                 }
             )
-            
-            //Line
+            // Line
             CanvasButton(
                 imageName: "line.diagonal",
                 isSelected: canvasModeVM.mode == .line,
                 onTap: {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         canvasModeVM.mode = .line
-                        if ((prevColor) != nil) {
+                        if prevColor != nil {
                             canvasVM.setColor(newColor: prevColor!)
                         }
-                        if (prevSize != nil) {
+                        if prevSize != nil {
                             canvasVM.setSize(newSize: prevSize!)
                         }
                     }
                 }
             )
-            
-            //Rectangle
+            // Rectangle
             CanvasButton(
                 imageName: "rectangle",
                 isSelected: canvasModeVM.mode == .rectangle,
                 onTap: {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         canvasModeVM.mode = .rectangle
-                        if ((prevColor) != nil) {
+                        if prevColor != nil {
                             canvasVM.setColor(newColor: prevColor!)
                         }
-                        if (prevSize != nil) {
+                        if prevSize != nil {
                             canvasVM.setSize(newSize: prevSize!)
                         }
                     }
                 }
             )
-            
-            //erase
+            // erase
             CanvasButton(
                 imageName: "eraser.line.dashed",
                 isSelected: canvasModeVM.mode == .erase,

@@ -20,7 +20,6 @@ struct ContentView: View {
         ZStack {
             CanvasView(canvasVM: canvasVM, modeVM: mode)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-           
             VStack {
                 ColorPickerView(canvasVM: canvasVM)
                     .padding(10)
@@ -30,7 +29,9 @@ struct ContentView: View {
 
                 ZStack(alignment: .bottom) {
                     HStack(alignment: .bottom, spacing: 10) {
-                        SizePickerView(canvasVM: canvasVM)
+                        if mode.mode != .pan {
+                            SizePickerView(canvasVM: canvasVM)
+                        }
                         DrawingToolbarView(canvasModeVM: mode, canvasVM: canvasVM)
                         BottomToolbarView(canvasModeVM: mode, canvasVM: canvasVM)
                     }

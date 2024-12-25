@@ -23,7 +23,7 @@ struct SizePickerView: View {
             }
 
             HStack(spacing: 0) {
-                //small
+                // small
                 CanvasButton(
                     imageName: "circle.fill",
                     isSelected: canvasVM.size == 1.5,
@@ -32,7 +32,7 @@ struct SizePickerView: View {
                     },
                     imageSize: .small
                 )
-                //medium
+                // medium
                 CanvasButton(
                     imageName: "circle.fill",
                     isSelected: canvasVM.size == 4,
@@ -41,7 +41,7 @@ struct SizePickerView: View {
                     },
                     imageSize: .medium
                 )
-                //large
+                // large
                 CanvasButton(
                     imageName: "circle.fill",
                     isSelected: canvasVM.size == 8,
@@ -50,7 +50,7 @@ struct SizePickerView: View {
                     },
                     imageSize: .large
                 )
-                //slider
+                // slider
                 CanvasButton(
                     imageName: "slider.horizontal.3",
                     isSelected: sliderVisible,

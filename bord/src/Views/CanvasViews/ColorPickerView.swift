@@ -29,8 +29,8 @@ struct ColorPickerView: View {
             .padding(10)
             .background(ColorManager.lighterGrey)
             .cornerRadius(15)
-            
-            CustomColorPicker() { color in
+
+            CustomColorPicker { color in
                 canvasVM.setColor(newColor: color)
             }
             .frame(width: 30, height: 30)
@@ -45,7 +45,7 @@ struct ColorPickerView_Previews: PreviewProvider {
         ColorPickerView(canvasVM: canvas)
             .preferredColorScheme(.dark)
     }
-    static private func setColor(_ color: Color) -> Void {
+    static private func setColor(_ color: Color) {
         print("Color set to \(color)")
     }
 }

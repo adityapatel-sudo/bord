@@ -11,13 +11,13 @@ struct BottomToolbarView: View {
     @ObservedObject var canvasModeVM: CanvasModeViewModel
     @ObservedObject var canvasVM: CanvasItemsViewModel
     @State var clearConfirmation = false
-    
+
     @State var hoverUndo = false
     @State var hoverReset = false
 
     var body: some View {
         HStack(spacing: 0) {
-            //pan
+            // pan
             CanvasButton(
                 imageName: "arrow.up.and.down.and.arrow.left.and.right",
                 isSelected: canvasModeVM.mode == .pan,
@@ -27,8 +27,8 @@ struct BottomToolbarView: View {
                     }
                 }
             )
-            
-            //undo
+
+            // undo
             CanvasButton(
                 imageName: "arrow.uturn.backward",
                 isSelected: false,
@@ -38,7 +38,7 @@ struct BottomToolbarView: View {
                 shortcut: KeyboardShortcut("z")
             )
 
-            //reset
+            // reset
             CanvasButton(
                 imageName: "clear",
                 isSelected: false,
