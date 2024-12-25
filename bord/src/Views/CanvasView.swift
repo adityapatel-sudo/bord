@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CanvasView: View {
-    @ObservedObject var lineVM: LineViewModel
+    @ObservedObject var canvasVM: CanvasItemsViewModel
     @ObservedObject var modeVM: CanvasModeViewModel
     
     var canvasSize: CGSize = CGSize(
@@ -22,13 +22,17 @@ struct CanvasView: View {
             Canvas { context, size in
                 // Draw the lines, translated by the current pan offset
                 context.translateBy(x: modeVM.currentPanOffset.width, y: modeVM.currentPanOffset.height)
-                for line in lineVM.lines {
-                    let strokeStyle = StrokeStyle(lineWidth: line.lineWidth, lineCap: .round)
-                    context.stroke(
-                        line.path,
-                        with: .color(line.color),
-                        style: strokeStyle
-                    )
+                for item in canvasVM.items {
+                    if let line = item as? LineModel {
+                        let strokeStyle = StrokeStyle(lineWidth: line.lineWidth, lineCap: .round)
+                        context.stroke(
+                            line.path,
+                            with: .color(line.color),
+                            style: strokeStyle
+                        )
+                    } else {
+                        print("not a line")
+                    }
                 }
 
                 // Draw a black rectangle around the canvas to show the canvas boundary
@@ -60,19 +64,19 @@ struct CanvasView: View {
                     x: value.location.x - modeVM.currentPanOffset.width,
                     y: value.location.y - modeVM.currentPanOffset.height
                 )
-            lineVM.newDraw(point: offsetPoint)
+            canvasVM.newDraw(point: offsetPoint)
         } else if modeVM.mode == .line {
             let offsetPoint = CGPoint(
                     x: value.location.x - modeVM.currentPanOffset.width,
                     y: value.location.y - modeVM.currentPanOffset.height
                 )
-            lineVM.newLine(point: offsetPoint)
+            canvasVM.newLine(point: offsetPoint)
         } else if modeVM.mode == .rectangle{
             let offsetPoint = CGPoint(
                     x: value.location.x - modeVM.currentPanOffset.width,
                     y: value.location.y - modeVM.currentPanOffset.height
                 )
-            lineVM.newRectangle(point: offsetPoint)
+            canvasVM.newRectangle(point: offsetPoint)
         } else if modeVM.mode == .pan {
             // Handle panning
             let newOffset = CGSize(
@@ -91,11 +95,11 @@ struct CanvasView: View {
                 y: value.location.y - modeVM.currentPanOffset.height
             )
         if modeVM.mode == .draw || modeVM.mode == .erase {
-            lineVM.endDraw()
+            canvasVM.endDraw()
         } else if modeVM.mode == .line {
-            lineVM.endLine(point: offsetPoint)
+            canvasVM.endLine(point: offsetPoint)
         } else if modeVM.mode == .rectangle{
-            lineVM.endRectangle(point: offsetPoint)
+            canvasVM.endRectangle(point: offsetPoint)
         } else if modeVM.mode == .pan {
             modeVM.panOffset.width += value.translation.width
             modeVM.panOffset.height += value.translation.height
@@ -109,5 +113,5 @@ struct CanvasView: View {
 }
 
 #Preview {
-    CanvasView(lineVM: LineViewModel(), modeVM: CanvasModeViewModel())
+    CanvasView(canvasVM: CanvasItemsViewModel(), modeVM: CanvasModeViewModel())
 }

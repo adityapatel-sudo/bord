@@ -8,12 +8,13 @@
 import Foundation
 import SwiftUI
 
-class LineViewModel: ObservableObject {
-    @Published var lines: [LineModel] = []
+class CanvasItemsViewModel: ObservableObject {
+    @Published var items: [CanvasItemModel] = []
     @Published var zoomScale: CGFloat = 1.0
     var color: Color = .white
     var currentLine: LineModel = LineModel()
     var size: Double = 1.5
+    var drawing: Bool = false
     
     func setColor(newColor: Color) {
         color = newColor
@@ -26,13 +27,15 @@ class LineViewModel: ObservableObject {
     }
     
     func reset() {
-        lines.removeAll()
+        items.removeAll()
         currentLine = LineModel()
     }
     
     func newDraw(point: CGPoint) {
-        if (currentLine.points.isEmpty) {
-            lines.append(currentLine)
+        if (!drawing) {
+            drawing = true
+            currentLine = LineModel()
+            items.append(currentLine)
             currentLine.path.move(to: point)
             currentLine.color = color
             currentLine.lineWidth = size
@@ -62,12 +65,14 @@ class LineViewModel: ObservableObject {
             currentLine.path.addLine(to: currentLine.points.last!)
             objectWillChange.send()
         }
-        currentLine = LineModel()
+        drawing = false
     }
     
     func newLine(point: CGPoint) {
-        if (currentLine.points.isEmpty) {
-            lines.append(currentLine)
+        if (!drawing) {
+            drawing = true
+            currentLine = LineModel()
+            items.append(currentLine)
             currentLine.path.move(to: point)
             currentLine.color = color
             currentLine.lineWidth = size
@@ -90,12 +95,14 @@ class LineViewModel: ObservableObject {
             currentLine.path.addLine(to: point)
             objectWillChange.send()
         }
-        currentLine = LineModel()
+        drawing = false
     }
     
     func newRectangle(point: CGPoint) {
-        if (currentLine.points.isEmpty) {
-            lines.append(currentLine)
+        if (!drawing) {
+            drawing = true
+            currentLine = LineModel()
+            items.append(currentLine)
             currentLine.path.move(to: point)
             currentLine.color = color
             currentLine.lineWidth = size
@@ -125,12 +132,12 @@ class LineViewModel: ObservableObject {
     }
     
     func endRectangle(point: CGPoint) {
-        currentLine = LineModel()
+        drawing = false
     }
 
     func undo() {
-        if (lines.count > 0) {
-            lines.removeLast()
+        if (items.count > 0) {
+            items.removeAll()
         }
     }
 }

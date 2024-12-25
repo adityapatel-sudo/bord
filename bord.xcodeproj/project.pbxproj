@@ -11,6 +11,7 @@
 		344596562D1BBB3100EC76D4 /* SizePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344596552D1BBB3100EC76D4 /* SizePickerView.swift */; };
 		344596592D1BBD3500EC76D4 /* CanvasButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344596582D1BBD3500EC76D4 /* CanvasButton.swift */; };
 		3445965B2D1BD14700EC76D4 /* DrawingToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3445965A2D1BD14700EC76D4 /* DrawingToolbarView.swift */; };
+		3445965D2D1C77E400EC76D4 /* CanvasItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3445965C2D1C77E400EC76D4 /* CanvasItemModel.swift */; };
 		349F09C62D15462C00FB16E4 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 349F09C52D15462C00FB16E4 /* Colors.xcassets */; };
 		349F09C92D154F0100FB16E4 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09C82D154F0100FB16E4 /* ColorManager.swift */; };
 		349F09CB2D154F5C00FB16E4 /* CanvasModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09CA2D154F5C00FB16E4 /* CanvasModeViewModel.swift */; };
@@ -31,7 +32,7 @@
 		34EA24282D0FBCF200D392CC /* bordUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24272D0FBCF200D392CC /* bordUITestsLaunchTests.swift */; };
 		34EA24382D0FBE6000D392CC /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24372D0FBE6000D392CC /* CanvasView.swift */; };
 		34EA243B2D0FDF2900D392CC /* LineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA243A2D0FDF2900D392CC /* LineModel.swift */; };
-		34EA243D2D1108BD00D392CC /* LineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA243C2D1108BD00D392CC /* LineViewModel.swift */; };
+		34EA243D2D1108BD00D392CC /* CanvasItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA243C2D1108BD00D392CC /* CanvasItemsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		344596552D1BBB3100EC76D4 /* SizePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePickerView.swift; sourceTree = "<group>"; };
 		344596582D1BBD3500EC76D4 /* CanvasButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasButton.swift; sourceTree = "<group>"; };
 		3445965A2D1BD14700EC76D4 /* DrawingToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingToolbarView.swift; sourceTree = "<group>"; };
+		3445965C2D1C77E400EC76D4 /* CanvasItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasItemModel.swift; sourceTree = "<group>"; };
 		349F09C52D15462C00FB16E4 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		349F09C82D154F0100FB16E4 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		349F09CA2D154F5C00FB16E4 /* CanvasModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasModeViewModel.swift; sourceTree = "<group>"; };
@@ -81,7 +83,7 @@
 		34EA24272D0FBCF200D392CC /* bordUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bordUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		34EA24372D0FBE6000D392CC /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		34EA243A2D0FDF2900D392CC /* LineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineModel.swift; sourceTree = "<group>"; };
-		34EA243C2D1108BD00D392CC /* LineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineViewModel.swift; sourceTree = "<group>"; };
+		34EA243C2D1108BD00D392CC /* CanvasItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasItemsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,7 +226,7 @@
 		34EA24362D0FBD8B00D392CC /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				34EA243C2D1108BD00D392CC /* LineViewModel.swift */,
+				34EA243C2D1108BD00D392CC /* CanvasItemsViewModel.swift */,
 				34EA240D2D0FBCF100D392CC /* Persistence.swift */,
 				349F09C82D154F0100FB16E4 /* ColorManager.swift */,
 				349F09CA2D154F5C00FB16E4 /* CanvasModeViewModel.swift */,
@@ -237,6 +239,7 @@
 			children = (
 				34EA243A2D0FDF2900D392CC /* LineModel.swift */,
 				34146C7D2D138A19000B7328 /* CanvasMode.swift */,
+				3445965C2D1C77E400EC76D4 /* CanvasItemModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -373,7 +376,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34EA243D2D1108BD00D392CC /* LineViewModel.swift in Sources */,
+				34EA243D2D1108BD00D392CC /* CanvasItemsViewModel.swift in Sources */,
 				34EA24112D0FBCF100D392CC /* bord.xcdatamodeld in Sources */,
 				349F09CF2D19B50500FB16E4 /* CustomColorPicker.swift in Sources */,
 				3445965B2D1BD14700EC76D4 /* DrawingToolbarView.swift in Sources */,
@@ -390,6 +393,7 @@
 				349F09C92D154F0100FB16E4 /* ColorManager.swift in Sources */,
 				344596592D1BBD3500EC76D4 /* CanvasButton.swift in Sources */,
 				34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */,
+				3445965D2D1C77E400EC76D4 /* CanvasItemModel.swift in Sources */,
 				34EA24052D0FBCF000D392CC /* bordApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

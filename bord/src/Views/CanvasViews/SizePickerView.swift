@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct SizePickerView: View {
-    @ObservedObject var lineVM: LineViewModel
+    @ObservedObject var canvasVM: CanvasItemsViewModel
     @State private var sliderVisible: Bool = false
     var body: some View {
         VStack {
             if sliderVisible {
-                Slider(value: $lineVM.size, in: 1...15, step: 0.5)
+                Slider(value: $canvasVM.size, in: 1...15, step: 0.5)
                     .padding()
                     .frame(width: 200)
                     .background(Color.black.opacity(0.8).cornerRadius(10))
@@ -26,27 +26,27 @@ struct SizePickerView: View {
                 //small
                 CanvasButton(
                     imageName: "circle.fill",
-                    isSelected: lineVM.size == 1.5,
+                    isSelected: canvasVM.size == 1.5,
                     onTap: {
-                        lineVM.setSize(newSize: 1.5)
+                        canvasVM.setSize(newSize: 1.5)
                     },
                     imageSize: .small
                 )
                 //medium
                 CanvasButton(
                     imageName: "circle.fill",
-                    isSelected: lineVM.size == 4,
+                    isSelected: canvasVM.size == 4,
                     onTap: {
-                        lineVM.setSize(newSize: 4)
+                        canvasVM.setSize(newSize: 4)
                     },
                     imageSize: .medium
                 )
                 //large
                 CanvasButton(
                     imageName: "circle.fill",
-                    isSelected: lineVM.size == 8,
+                    isSelected: canvasVM.size == 8,
                     onTap: {
-                        lineVM.setSize(newSize: 8)
+                        canvasVM.setSize(newSize: 8)
                     },
                     imageSize: .large
                 )
@@ -66,5 +66,5 @@ struct SizePickerView: View {
 }
 
 #Preview {
-    SizePickerView(lineVM: LineViewModel())
+    SizePickerView(canvasVM: CanvasItemsViewModel())
 }

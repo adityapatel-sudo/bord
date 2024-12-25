@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BottomToolbarView: View {
     @ObservedObject var canvasModeVM: CanvasModeViewModel
-    @ObservedObject var lineVM: LineViewModel
+    @ObservedObject var canvasVM: CanvasItemsViewModel
     @State var clearConfirmation = false
     
     @State var hoverUndo = false
@@ -33,7 +33,7 @@ struct BottomToolbarView: View {
                 imageName: "arrow.uturn.backward",
                 isSelected: false,
                 onTap: {
-                    lineVM.undo()
+                    canvasVM.undo()
                 },
                 shortcut: KeyboardShortcut("z")
             )
@@ -47,7 +47,7 @@ struct BottomToolbarView: View {
                 }
             )
             .confirmationDialog("Erase all progress?", isPresented: $clearConfirmation) {
-                Button("Clear", role: .destructive) { lineVM.reset() }
+                Button("Clear", role: .destructive) { canvasVM.reset() }
                 Button("Cancel", role: .cancel) { }
             } message: {
                 Text("Do you want to reset all progress?")
@@ -63,8 +63,8 @@ struct BottomToolbarView: View {
 
 struct BottomToolbarView_Previews: PreviewProvider {
     @StateObject static var canvasModeVM = CanvasModeViewModel()
-    @StateObject static var lineViewModel = LineViewModel()
+    @StateObject static var canvasVM = CanvasItemsViewModel()
     static var previews: some View {
-        BottomToolbarView(canvasModeVM: canvasModeVM, lineVM: lineViewModel)
+        BottomToolbarView(canvasModeVM: canvasModeVM, canvasVM: canvasVM)
     }
 }

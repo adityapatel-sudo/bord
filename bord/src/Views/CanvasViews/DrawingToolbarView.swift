@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DrawingToolbarView: View {
     @ObservedObject var canvasModeVM: CanvasModeViewModel
-    @ObservedObject var lineVM: LineViewModel
+    @ObservedObject var canvasVM: CanvasItemsViewModel
     @State var prevColor: Color? = nil
     @State var prevSize: CGFloat? = nil
 
@@ -23,10 +23,10 @@ struct DrawingToolbarView: View {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         canvasModeVM.mode = .draw
                         if ((prevColor) != nil) {
-                            lineVM.setColor(newColor: prevColor!)
+                            canvasVM.setColor(newColor: prevColor!)
                         }
                         if (prevSize != nil) {
-                            lineVM.setSize(newSize: prevSize!)
+                            canvasVM.setSize(newSize: prevSize!)
                         }
                     }
                 }
@@ -40,10 +40,10 @@ struct DrawingToolbarView: View {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         canvasModeVM.mode = .line
                         if ((prevColor) != nil) {
-                            lineVM.setColor(newColor: prevColor!)
+                            canvasVM.setColor(newColor: prevColor!)
                         }
                         if (prevSize != nil) {
-                            lineVM.setSize(newSize: prevSize!)
+                            canvasVM.setSize(newSize: prevSize!)
                         }
                     }
                 }
@@ -57,10 +57,10 @@ struct DrawingToolbarView: View {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         canvasModeVM.mode = .rectangle
                         if ((prevColor) != nil) {
-                            lineVM.setColor(newColor: prevColor!)
+                            canvasVM.setColor(newColor: prevColor!)
                         }
                         if (prevSize != nil) {
-                            lineVM.setSize(newSize: prevSize!)
+                            canvasVM.setSize(newSize: prevSize!)
                         }
                     }
                 }
@@ -72,10 +72,10 @@ struct DrawingToolbarView: View {
                 isSelected: canvasModeVM.mode == .erase,
                 onTap: {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                        prevSize = lineVM.size
-                        prevColor = lineVM.color
-                        lineVM.setSize(newSize: 15.0)
-                        lineVM.setColor(newColor: ColorManager.backgroundColor)
+                        prevSize = canvasVM.size
+                        prevColor = canvasVM.color
+                        canvasVM.setSize(newSize: 15.0)
+                        canvasVM.setColor(newColor: ColorManager.backgroundColor)
                         canvasModeVM.mode = .erase
                     }
                 }
@@ -88,5 +88,5 @@ struct DrawingToolbarView: View {
 }
 
 #Preview {
-    DrawingToolbarView(canvasModeVM: CanvasModeViewModel(), lineVM: LineViewModel())
+    DrawingToolbarView(canvasModeVM: CanvasModeViewModel(), canvasVM: CanvasItemsViewModel())
 }

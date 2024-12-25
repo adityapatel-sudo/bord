@@ -14,25 +14,25 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
-    @StateObject private var lineViewModel = LineViewModel()
+    @StateObject private var canvasVM = CanvasItemsViewModel()
     @StateObject private var mode = CanvasModeViewModel()
     var body: some View {
         ZStack {
-            CanvasView(lineVM: lineViewModel, modeVM: mode)
+            CanvasView(canvasVM: canvasVM, modeVM: mode)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
            
             VStack {
-                ColorPickerView(lineViewModel: lineViewModel)
+                ColorPickerView(canvasVM: canvasVM)
                     .padding(10)
-                    .offset(y: mode.mode != .draw ? -100 : 0) // Move off-screen upwards
-                    .animation(.easeInOut, value: mode.mode != .draw) // Animate the transition
+                    .offset(y: mode.mode == .pan || mode.mode == .erase ? -100 : 0)
+                    .animation(.easeInOut, value: mode.mode == .pan || mode.mode == .erase)
                 Spacer()
 
                 ZStack(alignment: .bottom) {
                     HStack(alignment: .bottom, spacing: 10) {
-                        SizePickerView(lineVM: lineViewModel)
-                        DrawingToolbarView(canvasModeVM: mode, lineVM: lineViewModel)
-                        BottomToolbarView(canvasModeVM: mode, lineVM: lineViewModel)
+                        SizePickerView(canvasVM: canvasVM)
+                        DrawingToolbarView(canvasModeVM: mode, canvasVM: canvasVM)
+                        BottomToolbarView(canvasModeVM: mode, canvasVM: canvasVM)
                     }
                     .padding(10)
                     HStack {
