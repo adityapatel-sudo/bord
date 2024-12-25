@@ -19,104 +19,69 @@ struct BottomToolbarView: View {
     var body: some View {
         HStack(spacing: 0) {
             //draw
-            ZStack {
-                Image(systemName: "pencil.and.scribble")
-                    .frame(width: 50, height: 50)
-                    .imageScale(.large)
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.orange.opacity(canvasModeVM.mode == .draw ? 0.25 : 0))
-                    .frame(width: 40, height: 40)
-                   
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                    canvasModeVM.mode = .draw
-                    lineVM.setSize(newSize: 2)
-                    if ((prevColor) != nil) {
-                        lineVM.setColor(newColor: prevColor!)
+            CanvasButton(
+                imageName: "pencil.and.scribble",
+                isSelected: canvasModeVM.mode == .draw,
+                onTap: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        canvasModeVM.mode = .draw
+                        lineVM.setSize(newSize: 2)
+                        if ((prevColor) != nil) {
+                            lineVM.setColor(newColor: prevColor!)
+                        }
                     }
                 }
-            }
+            )
             
             //erase
-            ZStack {
-                Image(systemName: "eraser.line.dashed")
-                    .frame(width: 50, height: 50)
-                    .imageScale(.large)
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.orange.opacity(canvasModeVM.mode == .erase ? 0.25 : 0))
-                    .frame(width: 40, height: 40)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                    prevColor = lineVM.color
-                    lineVM.setSize(newSize: 15.0)
-                    lineVM.setColor(newColor: ColorManager.backgroundColor)
-                    canvasModeVM.mode = .erase
+            CanvasButton(
+                imageName: "eraser.line.dashed",
+                isSelected: canvasModeVM.mode == .erase,
+                onTap: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        prevColor = lineVM.color
+                        lineVM.setSize(newSize: 15.0)
+                        lineVM.setColor(newColor: ColorManager.backgroundColor)
+                        canvasModeVM.mode = .erase
+                    }
                 }
-            }
+            )
             
             //pan
-            ZStack {
-                Image(systemName: "arrow.up.and.down.and.arrow.left.and.right")
-                    .frame(width: 50, height: 50)
-                    .imageScale(.large)
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.orange.opacity(canvasModeVM.mode == .pan ? 0.25 : 0))
-                    .frame(width: 40, height: 40)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                    canvasModeVM.mode = .pan
+            CanvasButton(
+                imageName: "arrow.up.and.down.and.arrow.left.and.right",
+                isSelected: canvasModeVM.mode == .pan,
+                onTap: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        canvasModeVM.mode = .pan
+                    }
                 }
-            }
+            )
             
             //undo
-            ZStack {
-                Image(systemName: "arrow.uturn.backward")
-                    .frame(width: 50, height: 50)
-                    .imageScale(.large)
-                    .foregroundColor(hoverUndo ? .gray : .white)
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.orange.opacity(0))
-                    .frame(width: 40, height: 40)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                lineVM.undo()
-            }
-            .onHover { hovering in
-                hoverUndo = hovering
-            }
-            
-            
-            //reset
-            ZStack {
-                Image(systemName: "clear")
-                    .frame(width: 50, height: 50)
-                    .imageScale(.large)
-                    .foregroundColor(hoverReset ? .gray : .white)
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.orange.opacity(0))
-                    .frame(width: 40, height: 40)
+            CanvasButton(
+                imageName: "arrow.uturn.backward",
+                isSelected: false,
+                onTap: {
+                    lineVM.undo()
+                }
+            )
 
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                clearConfirmation = true
-            }
-            .onHover(perform: { hovering in
-                hoverReset = hovering
-            })
+            //reset
+            CanvasButton(
+                imageName: "clear",
+                isSelected: false,
+                onTap: {
+                    clearConfirmation = true
+                }
+            )
             .confirmationDialog("Erase all progress?", isPresented: $clearConfirmation) {
                 Button("Clear", role: .destructive) { lineVM.reset() }
                 Button("Cancel", role: .cancel) { }
             } message: {
                 Text("Do you want to reset all progress?")
             }
+
         }
         .padding(5)
         .background(ColorManager.lighterGrey)

@@ -12,24 +12,19 @@ struct CenterCanvasView: View {
     @State var hover = false
     var body: some View {
         HStack {
-            ZStack {
-                Image(systemName: "circle.circle")
-                    .frame(width: 45, height: 45)
-                    .imageScale(.large)
-                    .foregroundColor(hover ? .gray : .orange)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                canvasModeVM.updatePanOffset(offset: .zero)
-            }
-            .onHover(perform: { hovering in
-                hover = hovering
-            })
-
+            CanvasButton(
+                imageName: "circle.circle",
+                isSelected: false,
+                onTap: {
+                    canvasModeVM.updatePanOffset(offset: .zero)
+                },
+                orange: true
+            )
         }
         .padding(5)
         .background(ColorManager.lighterGrey)
         .cornerRadius(15)
+
     }
 }
 
