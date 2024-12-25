@@ -48,7 +48,7 @@ class LineViewModel: ObservableObject {
         objectWillChange.send()
     }
     
-    func drawEnded() {
+    func endDraw() {
         if currentLine.points.count > 1 {
             let prev = currentLine.points[currentLine.points.count - 2]
             let cur = currentLine.points.last!
@@ -93,6 +93,41 @@ class LineViewModel: ObservableObject {
         currentLine = LineModel()
     }
     
+    func newRectangle(point: CGPoint) {
+        if (currentLine.points.isEmpty) {
+            lines.append(currentLine)
+            currentLine.path.move(to: point)
+            currentLine.color = color
+            currentLine.lineWidth = size
+            currentLine.points.append(point)
+        } else {
+            if currentLine.points.count == 1 {
+                currentLine.points.append(point)
+            } else {
+                currentLine.points[currentLine.points.count - 1] = point
+            }
+            let startPoint = currentLine.points[0]
+            let endPoint = currentLine.points[1]
+            let rect = CGRect(
+                x: min(startPoint.x, endPoint.x),
+                y: min(startPoint.y, endPoint.y),
+                width: abs(endPoint.x - startPoint.x),
+                height: abs(endPoint.y - startPoint.y)
+            )
+            currentLine.path = Path()
+            currentLine.path.addRoundedRect(
+                in: rect,
+                cornerSize: CGSize(width: 5, height: 5)
+            )
+        }
+        objectWillChange.send()
+
+    }
+    
+    func endRectangle(point: CGPoint) {
+        currentLine = LineModel()
+    }
+
     func undo() {
         if (lines.count > 0) {
             lines.removeLast()

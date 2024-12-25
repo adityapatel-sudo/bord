@@ -11,6 +11,7 @@ struct DrawingToolbarView: View {
     @ObservedObject var canvasModeVM: CanvasModeViewModel
     @ObservedObject var lineVM: LineViewModel
     @State var prevColor: Color? = nil
+    @State var prevSize: CGFloat? = nil
 
     var body: some View {
         HStack(spacing: 0) {
@@ -21,9 +22,11 @@ struct DrawingToolbarView: View {
                 onTap: {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         canvasModeVM.mode = .draw
-                        lineVM.setSize(newSize: 2)
                         if ((prevColor) != nil) {
                             lineVM.setColor(newColor: prevColor!)
+                        }
+                        if (prevSize != nil) {
+                            lineVM.setSize(newSize: prevSize!)
                         }
                     }
                 }
@@ -36,9 +39,28 @@ struct DrawingToolbarView: View {
                 onTap: {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         canvasModeVM.mode = .line
-                        lineVM.setSize(newSize: 2)
                         if ((prevColor) != nil) {
                             lineVM.setColor(newColor: prevColor!)
+                        }
+                        if (prevSize != nil) {
+                            lineVM.setSize(newSize: prevSize!)
+                        }
+                    }
+                }
+            )
+            
+            //Rectangle
+            CanvasButton(
+                imageName: "rectangle",
+                isSelected: canvasModeVM.mode == .rectangle,
+                onTap: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        canvasModeVM.mode = .rectangle
+                        if ((prevColor) != nil) {
+                            lineVM.setColor(newColor: prevColor!)
+                        }
+                        if (prevSize != nil) {
+                            lineVM.setSize(newSize: prevSize!)
                         }
                     }
                 }
@@ -50,6 +72,7 @@ struct DrawingToolbarView: View {
                 isSelected: canvasModeVM.mode == .erase,
                 onTap: {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        prevSize = lineVM.size
                         prevColor = lineVM.color
                         lineVM.setSize(newSize: 15.0)
                         lineVM.setColor(newColor: ColorManager.backgroundColor)

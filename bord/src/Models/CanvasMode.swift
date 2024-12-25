@@ -10,6 +10,7 @@ import Foundation
 enum CanvasMode {
     case draw
     case line
+    case rectangle
     case shape
     case erase
     case pan

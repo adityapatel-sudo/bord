@@ -57,14 +57,23 @@ struct CanvasView: View {
     }
     private func handleDragChanged(_ value: DragGesture.Value) {
         if modeVM.mode == .draw || modeVM.mode == .erase{
-            // Handle drawing or erasing
             let offsetPoint = CGPoint(
                     x: value.location.x - modeVM.currentPanOffset.width,
                     y: value.location.y - modeVM.currentPanOffset.height
                 )
             lineVM.newDraw(point: offsetPoint)
         } else if modeVM.mode == .line {
-            lineVM.newLine(point: value.location)
+            let offsetPoint = CGPoint(
+                    x: value.location.x - modeVM.currentPanOffset.width,
+                    y: value.location.y - modeVM.currentPanOffset.height
+                )
+            lineVM.newLine(point: offsetPoint)
+        } else if modeVM.mode == .rectangle{
+            let offsetPoint = CGPoint(
+                    x: value.location.x - modeVM.currentPanOffset.width,
+                    y: value.location.y - modeVM.currentPanOffset.height
+                )
+            lineVM.newRectangle(point: offsetPoint)
         } else if modeVM.mode == .pan {
             // Handle panning
             let newOffset = CGSize(
@@ -78,10 +87,16 @@ struct CanvasView: View {
 
     }
     private func handleDragEnded(_ value: DragGesture.Value) {
+        let offsetPoint = CGPoint(
+                x: value.location.x - modeVM.currentPanOffset.width,
+                y: value.location.y - modeVM.currentPanOffset.height
+            )
         if modeVM.mode == .draw || modeVM.mode == .erase {
-            lineVM.drawEnded()
+            lineVM.endDraw()
         } else if modeVM.mode == .line {
-            lineVM.endLine(point: value.location)
+            lineVM.endLine(point: offsetPoint)
+        } else if modeVM.mode == .rectangle{
+            lineVM.endRectangle(point: offsetPoint)
         } else if modeVM.mode == .pan {
             modeVM.panOffset.width += value.translation.width
             modeVM.panOffset.height += value.translation.height
