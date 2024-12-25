@@ -10,4 +10,5 @@ import SwiftUI
 struct ColorManager {
     static let backgroundColor = Color("background")
     static let lighterGrey = Color("lighterGrey")
+    static let uneditableBackground = Color("uneditableBackground")
 }

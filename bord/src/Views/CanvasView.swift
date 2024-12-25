@@ -16,7 +16,6 @@ struct CanvasView: View {
         height: NSScreen.main?.frame.height ?? 900
     )
 
-    let outsideCanvasColor: Color = .black
     var body: some View {
         GeometryReader { geometry in
             let screenSize = geometry.size
@@ -43,7 +42,7 @@ struct CanvasView: View {
                 canvasPath.addRect(canvasRect)
                 context.fill(
                     canvasPath,
-                    with: .color(outsideCanvasColor),
+                    with: .color(ColorManager.uneditableBackground),
                     style: FillStyle(eoFill: true)
                 )
             }
