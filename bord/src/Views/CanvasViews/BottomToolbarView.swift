@@ -10,7 +10,6 @@ import SwiftUI
 struct BottomToolbarView: View {
     @ObservedObject var canvasModeVM: CanvasModeViewModel
     @ObservedObject var lineVM: LineViewModel
-    @State var prevColor: Color? = nil
     @State var clearConfirmation = false
     
     @State var hoverUndo = false
@@ -18,35 +17,6 @@ struct BottomToolbarView: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            //draw
-            CanvasButton(
-                imageName: "pencil.and.scribble",
-                isSelected: canvasModeVM.mode == .draw,
-                onTap: {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                        canvasModeVM.mode = .draw
-                        lineVM.setSize(newSize: 2)
-                        if ((prevColor) != nil) {
-                            lineVM.setColor(newColor: prevColor!)
-                        }
-                    }
-                }
-            )
-            
-            //erase
-            CanvasButton(
-                imageName: "eraser.line.dashed",
-                isSelected: canvasModeVM.mode == .erase,
-                onTap: {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                        prevColor = lineVM.color
-                        lineVM.setSize(newSize: 15.0)
-                        lineVM.setColor(newColor: ColorManager.backgroundColor)
-                        canvasModeVM.mode = .erase
-                    }
-                }
-            )
-            
             //pan
             CanvasButton(
                 imageName: "arrow.up.and.down.and.arrow.left.and.right",
@@ -64,7 +34,8 @@ struct BottomToolbarView: View {
                 isSelected: false,
                 onTap: {
                     lineVM.undo()
-                }
+                },
+                shortcut: KeyboardShortcut("z")
             )
 
             //reset

@@ -12,31 +12,35 @@ struct CanvasButton: View {
     var isSelected: Bool
     var onTap: () -> Void
     var orange: Bool = false
+    var imageSize: Image.Scale = .large
+    var shortcut: KeyboardShortcut? = nil
     @State private var isHovered = false
     var body: some View {
-        ZStack {
-            orange ? (
-                Image(systemName: imageName)
-                    .frame(width: 50, height: 50)
-                    .imageScale(.large)
-                    .foregroundColor(isHovered ? .gray : .orange)
-            ) : (
-                Image(systemName: imageName)
-                    .frame(width: 50, height: 50)
-                    .imageScale(.large)
-                    .foregroundColor(isHovered ? .gray : .white)
-            )
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.orange.opacity(isSelected ? 0.25 : 0))
-                .frame(width: 40, height: 40)
-        }
-        .contentShape(Rectangle())
-        .onTapGesture {
+        Button {
             onTap()
+        } label: {
+            ZStack {
+                orange ? (
+                    Image(systemName: imageName)
+                        .frame(width: 50, height: 50)
+                        .imageScale(imageSize)
+                        .foregroundColor(isHovered ? .gray : .orange)
+                ) : (
+                    Image(systemName: imageName)
+                        .frame(width: 50, height: 50)
+                        .imageScale(imageSize)
+                        .foregroundColor(isHovered ? .gray : .white)
+                )
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.orange.opacity(isSelected ? 0.25 : 0))
+                    .frame(width: 40, height: 40)
+            }
+            .onHover { hovering in
+                isHovered = hovering
+            }
         }
-        .onHover { hovering in
-            isHovered = hovering
-        }
+        .buttonStyle(PlainButtonStyle())
+        .keyboardShortcut(shortcut)
     }
 }
 

@@ -13,7 +13,7 @@ class LineViewModel: ObservableObject {
     @Published var zoomScale: CGFloat = 1.0
     var color: Color = .white
     var currentLine: LineModel = LineModel()
-    var size: Double = 2.0
+    var size: Double = 1.5
     
     func setColor(newColor: Color) {
         color = newColor
@@ -30,7 +30,7 @@ class LineViewModel: ObservableObject {
         currentLine = LineModel()
     }
     
-    func newPoint(point: CGPoint) {
+    func newDraw(point: CGPoint) {
         if (currentLine.points.isEmpty) {
             lines.append(currentLine)
             currentLine.path.move(to: point)
@@ -47,7 +47,8 @@ class LineViewModel: ObservableObject {
         currentLine.points.append(point)
         objectWillChange.send()
     }
-    func lineEnded() {
+    
+    func drawEnded() {
         if currentLine.points.count > 1 {
             let prev = currentLine.points[currentLine.points.count - 2]
             let cur = currentLine.points.last!
@@ -63,6 +64,35 @@ class LineViewModel: ObservableObject {
         }
         currentLine = LineModel()
     }
+    
+    func newLine(point: CGPoint) {
+        if (currentLine.points.isEmpty) {
+            lines.append(currentLine)
+            currentLine.path.move(to: point)
+            currentLine.color = color
+            currentLine.lineWidth = size
+            currentLine.points.append(point)
+        } else {
+            if currentLine.points.count == 1 {
+                currentLine.points.append(point)
+            } else {
+                currentLine.points[currentLine.points.count - 1] = point
+            }
+            currentLine.path = Path()
+            currentLine.path.move(to: currentLine.points.first!)
+            currentLine.path.addLine(to: currentLine.points.last!)
+        }
+        objectWillChange.send()
+    }
+    
+    func endLine(point: CGPoint) {
+        if currentLine.points.count > 0 {
+            currentLine.path.addLine(to: point)
+            objectWillChange.send()
+        }
+        currentLine = LineModel()
+    }
+    
     func undo() {
         if (lines.count > 0) {
             lines.removeLast()

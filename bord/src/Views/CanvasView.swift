@@ -62,7 +62,9 @@ struct CanvasView: View {
                     x: value.location.x - modeVM.currentPanOffset.width,
                     y: value.location.y - modeVM.currentPanOffset.height
                 )
-            lineVM.newPoint(point: offsetPoint)
+            lineVM.newDraw(point: offsetPoint)
+        } else if modeVM.mode == .line {
+            lineVM.newLine(point: value.location)
         } else if modeVM.mode == .pan {
             // Handle panning
             let newOffset = CGSize(
@@ -77,7 +79,9 @@ struct CanvasView: View {
     }
     private func handleDragEnded(_ value: DragGesture.Value) {
         if modeVM.mode == .draw || modeVM.mode == .erase {
-            lineVM.lineEnded()
+            lineVM.drawEnded()
+        } else if modeVM.mode == .line {
+            lineVM.endLine(point: value.location)
         } else if modeVM.mode == .pan {
             modeVM.panOffset.width += value.translation.width
             modeVM.panOffset.height += value.translation.height

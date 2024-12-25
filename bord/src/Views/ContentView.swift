@@ -29,8 +29,12 @@ struct ContentView: View {
                 Spacer()
 
                 ZStack(alignment: .bottom) {
-                    BottomToolbarView(canvasModeVM: mode, lineVM: lineViewModel)
-                        .padding(10)
+                    HStack(alignment: .bottom, spacing: 10) {
+                        SizePickerView(lineVM: lineViewModel)
+                        DrawingToolbarView(canvasModeVM: mode, lineVM: lineViewModel)
+                        BottomToolbarView(canvasModeVM: mode, lineVM: lineViewModel)
+                    }
+                    .padding(10)
                     HStack {
                         if mode.panOffset != .zero {
                             CenterCanvasView(canvasModeVM: mode)
