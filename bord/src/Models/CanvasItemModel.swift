@@ -9,10 +9,6 @@ import Foundation
 import SwiftUI
 
 class CanvasItemModel: Observable, Identifiable, Equatable {
-    static func == (lhs: CanvasItemModel, rhs: CanvasItemModel) -> Bool {
-        return lhs.id == rhs.id
-    }
-
     let id = UUID()
     var color: Color
 
@@ -21,5 +17,9 @@ class CanvasItemModel: Observable, Identifiable, Equatable {
     }
     init(color: Color) {
         self.color = color
+    }
+    
+    static func == (lhs: CanvasItemModel, rhs: CanvasItemModel) -> Bool {
+        return lhs.id == rhs.id
     }
 }

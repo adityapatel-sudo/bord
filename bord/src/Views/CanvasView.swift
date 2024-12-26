@@ -30,8 +30,8 @@ struct CanvasView: View {
                         .onEnded(handleDragEnded)
                 )
                 .onChange(of: modeVM.mode) { _, newValue in
-                    if newValue != .drag {
-                        canvasVM.isDragging = false
+                    if newValue != .select {
+                        canvasVM.isMoving = false
                         canvasVM.selectedPath = nil
                     }
                 }
@@ -80,32 +80,22 @@ struct CanvasView: View {
                 y: value.location.y - modeVM.currentPanOffset.height
             )
         switch modeVM.mode {
-        case .draw, .erase:
+        case .draw:
             canvasVM.newDraw(point: offsetPoint)
-        case .drag:
-            if !canvasVM.isDragging {
-                let lines = canvasVM.getLines()
-                canvasVM.curentDragOffset = value.location
-                canvasVM.selectedPath = lines.last(where: { line in
-                    let strokedPath = line.path.cgPath.copy(
-                        strokingWithWidth: 20,
-                        lineCap: .round,
-                        lineJoin: .round,
-                        miterLimit: 0
-                    )
-                    return strokedPath.contains(offsetPoint)
-                })
-            } else {
-                if let line = canvasVM.selectedPath as? LineModel {
-                    let curDiff = CGSize(
-                        width: value.location.x - canvasVM.curentDragOffset.x,
-                        height: value.location.y - canvasVM.curentDragOffset.y
-                    )
-                    canvasVM.curentDragOffset = value.location
-                    canvasVM.moveLine(line, by: curDiff)
-                }
+        case .erase:
+            if let line = canvasVM.getLines().last(where: { line in
+                let strokedPath = line.path.cgPath.copy(
+                    strokingWithWidth: 40,
+                    lineCap: .round,
+                    lineJoin: .round,
+                    miterLimit: 0
+                )
+                return strokedPath.contains(offsetPoint)
+            }) {
+                canvasVM.remove(item: line)
             }
-            canvasVM.isDragging = true
+        case .select:
+            handleMoveChanged(value, offsetPoint)
         case .line:
             canvasVM.newLine(point: offsetPoint)
         case .rectangle:
@@ -123,16 +113,21 @@ struct CanvasView: View {
             break
         }
     }
+
     private func handleDragEnded(_ value: DragGesture.Value) {
         let offsetPoint = CGPoint(
                 x: value.location.x - modeVM.currentPanOffset.width,
                 y: value.location.y - modeVM.currentPanOffset.height
             )
         switch modeVM.mode {
-        case .draw, .erase:
+        case .draw:
             canvasVM.endDraw()
-        case .drag:
-            canvasVM.isDragging = false
+        case .erase:
+            for line in canvasVM.getLines() where line.path.contains(offsetPoint) {
+                canvasVM.remove(item: line)
+            }
+        case .select:
+            canvasVM.isMoving = false
         case .line:
             canvasVM.endLine(point: offsetPoint)
         case .rectangle:
@@ -144,6 +139,33 @@ struct CanvasView: View {
             break
         }
     }
+
+    fileprivate func handleMoveChanged(_ value: DragGesture.Value, _ offsetPoint: CGPoint) {
+        if !canvasVM.isMoving {
+            let lines = canvasVM.getLines()
+            canvasVM.currentMoveOffset = value.location
+            canvasVM.selectedPath = lines.last(where: { line in
+                let strokedPath = line.path.cgPath.copy(
+                    strokingWithWidth: 40,
+                    lineCap: .round,
+                    lineJoin: .round,
+                    miterLimit: 0
+                )
+                return strokedPath.contains(offsetPoint)
+            })
+        } else {
+            if let line = canvasVM.selectedPath as? LineModel {
+                let curDiff = CGSize(
+                    width: value.location.x - canvasVM.currentMoveOffset.x,
+                    height: value.location.y - canvasVM.currentMoveOffset.y
+                )
+                canvasVM.currentMoveOffset = value.location
+                canvasVM.moveLine(line, by: curDiff)
+            }
+        }
+        canvasVM.isMoving = true
+    }
+
     private func handleScroll(delta: CGSize) {
         modeVM.currentPanOffset.width += delta.width
         modeVM.currentPanOffset.height += delta.height

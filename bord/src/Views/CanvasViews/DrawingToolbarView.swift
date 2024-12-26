@@ -77,13 +77,13 @@ struct DrawingToolbarView: View {
                     }
                 }
             )
-            // drag
+            // select
             CanvasButton(
                 imageName: "rectangle.and.hand.point.up.left.filled",
-                isSelected: canvasModeVM.mode == .drag,
+                isSelected: canvasModeVM.mode == .select,
                 onTap: {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                        canvasModeVM.mode = .drag
+                        canvasModeVM.mode = .select
                     }
                 }
             )

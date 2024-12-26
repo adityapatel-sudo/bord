@@ -12,9 +12,9 @@ class CanvasItemsViewModel: ObservableObject {
     @Published var items: [CanvasItemModel] = []
     @Published var zoomScale: CGFloat = 1.0
 
-    @Published var isDragging = false
     @Published var selectedPath: CanvasItemModel?
-    @Published var curentDragOffset: CGPoint = .zero
+    @Published var isMoving = false
+    @Published var currentMoveOffset: CGPoint = .zero
 
     var color: Color = .white
     var currentLine: LineModel = LineModel()
@@ -38,6 +38,13 @@ class CanvasItemsViewModel: ObservableObject {
 
     func getLines() -> [LineModel] {
         return items.compactMap { $0 as? LineModel }
+    }
+
+    func remove(item: CanvasItemModel) {
+        if let index = items.firstIndex(of: item) {
+            items.remove(at: index)
+            objectWillChange.send()
+        }
     }
 
     func moveLine(_ line: LineModel, by value: CGSize) {

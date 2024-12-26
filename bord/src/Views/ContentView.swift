@@ -22,7 +22,7 @@ struct ContentView: View {
             CanvasView(canvasVM: canvasVM, modeVM: mode)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             VStack {
-                let colorPickerVisible = mode.mode == .pan || mode.mode == .erase || mode.mode == .drag
+                let colorPickerVisible = mode.mode == .pan || mode.mode == .erase || mode.mode == .select
                 ColorPickerView(canvasVM: canvasVM)
                     .padding(10)
                     .offset(y: colorPickerVisible ? -100 : 0)
@@ -31,7 +31,7 @@ struct ContentView: View {
 
                 ZStack(alignment: .bottom) {
                     HStack(alignment: .bottom, spacing: 10) {
-                        let sizePickerVisible = mode.mode != .pan && mode.mode != .drag
+                        let sizePickerVisible = mode.mode != .pan && mode.mode != .select
                         if sizePickerVisible {
                             SizePickerView(canvasVM: canvasVM)
                         }
