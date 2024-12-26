@@ -13,13 +13,11 @@ struct SizePickerView: View {
     var body: some View {
         VStack {
             if sliderVisible {
-                Slider(value: $canvasVM.size, in: 1...15, step: 0.5)
+                Slider(value: $canvasVM.size, in: 1...30, step: 1)
                     .padding()
                     .frame(width: 200)
-                    .background(Color.black.opacity(0.8).cornerRadius(10))
+                    .background(Color.black.cornerRadius(10))
                     .shadow(radius: 5)
-                    .transition(.opacity)
-                    .animation(.easeInOut, value: sliderVisible)
             }
 
             HStack(spacing: 0) {
@@ -46,7 +44,7 @@ struct SizePickerView: View {
                     imageName: "circle.fill",
                     isSelected: canvasVM.size == 8,
                     onTap: {
-                        canvasVM.setSize(newSize: 8)
+                        canvasVM.setSize(newSize: 15)
                     },
                     imageSize: .large
                 )

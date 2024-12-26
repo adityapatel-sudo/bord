@@ -31,7 +31,7 @@ struct ContentView: View {
 
                 ZStack(alignment: .bottom) {
                     HStack(alignment: .bottom, spacing: 10) {
-                        let sizePickerVisible = mode.mode != .pan && mode.mode != .select
+                        let sizePickerVisible = mode.mode == .draw || mode.mode == .line || mode.mode == .rectangle
                         if sizePickerVisible {
                             SizePickerView(canvasVM: canvasVM)
                         }

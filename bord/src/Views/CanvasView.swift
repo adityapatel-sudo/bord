@@ -85,7 +85,8 @@ struct CanvasView: View {
         case .erase:
             if let line = canvasVM.getLines().last(where: { line in
                 let strokedPath = line.path.cgPath.copy(
-                    strokingWithWidth: 40,
+                    strokingWithWidth: line.lineWidth + 20
+                    ,
                     lineCap: .round,
                     lineJoin: .round,
                     miterLimit: 0
@@ -146,7 +147,7 @@ struct CanvasView: View {
             canvasVM.currentMoveOffset = value.location
             canvasVM.selectedPath = lines.last(where: { line in
                 let strokedPath = line.path.cgPath.copy(
-                    strokingWithWidth: 40,
+                    strokingWithWidth: line.lineWidth + 20,
                     lineCap: .round,
                     lineJoin: .round,
                     miterLimit: 0
