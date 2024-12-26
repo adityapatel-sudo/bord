@@ -21,7 +21,7 @@
 		349F09D42D19C0E200FB16E4 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 349F09D32D19C0E200FB16E4 /* Icons.xcassets */; };
 		349F09D72D1B344500FB16E4 /* GridPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D62D1B344500FB16E4 /* GridPickerView.swift */; };
 		349F09D92D1B672400FB16E4 /* CenterCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */; };
-		34E538032D1E015600915491 /* bord.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E538022D1E015600915491 /* bord.png */; };
+		34E538062D1E025300915491 /* bord.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E538052D1E025300915491 /* bord.png */; };
 		34EA24052D0FBCF000D392CC /* BordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24042D0FBCF000D392CC /* BordApp.swift */; };
 		34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24062D0FBCF000D392CC /* ContentView.swift */; };
 		34EA24092D0FBCF100D392CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34EA24082D0FBCF100D392CC /* Assets.xcassets */; };
@@ -69,7 +69,7 @@
 		349F09D52D1A65D600FB16E4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		349F09D62D1B344500FB16E4 /* GridPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPickerView.swift; sourceTree = "<group>"; };
 		349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCanvasView.swift; sourceTree = "<group>"; };
-		34E538022D1E015600915491 /* bord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bord.png; path = ../../../../Desktop/bord.png; sourceTree = "<group>"; };
+		34E538052D1E025300915491 /* bord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bord.png; path = ../../../../Desktop/bord.png; sourceTree = "<group>"; };
 		34EA24012D0FBCF000D392CC /* bord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34EA24042D0FBCF000D392CC /* BordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BordApp.swift; sourceTree = "<group>"; };
 		34EA24062D0FBCF000D392CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 		349F09C72D154B2700FB16E4 /* assets */ = {
 			isa = PBXGroup;
 			children = (
-				34E538022D1E015600915491 /* bord.png */,
+				34E538052D1E025300915491 /* bord.png */,
 				34EA24082D0FBCF100D392CC /* Assets.xcassets */,
 				349F09C52D15462C00FB16E4 /* Colors.xcassets */,
 				349F09D32D19C0E200FB16E4 /* Icons.xcassets */,
@@ -356,7 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				349F09C62D15462C00FB16E4 /* Colors.xcassets in Resources */,
-				34E538032D1E015600915491 /* bord.png in Resources */,
+				34E538062D1E025300915491 /* bord.png in Resources */,
 				34EA240C2D0FBCF100D392CC /* Preview Assets.xcassets in Resources */,
 				349F09D42D19C0E200FB16E4 /* Icons.xcassets in Resources */,
 				34EA24092D0FBCF100D392CC /* Assets.xcassets in Resources */,
