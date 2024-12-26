@@ -77,6 +77,16 @@ struct DrawingToolbarView: View {
                     }
                 }
             )
+            // drag
+            CanvasButton(
+                imageName: "rectangle.and.hand.point.up.left.filled",
+                isSelected: canvasModeVM.mode == .drag,
+                onTap: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        canvasModeVM.mode = .drag
+                    }
+                }
+            )
         }
         .padding(5)
         .background(ColorManager.lighterGrey)

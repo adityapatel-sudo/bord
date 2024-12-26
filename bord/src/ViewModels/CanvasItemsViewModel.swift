@@ -11,6 +11,11 @@ import SwiftUI
 class CanvasItemsViewModel: ObservableObject {
     @Published var items: [CanvasItemModel] = []
     @Published var zoomScale: CGFloat = 1.0
+
+    @Published var isDragging = false
+    @Published var selectedPath: CanvasItemModel?
+    @Published var curentDragOffset: CGPoint = .zero
+
     var color: Color = .white
     var currentLine: LineModel = LineModel()
     var size: Double = 1.5
@@ -29,6 +34,15 @@ class CanvasItemsViewModel: ObservableObject {
     func reset() {
         items.removeAll()
         currentLine = LineModel()
+    }
+
+    func getLines() -> [LineModel] {
+        return items.compactMap { $0 as? LineModel }
+    }
+
+    func moveLine(_ line: LineModel, by value: CGSize) {
+        line.path = line.path.applying(.init(translationX: value.width, y: value.height))
+        objectWillChange.send()
     }
 
     func newDraw(point: CGPoint) {
@@ -122,9 +136,10 @@ class CanvasItemsViewModel: ObservableObject {
                 height: abs(endPoint.y - startPoint.y)
             )
             currentLine.path = Path()
+            let circum = rect.size.width + rect.size.height
             currentLine.path.addRoundedRect(
                 in: rect,
-                cornerSize: CGSize(width: 5, height: 5)
+                cornerSize: CGSize(width: circum/100, height: circum/100)
             )
         }
         objectWillChange.send()
@@ -137,7 +152,7 @@ class CanvasItemsViewModel: ObservableObject {
 
     func undo() {
         if items.count > 0 {
-            items.removeAll()
+            items.removeLast()
         }
     }
 }

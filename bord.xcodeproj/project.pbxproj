@@ -215,10 +215,10 @@
 		34EA24352D0FBD6300D392CC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				349F09D22D19BBAD00FB16E4 /* CanvasViews */,
 				344596572D1BBD1F00EC76D4 /* Components */,
 				34EA24372D0FBE6000D392CC /* CanvasView.swift */,
 				34EA24062D0FBCF000D392CC /* ContentView.swift */,
-				349F09D22D19BBAD00FB16E4 /* CanvasViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
