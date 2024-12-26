@@ -62,7 +62,7 @@ struct BottomToolbarView: View {
 }
 
 struct BottomToolbarView_Previews: PreviewProvider {
-    @StateObject static var canvasModeVM = CanvasModeViewModel()
+    @StateObject static var canvasModeVM = CanvasModeViewModel(panOffset: .zero)
     @StateObject static var canvasVM = CanvasItemsViewModel()
     static var previews: some View {
         BottomToolbarView(canvasModeVM: canvasModeVM, canvasVM: canvasVM)

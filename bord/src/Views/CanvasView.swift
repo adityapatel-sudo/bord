@@ -12,8 +12,8 @@ struct CanvasView: View {
     @ObservedObject var modeVM: CanvasModeViewModel
 
     var canvasSize: CGSize = CGSize(
-        width: NSScreen.main?.frame.width ?? 1600,
-        height: NSScreen.main?.frame.height ?? 900
+        width: (NSScreen.main?.frame.width ?? 1600) * 3,
+        height: (NSScreen.main?.frame.height ?? 900) * 3
     )
 
     var body: some View {
@@ -175,5 +175,5 @@ struct CanvasView: View {
 }
 
 #Preview {
-    CanvasView(canvasVM: CanvasItemsViewModel(), modeVM: CanvasModeViewModel())
+    CanvasView(canvasVM: CanvasItemsViewModel(), modeVM: CanvasModeViewModel(panOffset: .zero))
 }

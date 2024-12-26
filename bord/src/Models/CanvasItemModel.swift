@@ -15,10 +15,11 @@ class CanvasItemModel: Observable, Identifiable, Equatable {
     init () {
         self.color = .black
     }
+
     init(color: Color) {
         self.color = color
     }
-    
+
     static func == (lhs: CanvasItemModel, rhs: CanvasItemModel) -> Bool {
         return lhs.id == rhs.id
     }

@@ -8,11 +8,44 @@
 import SwiftUI
 
 struct GridPickerView: View {
+    @ObservedObject var modeVM: CanvasModeViewModel
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack(spacing: 0) {
+            // none
+            CanvasButton(
+                imageName: "square",
+                isSelected: modeVM.gridMode == .none,
+                onTap: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        modeVM.gridMode = .none
+                    }
+                }
+            )
+            // grid
+            CanvasButton(
+                imageName: "square.split.2x2",
+                isSelected: modeVM.gridMode == .grid,
+                onTap: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        modeVM.gridMode = .grid
+                    }
+                }
+            )
+            // lines
+            CanvasButton(
+                imageName: "square.split.1x2",
+                isSelected: modeVM.gridMode == .lines,
+                onTap: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        modeVM.gridMode = .lines
+                    }
+                }
+            )
+
+        }
     }
 }
 
 #Preview {
-    GridPickerView()
+    GridPickerView(modeVM: CanvasModeViewModel())
 }

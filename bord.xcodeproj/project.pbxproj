@@ -22,6 +22,7 @@
 		349F09D72D1B344500FB16E4 /* GridPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D62D1B344500FB16E4 /* GridPickerView.swift */; };
 		349F09D92D1B672400FB16E4 /* CenterCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */; };
 		34E538062D1E025300915491 /* bord.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E538052D1E025300915491 /* bord.png */; };
+		34E538082D1E109800915491 /* CanvasGridMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E538072D1E109800915491 /* CanvasGridMode.swift */; };
 		34EA24052D0FBCF000D392CC /* BordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24042D0FBCF000D392CC /* BordApp.swift */; };
 		34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24062D0FBCF000D392CC /* ContentView.swift */; };
 		34EA24092D0FBCF100D392CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34EA24082D0FBCF100D392CC /* Assets.xcassets */; };
@@ -70,6 +71,7 @@
 		349F09D62D1B344500FB16E4 /* GridPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPickerView.swift; sourceTree = "<group>"; };
 		349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCanvasView.swift; sourceTree = "<group>"; };
 		34E538052D1E025300915491 /* bord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bord.png; path = ../../../../Desktop/bord.png; sourceTree = "<group>"; };
+		34E538072D1E109800915491 /* CanvasGridMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasGridMode.swift; sourceTree = "<group>"; };
 		34EA24012D0FBCF000D392CC /* bord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34EA24042D0FBCF000D392CC /* BordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BordApp.swift; sourceTree = "<group>"; };
 		34EA24062D0FBCF000D392CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				34EA243A2D0FDF2900D392CC /* LineModel.swift */,
 				34146C7D2D138A19000B7328 /* CanvasMode.swift */,
 				3445965C2D1C77E400EC76D4 /* CanvasItemModel.swift */,
+				34E538072D1E109800915491 /* CanvasGridMode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				3445965B2D1BD14700EC76D4 /* DrawingToolbarView.swift in Sources */,
 				344596562D1BBB3100EC76D4 /* SizePickerView.swift in Sources */,
 				34EA240E2D0FBCF100D392CC /* Persistence.swift in Sources */,
+				34E538082D1E109800915491 /* CanvasGridMode.swift in Sources */,
 				34EA24382D0FBE6000D392CC /* CanvasView.swift in Sources */,
 				34146C7E2D138A19000B7328 /* CanvasMode.swift in Sources */,
 				349F09CB2D154F5C00FB16E4 /* CanvasModeViewModel.swift in Sources */,

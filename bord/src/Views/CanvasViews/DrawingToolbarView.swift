@@ -95,5 +95,5 @@ struct DrawingToolbarView: View {
 }
 
 #Preview {
-    DrawingToolbarView(canvasModeVM: CanvasModeViewModel(), canvasVM: CanvasItemsViewModel())
+    DrawingToolbarView(canvasModeVM: CanvasModeViewModel(panOffset: .zero), canvasVM: CanvasItemsViewModel())
 }

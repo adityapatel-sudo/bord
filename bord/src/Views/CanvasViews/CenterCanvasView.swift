@@ -16,7 +16,7 @@ struct CenterCanvasView: View {
                 imageName: "circle.circle",
                 isSelected: false,
                 onTap: {
-                    canvasModeVM.updatePanOffset(offset: .zero)
+                    canvasModeVM.resetOffset()
                 },
                 orange: true
             )
@@ -29,7 +29,7 @@ struct CenterCanvasView: View {
 }
 
 struct CenterCanvasView_Previews: PreviewProvider {
-    @StateObject static var canvasModeVM = CanvasModeViewModel()
+    @StateObject static var canvasModeVM = CanvasModeViewModel(panOffset: .zero)
     static var previews: some View {
         CenterCanvasView(canvasModeVM: canvasModeVM)
     }

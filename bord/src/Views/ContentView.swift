@@ -15,14 +15,19 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Item>
     @StateObject private var canvasVM = CanvasItemsViewModel()
-    @StateObject private var mode = CanvasModeViewModel()
+    @StateObject private var modeVM = CanvasModeViewModel(
+        panOffset: CGSize(
+            width: -(NSScreen.main?.frame.width ?? 1600),
+            height: -(NSScreen.main?.frame.height ?? 900)
+        )
+    )
 
     var body: some View {
         ZStack {
-            CanvasView(canvasVM: canvasVM, modeVM: mode)
+            CanvasView(canvasVM: canvasVM, modeVM: modeVM)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             VStack {
-                let colorPickerVisible = mode.mode == .pan || mode.mode == .erase || mode.mode == .select
+                let colorPickerVisible = modeVM.mode == .pan || modeVM.mode == .erase || modeVM.mode == .select
                 ColorPickerView(canvasVM: canvasVM)
                     .padding(10)
                     .offset(y: colorPickerVisible ? -100 : 0)
@@ -31,17 +36,18 @@ struct ContentView: View {
 
                 ZStack(alignment: .bottom) {
                     HStack(alignment: .bottom, spacing: 10) {
-                        let sizePickerVisible = mode.mode == .draw || mode.mode == .line || mode.mode == .rectangle
+                        let sizePickerVisible = modeVM.mode == .draw || modeVM.mode == .line ||
+                            modeVM.mode == .rectangle
                         if sizePickerVisible {
                             SizePickerView(canvasVM: canvasVM)
                         }
-                        DrawingToolbarView(canvasModeVM: mode, canvasVM: canvasVM)
-                        BottomToolbarView(canvasModeVM: mode, canvasVM: canvasVM)
+                        DrawingToolbarView(canvasModeVM: modeVM, canvasVM: canvasVM)
+                        BottomToolbarView(canvasModeVM: modeVM, canvasVM: canvasVM)
                     }
                     .padding(10)
-                    HStack {
-                        if mode.panOffset != .zero {
-                            CenterCanvasView(canvasModeVM: mode)
+                    HStack(alignment: .bottom) {
+                        if modeVM.isOffCenter() {
+                            CenterCanvasView(canvasModeVM: modeVM)
                                 .padding(10)
                         }
                         Spacer()
