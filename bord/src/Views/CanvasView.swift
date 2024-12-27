@@ -17,27 +17,29 @@ struct CanvasView: View {
     )
 
     var body: some View {
-        GeometryReader { geometry in
-            let screenSize = geometry.size
-            ZStack {
-                Canvas { context, _ in
-                    drawLines(&context)
-                    drawBackground(context, screenSize)
+        ZStack {
+            Canvas { context, screenSize in
+                if modeVM.gridMode == .grid {
+                    drawGrid(context, screenSize)
+                } else if modeVM.gridMode == .lines {
+                    drawHorizontalLines(context, screenSize)
                 }
-                .gesture(
-                    DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                        .onChanged(handleDragChanged)
-                        .onEnded(handleDragEnded)
-                )
-                .onChange(of: modeVM.mode) { _, newValue in
-                    if newValue != .select {
-                        canvasVM.isMoving = false
-                        canvasVM.selectedPath = nil
-                    }
-                }
-
-                .background(ColorManager.backgroundColor)
+                drawLines(&context)
+                drawBackground(context, screenSize)
             }
+            .gesture(
+                DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                    .onChanged(handleDragChanged)
+                    .onEnded(handleDragEnded)
+            )
+            .onChange(of: modeVM.mode) { _, newValue in
+                if newValue != .select {
+                    canvasVM.isMoving = false
+                    canvasVM.selectedPath = nil
+                }
+            }
+
+            .background(ColorManager.backgroundColor)
         }
     }
 
@@ -72,6 +74,48 @@ struct CanvasView: View {
             with: .color(ColorManager.uneditableBackground),
             style: FillStyle(eoFill: true)
         )
+    }
+
+    private func drawGrid(
+        _ context: GraphicsContext,
+        _ size: CGSize,
+        _ gridSpacing: CGFloat.Stride = CGFloat.Stride(50)
+    ) {
+        // Draw horizontal lines
+        drawHorizontalLines(context, size, gridSpacing)
+
+        // Draw vertical lines
+        for xLines in stride(from: modeVM.currentPanOffset.width, through: size.width, by: gridSpacing) {
+            let startPoint = CGPoint(x: xLines, y: 0)
+            let endPoint = CGPoint(x: xLines, y: size.height)
+            context.stroke(
+                Path { path in
+                    path.move(to: startPoint)
+                    path.addLine(to: endPoint)
+                },
+                with: .color(.gray),
+                lineWidth: 0.5
+            )
+        }
+    }
+    
+    private func drawHorizontalLines(
+        _ context: GraphicsContext,
+        _ size: CGSize,
+        _ gridSpacing: CGFloat.Stride = CGFloat.Stride(50)
+    ) {
+        for yLines in stride(from: modeVM.currentPanOffset.height, through: size.height, by: gridSpacing) {
+            let startPoint = CGPoint(x: 0, y: yLines)
+            let endPoint = CGPoint(x: size.width, y: yLines)
+            context.stroke(
+                Path { path in
+                    path.move(to: startPoint)
+                    path.addLine(to: endPoint)
+                },
+                with: .color(.gray),
+                lineWidth: 0.5
+            )
+        }
     }
 
     private func handleDragChanged(_ value: DragGesture.Value) {

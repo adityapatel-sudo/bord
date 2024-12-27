@@ -41,8 +41,10 @@ struct GridPickerView: View {
                     }
                 }
             )
-
         }
+        .padding(5)
+        .background(ColorManager.lighterGrey)
+        .cornerRadius(15)
     }
 }
 
