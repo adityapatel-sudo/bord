@@ -19,11 +19,7 @@ struct CanvasView: View {
     var body: some View {
         ZStack {
             Canvas { context, screenSize in
-                if modeVM.gridMode == .grid {
-                    drawGrid(context, screenSize)
-                } else if modeVM.gridMode == .lines {
-                    drawHorizontalLines(context, screenSize)
-                }
+                drawGridOrLines(context, screenSize)
                 drawLines(&context)
                 drawBackground(context, screenSize)
             }
@@ -40,6 +36,14 @@ struct CanvasView: View {
             }
 
             .background(ColorManager.backgroundColor)
+        }
+    }
+
+    fileprivate func drawGridOrLines(_ context: GraphicsContext, _ screenSize: CGSize) {
+        if modeVM.gridMode == .grid {
+            drawGrid(context, screenSize)
+        } else if modeVM.gridMode == .lines {
+            drawHorizontalLines(context, screenSize)
         }
     }
 
@@ -98,7 +102,7 @@ struct CanvasView: View {
             )
         }
     }
-    
+
     private func drawHorizontalLines(
         _ context: GraphicsContext,
         _ size: CGSize,

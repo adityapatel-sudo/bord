@@ -13,7 +13,7 @@ struct CenterCanvasView: View {
     var body: some View {
         HStack {
             CanvasButton(
-                imageName: "circle.circle",
+                imageName: "mappin.and.ellipse",
                 isSelected: false,
                 onTap: {
                     canvasModeVM.resetOffset()

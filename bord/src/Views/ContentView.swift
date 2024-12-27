@@ -27,7 +27,7 @@ struct ContentView: View {
             CanvasView(canvasVM: canvasVM, modeVM: modeVM)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             VStack {
-                HStack{
+                HStack {
                     GridPickerView(modeVM: modeVM)
                         .padding(10)
                     Spacer()
