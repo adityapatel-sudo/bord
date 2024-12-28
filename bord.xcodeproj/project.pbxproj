@@ -23,6 +23,7 @@
 		349F09D92D1B672400FB16E4 /* CenterCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */; };
 		34E538082D1E109800915491 /* CanvasGridMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E538072D1E109800915491 /* CanvasGridMode.swift */; };
 		34E5380C2D1E9F3D00915491 /* bord.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E5380B2D1E9F3D00915491 /* bord.png */; };
+		34E5380E2D1F6BAA00915491 /* ScrollWheelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E5380D2D1F6BAA00915491 /* ScrollWheelModifier.swift */; };
 		34EA24052D0FBCF000D392CC /* BordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24042D0FBCF000D392CC /* BordApp.swift */; };
 		34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EA24062D0FBCF000D392CC /* ContentView.swift */; };
 		34EA24092D0FBCF100D392CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34EA24082D0FBCF100D392CC /* Assets.xcassets */; };
@@ -72,6 +73,7 @@
 		349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCanvasView.swift; sourceTree = "<group>"; };
 		34E538072D1E109800915491 /* CanvasGridMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasGridMode.swift; sourceTree = "<group>"; };
 		34E5380B2D1E9F3D00915491 /* bord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bord.png; sourceTree = "<group>"; };
+		34E5380D2D1F6BAA00915491 /* ScrollWheelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollWheelModifier.swift; sourceTree = "<group>"; };
 		34EA24012D0FBCF000D392CC /* bord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34EA24042D0FBCF000D392CC /* BordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BordApp.swift; sourceTree = "<group>"; };
 		34EA24062D0FBCF000D392CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				344596582D1BBD3500EC76D4 /* CanvasButton.swift */,
+				34E5380D2D1F6BAA00915491 /* ScrollWheelModifier.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				344596592D1BBD3500EC76D4 /* CanvasButton.swift in Sources */,
 				34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */,
 				3445965D2D1C77E400EC76D4 /* CanvasItemModel.swift in Sources */,
+				34E5380E2D1F6BAA00915491 /* ScrollWheelModifier.swift in Sources */,
 				34EA24052D0FBCF000D392CC /* BordApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

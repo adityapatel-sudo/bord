@@ -23,6 +23,10 @@ struct CanvasView: View {
                 drawLines(&context)
                 drawBackground(context, screenSize)
             }
+            .onScrollWheelUp { deltaX, deltaY in
+                print(deltaX, deltaY)
+                handleScroll(deltaX * 3, deltaY * 3)
+            }
             .gesture(
                 DragGesture(minimumDistance: 0, coordinateSpace: .local)
                     .onChanged(handleDragChanged)
@@ -215,9 +219,12 @@ struct CanvasView: View {
         canvasVM.isMoving = true
     }
 
-    private func handleScroll(delta: CGSize) {
-        modeVM.currentPanOffset.width += delta.width
-        modeVM.currentPanOffset.height += delta.height
+    private func handleScroll(_ deltaX: CGFloat, _ deltaY: CGFloat) {
+        modeVM.currentPanOffset.width += deltaX
+        modeVM.currentPanOffset.height += deltaY
+
+        modeVM.panOffset.width += deltaX
+        modeVM.panOffset.height += deltaY
         print("Scrolling handling")
     }
 }
