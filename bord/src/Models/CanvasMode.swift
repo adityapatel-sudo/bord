@@ -15,4 +15,5 @@ enum CanvasMode {
     case erase
     case pan
     case select
+    case text
 }

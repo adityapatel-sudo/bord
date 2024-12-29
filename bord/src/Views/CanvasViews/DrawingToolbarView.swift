@@ -87,6 +87,16 @@ struct DrawingToolbarView: View {
                     }
                 }
             )
+            // text
+            CanvasButton(
+                imageName: "character.cursor.ibeam",
+                isSelected: canvasModeVM.mode == .text,
+                onTap: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        canvasModeVM.mode = .text
+                    }
+                }
+            )
         }
         .padding(5)
         .background(ColorManager.lighterGrey)

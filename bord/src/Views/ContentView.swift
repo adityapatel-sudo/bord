@@ -26,6 +26,13 @@ struct ContentView: View {
         ZStack {
             CanvasView(canvasVM: canvasVM, modeVM: modeVM)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                .onHover { inside in
+                    if inside {
+                        NSCursor.crosshair.push()
+                    } else {
+                        NSCursor.pop()
+                    }
+                }
             VStack {
                 HStack {
                     GridPickerView(modeVM: modeVM)

@@ -24,7 +24,6 @@ struct CanvasView: View {
                 drawBackground(context, screenSize)
             }
             .onScrollWheelUp { deltaX, deltaY in
-                print(deltaX, deltaY)
                 handleScroll(deltaX * 3, deltaY * 3)
             }
             .gesture(
@@ -38,8 +37,14 @@ struct CanvasView: View {
                     canvasVM.selectedPath = nil
                 }
             }
-
             .background(ColorManager.backgroundColor)
+            ForEach(canvasVM.texts) { text in
+                EditableTextView(text: text, temporaryText: text.text)
+                    .position(
+                        x: text.position.x + modeVM.currentPanOffset.width,
+                        y: text.position.y + modeVM.currentPanOffset.height
+                    )
+            }
         }
     }
 
@@ -54,11 +59,10 @@ struct CanvasView: View {
     private func drawLines(_ context: inout GraphicsContext) {
         // Draw the lines, translated by the current pan offset
         context.translateBy(x: modeVM.currentPanOffset.width, y: modeVM.currentPanOffset.height)
-        for line in canvasVM.getLines() {
-            var strokeStyle = StrokeStyle(lineWidth: line.lineWidth, lineCap: .round)
-            if line == canvasVM.selectedPath {
-                strokeStyle = StrokeStyle(lineWidth: line.lineWidth, lineCap: .round, dash: [line.lineWidth * 5])
-            }
+        for line in canvasVM.lines {
+            let strokeStyle = line == canvasVM.selectedPath ?
+                StrokeStyle(lineWidth: line.lineWidth, lineCap: .round, dash: [line.lineWidth * 5]) :
+                StrokeStyle(lineWidth: line.lineWidth, lineCap: .round)
             context.stroke(
                 line.path,
                 with: .color(line.color),
@@ -135,7 +139,7 @@ struct CanvasView: View {
         case .draw:
             canvasVM.newDraw(point: offsetPoint)
         case .erase:
-            if let line = canvasVM.getLines().last(where: { line in
+            if let line = canvasVM.lines.last(where: { line in
                 let strokedPath = line.path.cgPath.copy(
                     strokingWithWidth: line.lineWidth + 20
                     ,
@@ -145,7 +149,7 @@ struct CanvasView: View {
                 )
                 return strokedPath.contains(offsetPoint)
             }) {
-                canvasVM.remove(item: line)
+                canvasVM.remove(line: line)
             }
         case .select:
             handleMoveChanged(value, offsetPoint)
@@ -176,8 +180,8 @@ struct CanvasView: View {
         case .draw:
             canvasVM.endDraw()
         case .erase:
-            for line in canvasVM.getLines() where line.path.contains(offsetPoint) {
-                canvasVM.remove(item: line)
+            for line in canvasVM.lines where line.path.contains(offsetPoint) {
+                canvasVM.remove(line: line)
             }
         case .select:
             canvasVM.isMoving = false
@@ -188,6 +192,8 @@ struct CanvasView: View {
         case .pan:
             modeVM.panOffset.width += value.translation.width
             modeVM.panOffset.height += value.translation.height
+        case .text:
+            canvasVM.newText(at: offsetPoint)
         default:
             break
         }
@@ -195,9 +201,8 @@ struct CanvasView: View {
 
     fileprivate func handleMoveChanged(_ value: DragGesture.Value, _ offsetPoint: CGPoint) {
         if !canvasVM.isMoving {
-            let lines = canvasVM.getLines()
             canvasVM.currentMoveOffset = value.location
-            canvasVM.selectedPath = lines.last(where: { line in
+            canvasVM.selectedPath = canvasVM.lines.last(where: { line in
                 let strokedPath = line.path.cgPath.copy(
                     strokingWithWidth: line.lineWidth + 20,
                     lineCap: .round,
@@ -225,7 +230,6 @@ struct CanvasView: View {
 
         modeVM.panOffset.width += deltaX
         modeVM.panOffset.height += deltaY
-        print("Scrolling handling")
     }
 }
 

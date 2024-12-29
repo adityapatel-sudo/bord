@@ -21,6 +21,7 @@ struct ScrollWheelModifier: ViewModifier {
     func trackScrollWheel() {
         NSApp.publisher(for: \.currentEvent)
             .filter { event in event?.type == .scrollWheel }
+            .throttle(for: .milliseconds(5), scheduler: RunLoop.main, latest: true)
             .sink {
                 if let event = $0 {
                     action(event.deltaX, event.deltaY)

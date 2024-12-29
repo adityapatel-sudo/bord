@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 class CanvasItemsViewModel: ObservableObject {
-    @Published var items: [CanvasItemModel] = []
+    @Published var lines: [LineModel] = []
+    @Published var texts: [TextModel] = []
     @Published var zoomScale: CGFloat = 1.0
 
     @Published var selectedPath: CanvasItemModel?
@@ -32,17 +33,13 @@ class CanvasItemsViewModel: ObservableObject {
     }
 
     func reset() {
-        items.removeAll()
+        lines.removeAll()
         currentLine = LineModel()
     }
-
-    func getLines() -> [LineModel] {
-        return items.compactMap { $0 as? LineModel }
-    }
-
-    func remove(item: CanvasItemModel) {
-        if let index = items.firstIndex(of: item) {
-            items.remove(at: index)
+    
+    func remove(line: LineModel) {
+        if let index = lines.firstIndex(of: line) {
+            lines.remove(at: index)
             objectWillChange.send()
         }
     }
@@ -56,7 +53,7 @@ class CanvasItemsViewModel: ObservableObject {
         if !drawing {
             drawing = true
             currentLine = LineModel()
-            items.append(currentLine)
+            lines.append(currentLine)
             currentLine.path.move(to: point)
             currentLine.color = color
             currentLine.lineWidth = size
@@ -93,7 +90,7 @@ class CanvasItemsViewModel: ObservableObject {
         if !drawing {
             drawing = true
             currentLine = LineModel()
-            items.append(currentLine)
+            lines.append(currentLine)
             currentLine.path.move(to: point)
             currentLine.color = color
             currentLine.lineWidth = size
@@ -123,7 +120,7 @@ class CanvasItemsViewModel: ObservableObject {
         if !drawing {
             drawing = true
             currentLine = LineModel()
-            items.append(currentLine)
+            lines.append(currentLine)
             currentLine.path.move(to: point)
             currentLine.color = color
             currentLine.lineWidth = size
@@ -157,9 +154,14 @@ class CanvasItemsViewModel: ObservableObject {
         drawing = false
     }
 
+    func newText(at point: CGPoint) {
+        let text = TextModel(text: "Text", position: point)
+        texts.append(text)
+    }
+
     func undo() {
-        if items.count > 0 {
-            items.removeLast()
+        if lines.count > 0 {
+            lines.removeLast()
         }
     }
 }
