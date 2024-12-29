@@ -36,10 +36,17 @@ class CanvasItemsViewModel: ObservableObject {
         lines.removeAll()
         currentLine = LineModel()
     }
-    
+
     func remove(line: LineModel) {
         if let index = lines.firstIndex(of: line) {
             lines.remove(at: index)
+            objectWillChange.send()
+        }
+    }
+
+    func remove(text: TextModel) {
+        if let index = texts.firstIndex(of: text) {
+            texts.remove(at: index)
             objectWillChange.send()
         }
     }

@@ -39,7 +39,7 @@ struct CanvasView: View {
             }
             .background(ColorManager.backgroundColor)
             ForEach(canvasVM.texts) { text in
-                EditableTextView(text: text, temporaryText: text.text)
+                EditableTextView(canvasVM: canvasVM, text: text, temporaryText: text.text)
                     .position(
                         x: text.position.x + modeVM.currentPanOffset.width,
                         y: text.position.y + modeVM.currentPanOffset.height

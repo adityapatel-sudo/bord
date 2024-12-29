@@ -13,6 +13,9 @@ struct CanvasButton: View {
     var onTap: () -> Void
     var orange: Bool = false
     var imageSize: Image.Scale = .large
+    var imageFrameSize: CGFloat = 50
+    var cornerRadius: CGFloat = 10
+
     var shortcut: KeyboardShortcut?
     @State private var isHovered = false
     var body: some View {
@@ -22,18 +25,18 @@ struct CanvasButton: View {
             ZStack {
                 orange ? (
                     Image(systemName: imageName)
-                        .frame(width: 50, height: 50)
+                        .frame(width: imageFrameSize, height: imageFrameSize)
                         .imageScale(imageSize)
                         .foregroundColor(isHovered ? .gray : .orange)
                 ) : (
                     Image(systemName: imageName)
-                        .frame(width: 50, height: 50)
+                        .frame(width: imageFrameSize, height: imageFrameSize)
                         .imageScale(imageSize)
                         .foregroundColor(isHovered ? .gray : .white)
                 )
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(Color.orange.opacity(isSelected ? 0.25 : 0))
-                    .frame(width: 40, height: 40)
+                    .frame(width: imageFrameSize - 10, height: imageFrameSize - 10)
             }
             .onHover { hovering in
                 isHovered = hovering
