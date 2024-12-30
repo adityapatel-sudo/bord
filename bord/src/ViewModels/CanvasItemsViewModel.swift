@@ -8,6 +8,9 @@
 import Foundation
 import SwiftUI
 
+/**
+    * The view model for the canvas items. This class is responsible for managing the canvas items and their properties.
+ */
 class CanvasItemsViewModel: ObservableObject {
     @Published var lines: [LineModel] = []
     @Published var texts: [TextModel] = []
@@ -16,6 +19,7 @@ class CanvasItemsViewModel: ObservableObject {
     @Published var selectedPath: CanvasItemModel?
     @Published var isMoving = false
     @Published var currentMoveOffset: CGPoint = .zero
+    @Published var drawEndMode: DrawEndMode = .plain
 
     var color: Color = .white
     var currentLine: LineModel = LineModel()
@@ -60,11 +64,9 @@ class CanvasItemsViewModel: ObservableObject {
     func newDraw(point: CGPoint) {
         if !drawing {
             drawing = true
-            currentLine = LineModel()
+            currentLine = LineModel(color: color, lineWidth: size)
             lines.append(currentLine)
             currentLine.path.move(to: point)
-            currentLine.color = color
-            currentLine.lineWidth = size
         } else {
             let prev = currentLine.points.last!
             let midPoint = CGPoint(
@@ -94,14 +96,75 @@ class CanvasItemsViewModel: ObservableObject {
         drawing = false
     }
 
+    func newDrawnArrow(point: CGPoint) {
+        if !drawing {
+            drawing = true
+            currentLine = LineModel(color: color, lineWidth: size)
+            lines.append(currentLine)
+            currentLine.path.move(to: point)
+        } else {
+            let prev = currentLine.points.last!
+            let midPoint = CGPoint(
+                x: (prev.x + point.x) / 2,
+                y: (prev.y + point.y) / 2
+            )
+            currentLine.path.addQuadCurve(to: midPoint, control: prev)
+        }
+        currentLine.points.append(point)
+        objectWillChange.send()
+    }
+
+    func endDrawnArrow() {
+        if currentLine.points.count > 1 {
+            let prev = currentLine.points[currentLine.points.count - 2]
+            let cur = currentLine.points.last!
+            let midPoint = CGPoint(
+                x: (prev.x + cur.x) / 2,
+                y: (prev.y + cur.y) / 2
+            )
+            currentLine.path.addQuadCurve(to: cur, control: midPoint)
+            objectWillChange.send()
+        } else if currentLine.points.count == 1 {
+            currentLine.path.addLine(to: currentLine.points.last!)
+            objectWillChange.send()
+        }
+        drawing = false
+    }
+
+    private func addArrow(from start: CGPoint, to end: CGPoint) {
+        let arrowLength: CGFloat = 15.0
+        let arrowAngle: CGFloat = .pi / 6.0
+
+        // Calculate the direction vector
+        let dx = end.x - start.x
+        let dy = end.y - start.y
+        let angle = atan2(dy, dx)
+
+        // Calculate the two points for the arrowhead
+        let point1 = CGPoint(
+            x: end.x - arrowLength * cos(angle - arrowAngle),
+            y: end.y - arrowLength * sin(angle - arrowAngle)
+        )
+        let point2 = CGPoint(
+            x: end.x - arrowLength * cos(angle + arrowAngle),
+            y: end.y - arrowLength * sin(angle + arrowAngle)
+        )
+
+        // Draw the arrowhead
+        currentLine.path.move(to: end)
+        currentLine.path.addLine(to: point1)
+        currentLine.path.move(to: end)
+        currentLine.path.addLine(to: point2)
+        currentLine.path.move(to: end)
+    }
+
+
     func newLine(point: CGPoint) {
         if !drawing {
             drawing = true
-            currentLine = LineModel()
+            currentLine = LineModel(color: color, lineWidth: size)
             lines.append(currentLine)
             currentLine.path.move(to: point)
-            currentLine.color = color
-            currentLine.lineWidth = size
             currentLine.points.append(point)
         } else {
             if currentLine.points.count == 1 {
@@ -127,11 +190,9 @@ class CanvasItemsViewModel: ObservableObject {
     func newRectangle(point: CGPoint) {
         if !drawing {
             drawing = true
-            currentLine = LineModel()
+            currentLine = LineModel(color: color, lineWidth: size)
             lines.append(currentLine)
             currentLine.path.move(to: point)
-            currentLine.color = color
-            currentLine.lineWidth = size
             currentLine.points.append(point)
         } else {
             if currentLine.points.count == 1 {

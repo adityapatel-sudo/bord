@@ -14,6 +14,7 @@ struct CanvasButton: View {
     var highlighted: Bool = false
     var imageSize: Image.Scale = .large
     var imageFrameSize: CGFloat = 50
+    var highlightSize: CGFloat = 40
     var cornerRadius: CGFloat = 10
 
     var shortcut: KeyboardShortcut?
@@ -36,7 +37,7 @@ struct CanvasButton: View {
                 )
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(Color.green.opacity(isSelected ? 0.25 : 0))
-                    .frame(width: imageFrameSize - 10, height: imageFrameSize - 10)
+                    .frame(width: highlightSize, height: highlightSize)
             }
             .onHover { hovering in
                 isHovered = hovering

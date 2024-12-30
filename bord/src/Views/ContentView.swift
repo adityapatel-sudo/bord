@@ -43,17 +43,24 @@ struct ContentView: View {
             }
 
             VStack {
-                let colorPickerInvisible = modeVM.mode == .pan || modeVM.mode == .erase || modeVM.mode == .select
-                HStack {
+                let colorPickerInvisible =
+                    modeVM.mode == .pan || modeVM.mode == .erase || modeVM.mode == .select
+                let drawModesVisible = modeVM.mode == .draw
+                HStack(alignment: .top, spacing: 0) {
                     Spacer()
+                    if drawModesVisible {
+                        DrawOptionsView(canvasVM: canvasVM)
+                            .padding(10)
+                    }
                     if !colorPickerInvisible {
                         ColorPickerView(canvasVM: canvasVM)
                             .padding(10)
                     }
                     let sizePickerVisible = modeVM.mode == .draw || modeVM.mode == .line ||
-                        modeVM.mode == .rectangle
+                        modeVM.mode == .rectangle || modeVM.mode == .arrow || modeVM.mode == .elipse
                     if sizePickerVisible {
                         SizePickerView(canvasVM: canvasVM)
+                            .padding(10)
                     }
                     Spacer()
                 }

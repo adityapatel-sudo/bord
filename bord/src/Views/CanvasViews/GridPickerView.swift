@@ -19,7 +19,8 @@ struct GridPickerView: View {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         modeVM.gridMode = .none
                     }
-                }
+                },
+                highlightSize: 35
             )
             // grid
             CanvasButton(
@@ -29,7 +30,8 @@ struct GridPickerView: View {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         modeVM.gridMode = .grid
                     }
-                }
+                },
+                highlightSize: 35
             )
             // lines
             CanvasButton(
@@ -39,10 +41,10 @@ struct GridPickerView: View {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         modeVM.gridMode = .lines
                     }
-                }
+                },
+                highlightSize: 35
             )
         }
-        .padding(5)
         .background(ColorManager.lighterGrey)
         .cornerRadius(15)
     }

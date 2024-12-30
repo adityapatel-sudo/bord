@@ -12,14 +12,6 @@ struct SizePickerView: View {
     @State private var sliderVisible: Bool = false
     var body: some View {
         VStack {
-            if sliderVisible {
-                Slider(value: $canvasVM.size, in: 1...30, step: 1)
-                    .padding()
-                    .frame(width: 200)
-                    .background(Color.black.cornerRadius(10))
-                    .shadow(radius: 5)
-            }
-
             HStack(spacing: 0) {
                 // small
                 CanvasButton(
@@ -28,7 +20,8 @@ struct SizePickerView: View {
                     onTap: {
                         canvasVM.setSize(newSize: 1.5)
                     },
-                    imageSize: .small
+                    imageSize: .small,
+                    highlightSize: 35
                 )
                 // medium
                 CanvasButton(
@@ -37,16 +30,18 @@ struct SizePickerView: View {
                     onTap: {
                         canvasVM.setSize(newSize: 4)
                     },
-                    imageSize: .medium
+                    imageSize: .medium,
+                    highlightSize: 35
                 )
                 // large
                 CanvasButton(
                     imageName: "circle.fill",
-                    isSelected: canvasVM.size == 8,
+                    isSelected: canvasVM.size == 15,
                     onTap: {
                         canvasVM.setSize(newSize: 15)
                     },
-                    imageSize: .large
+                    imageSize: .large,
+                    highlightSize: 35
                 )
                 // slider
                 CanvasButton(
@@ -55,10 +50,16 @@ struct SizePickerView: View {
                     onTap: {sliderVisible.toggle()}
                 )
             }
-            .padding(5)
             .background(ColorManager.lighterGrey)
             .cornerRadius(15)
 
+            if sliderVisible {
+                Slider(value: $canvasVM.size, in: 1...30, step: 1)
+                    .padding()
+                    .frame(width: 200)
+                    .background(Color.black.cornerRadius(10))
+                    .shadow(radius: 5)
+            }
         }
     }
 }

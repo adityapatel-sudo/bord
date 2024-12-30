@@ -25,6 +25,8 @@
 		349F09D92D1B672400FB16E4 /* CenterCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */; };
 		34D33BA42D223CF8009E8984 /* HeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D33BA32D223CF8009E8984 /* HeightCalculator.swift */; };
 		34D33BA62D22839A009E8984 /* ShapesToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D33BA52D22839A009E8984 /* ShapesToolbar.swift */; };
+		34D33BA82D22AA99009E8984 /* DrawOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D33BA72D22AA99009E8984 /* DrawOptionsView.swift */; };
+		34D33BAA2D22AB05009E8984 /* DrawEndMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D33BA92D22AB05009E8984 /* DrawEndMode.swift */; };
 		34E538082D1E109800915491 /* CanvasGridMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E538072D1E109800915491 /* CanvasGridMode.swift */; };
 		34E5380C2D1E9F3D00915491 /* bord.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E5380B2D1E9F3D00915491 /* bord.png */; };
 		34E5380E2D1F6BAA00915491 /* ScrollWheelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E5380D2D1F6BAA00915491 /* ScrollWheelModifier.swift */; };
@@ -79,6 +81,8 @@
 		349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCanvasView.swift; sourceTree = "<group>"; };
 		34D33BA32D223CF8009E8984 /* HeightCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightCalculator.swift; sourceTree = "<group>"; };
 		34D33BA52D22839A009E8984 /* ShapesToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapesToolbar.swift; sourceTree = "<group>"; };
+		34D33BA72D22AA99009E8984 /* DrawOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawOptionsView.swift; sourceTree = "<group>"; };
+		34D33BA92D22AB05009E8984 /* DrawEndMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawEndMode.swift; sourceTree = "<group>"; };
 		34E538072D1E109800915491 /* CanvasGridMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasGridMode.swift; sourceTree = "<group>"; };
 		34E5380B2D1E9F3D00915491 /* bord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bord.png; sourceTree = "<group>"; };
 		34E5380D2D1F6BAA00915491 /* ScrollWheelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollWheelModifier.swift; sourceTree = "<group>"; };
@@ -156,6 +160,7 @@
 				344596552D1BBB3100EC76D4 /* SizePickerView.swift */,
 				3445965A2D1BD14700EC76D4 /* DrawingToolbarView.swift */,
 				34D33BA52D22839A009E8984 /* ShapesToolbar.swift */,
+				34D33BA72D22AA99009E8984 /* DrawOptionsView.swift */,
 			);
 			path = CanvasViews;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 				3445965C2D1C77E400EC76D4 /* CanvasItemModel.swift */,
 				34E538072D1E109800915491 /* CanvasGridMode.swift */,
 				347665032D20F91B00D7440B /* TextModel.swift */,
+				34D33BA92D22AB05009E8984 /* DrawEndMode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -415,6 +421,7 @@
 				347665042D20F91B00D7440B /* TextModel.swift in Sources */,
 				349F09CF2D19B50500FB16E4 /* CustomColorPicker.swift in Sources */,
 				3445965B2D1BD14700EC76D4 /* DrawingToolbarView.swift in Sources */,
+				34D33BA82D22AA99009E8984 /* DrawOptionsView.swift in Sources */,
 				344596562D1BBB3100EC76D4 /* SizePickerView.swift in Sources */,
 				34EA240E2D0FBCF100D392CC /* Persistence.swift in Sources */,
 				34E538082D1E109800915491 /* CanvasGridMode.swift in Sources */,
@@ -424,6 +431,7 @@
 				347665062D21071200D7440B /* EditableTextView.swift in Sources */,
 				34EA243B2D0FDF2900D392CC /* LineModel.swift in Sources */,
 				349F09D72D1B344500FB16E4 /* GridPickerView.swift in Sources */,
+				34D33BAA2D22AB05009E8984 /* DrawEndMode.swift in Sources */,
 				349F09CD2D18E49C00FB16E4 /* ColorPickerView.swift in Sources */,
 				349F09D92D1B672400FB16E4 /* CenterCanvasView.swift in Sources */,
 				34D33BA62D22839A009E8984 /* ShapesToolbar.swift in Sources */,

@@ -13,9 +13,8 @@ class CanvasModeViewModel: ObservableObject {
 
     @Published var currentPanOffset: CGSize = .zero
     @Published var panOffset: CGSize = .zero
-    
     @Published var shapesEnabled: Bool = false
-    
+
     var defaultOffset: CGSize = .zero
 
     init() {}

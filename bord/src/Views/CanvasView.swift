@@ -149,6 +149,7 @@ struct CanvasView: View {
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     private func handleDragChanged(_ value: DragGesture.Value) {
         let offsetPoint = CGPoint(
                 x: value.location.x - modeVM.currentPanOffset.width,
@@ -156,7 +157,14 @@ struct CanvasView: View {
             )
         switch modeVM.mode {
         case .draw:
-            canvasVM.newDraw(point: offsetPoint)
+            switch canvasVM.drawEndMode {
+            case .plain:
+                canvasVM.newDraw(point: offsetPoint)
+            case .arrow:
+                canvasVM.newDrawnArrow(point: offsetPoint)
+            case .twoEndArrow:
+                canvasVM.newDrawnArrow(point: offsetPoint)
+            }
         case .erase:
             handleEraseStroke(offsetPoint)
         case .select:
