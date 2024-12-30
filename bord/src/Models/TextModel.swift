@@ -15,10 +15,10 @@ class TextModel: CanvasItemModel, ObservableObject {
     var fontSize: CGFloat = 25
     var rotation: Double = 0
 
-    init(text: String, position: CGPoint) {
+    init(text: String, position: CGPoint, color: Color) {
         self.text = text
         self.position = position
-        super.init()
+        super.init(color: color)
     }
 
     func increaseSize() {
@@ -29,9 +29,5 @@ class TextModel: CanvasItemModel, ObservableObject {
     func decreaseSize() {
         fontSize -= 5
         objectWillChange.send()
-    }
-
-    func translateChange(by value: CGSize) {
-        
     }
 }

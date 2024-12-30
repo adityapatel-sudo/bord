@@ -162,7 +162,7 @@ class CanvasItemsViewModel: ObservableObject {
     }
 
     func newText(at point: CGPoint) {
-        let text = TextModel(text: "Text", position: point)
+        let text = TextModel(text: "Text", position: point, color: color)
         texts.append(text)
     }
 

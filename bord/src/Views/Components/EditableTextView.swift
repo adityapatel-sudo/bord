@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EditableTextView: View {
     @ObservedObject var canvasVM: CanvasItemsViewModel
+    @ObservedObject var modeVM: CanvasModeViewModel
     @ObservedObject var text: TextModel
 
     @State var temporaryText: String
@@ -17,6 +18,73 @@ struct EditableTextView: View {
 
     var body: some View {
         VStack {
+            HStack {
+                if isDragging || isFocused {
+                    Circle()
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    isDragging = true
+                                    isFocused = false
+                                    text.width = min(max(20, text.width - value.translation.width), 1500)
+                                }
+                                .onEnded { _ in
+                                    isDragging = false
+                                    isFocused = true
+                                }
+                         )
+                        .frame(width: 15, height: 15)
+                }
+                TextField("", text: $temporaryText, axis: .vertical)
+                    .focused($isFocused, equals: true)
+                    .font(.system(size: text.fontSize, weight: .bold))
+                    .foregroundStyle(text.color)
+                    .onTapGesture { isFocused = true }
+                    .onExitCommand {
+                        isFocused = false
+                        if text.text.isEmpty {
+                            canvasVM.remove(text: text)
+                        }
+                    }
+                    .onSubmit {
+                        if text.text.isEmpty {
+                            canvasVM.remove(text: text)
+                        }
+                    }
+                    .textFieldStyle(.plain)
+                    .frame(width: text.width)
+                    .multilineTextAlignment(.center)
+                    .onChange(of: temporaryText) { _, newValue in
+                        text.text = newValue
+                    }
+                    .onChange(of: isFocused) {
+                        if !isFocused && text.text.isEmpty {
+                            canvasVM.remove(text: text)
+                        }
+                    }
+                if isDragging || isFocused {
+                    Circle()
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    isDragging = true
+                                    isFocused = false
+                                    text.width = min(max(80, text.width + value.translation.width), 1500)
+                                }
+                                .onEnded { _ in
+                                    isDragging = false
+                                    isFocused = true
+                                }
+                        )
+                        .frame(width: 15, height: 15)
+                }
+            }
+            .onAppear {
+                isFocused = true
+            }
+            .rotationEffect(.degrees(text.rotation))
+        }
+        .overlay(alignment: .top) {
             if isFocused || isDragging {
                 HStack(spacing: 0) {
                     CanvasButton(
@@ -38,22 +106,38 @@ struct EditableTextView: View {
                         imageFrameSize: 40
                     )
                     CanvasButton(
-                        imageName: "arrow.up.and.down.and.arrow.left.and.right",
+                        imageName: "rotate.right",
                         isSelected: false,
                         onTap: {
-                            
+                            text.rotation += 45
+                            text.objectWillChange.send()
                         },
                         imageSize: .medium,
                         imageFrameSize: 40
                     )
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                text.position.x += value.translation.width
-                                text.position.y += value.translation.height
-                                text.objectWillChange.send()
-                            }
+
+                    CanvasButton(
+                        imageName: "arrow.up.and.down.and.arrow.left.and.right",
+                        isSelected: false,
+                        onTap: {},
+                        imageSize: .medium,
+                        imageFrameSize: 40
                     )
+                        .highPriorityGesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    isFocused = false
+                                    isDragging = true
+                                    print("dragging box to \(value.translation)")
+                                    text.position.x += value.translation.width
+                                    text.position.y += value.translation.height
+                                    text.objectWillChange.send()
+                                }
+                                .onEnded { _ in
+                                    isFocused = true
+                                    isDragging = false
+                                }
+                        )
                     CanvasButton(
                         imageName: "clear",
                         isSelected: false,
@@ -68,66 +152,12 @@ struct EditableTextView: View {
                 .background(ColorManager.lighterGrey)
                 .cornerRadius(10)
                 .padding(5)
+                .offset(y: -50)
             }
-            HStack {
-                if isDragging || isFocused {
-                    Circle()
-                        .gesture(
-                            DragGesture()
-                                .onChanged { value in
-                                    isDragging = true
-                                    isFocused = false
-                                    text.width = min(max(20, text.width - value.translation.width), 1500)
-                                }
-                                .onEnded { _ in
-                                    isDragging = false
-                                    isFocused = true
-                                }
-                         )
-                        .frame(width: 15, height: 15)
-                }
-                TextField("", text: $temporaryText, axis: .vertical)
-                    .focused($isFocused, equals: true)
-                    .font(.system(size: text.fontSize, weight: .bold))
-                    .onTapGesture { isFocused = true }
-                    .onExitCommand {
-                        isFocused = false
-                        if text.text.isEmpty {
-                            canvasVM.remove(text: text)
-                        }
-                    }
-                    .onSubmit {
-                        if text.text.isEmpty {
-                            canvasVM.remove(text: text)
-                        }
-                    }
-                    .textFieldStyle(.plain)
-                    .frame(width: text.width)
-                    .multilineTextAlignment(.center)
-                    .onChange(of: temporaryText) { _, newValue in
-                        text.text = newValue
-                    }
-                if isDragging || isFocused {
-                    Circle()
-                        .gesture(
-                            DragGesture()
-                                .onChanged { value in
-                                    isDragging = true
-                                    isFocused = false
-                                    text.width = min(max(40, text.width + value.translation.width), 1500)
-                                }
-                                .onEnded { _ in
-                                    isDragging = false
-                                    isFocused = true
-                                }
-                        )
-                        .frame(width: 15, height: 15)
-                }
-            }
-            .onAppear {
-                isFocused = true
-            }
-            .rotationEffect(.degrees(text.rotation))
         }
+        .position(
+            x: text.position.x + modeVM.currentPanOffset.width,
+            y: text.position.y + modeVM.currentPanOffset.height
+        )
     }
 }
