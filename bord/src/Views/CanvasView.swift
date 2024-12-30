@@ -7,6 +7,24 @@
 
 import SwiftUI
 
+/**
+ A view that displays the canvas and handles user interactions.
+ - Parameters:
+ - canvasVM: The view model that holds the canvas items.
+ - modeVM: The view model that holds the current mode.
+ - canvasSize: The size of the canvas.
+ 
+ The canvas view is the main view that displays the canvas and handles user interactions. It uses the `Canvas`
+ view to draw the grid or lines, the lines, and the background. It also uses the `EditableTextView` view to
+ display and edit text items. The canvas view handles user interactions such as scrolling, dragging, and drawing
+ based on the current mode.
+ 
+ The canvas view is used in the `ContentView` view.
+ 
+ ```swift
+ CanvasView(canvasVM: CanvasItemsViewModel(), modeVM: CanvasModeViewModel(panOffset: .zero))
+ ```
+ */
 struct CanvasView: View {
     @ObservedObject var canvasVM: CanvasItemsViewModel
     @ObservedObject var modeVM: CanvasModeViewModel
@@ -45,7 +63,6 @@ struct CanvasView: View {
                     text: text,
                     temporaryText: text.text
                 )
-
             }
         }
     }
@@ -141,24 +158,17 @@ struct CanvasView: View {
         case .draw:
             canvasVM.newDraw(point: offsetPoint)
         case .erase:
-            if let line = canvasVM.lines.last(where: { line in
-                let strokedPath = line.path.cgPath.copy(
-                    strokingWithWidth: line.lineWidth + 20
-                    ,
-                    lineCap: .round,
-                    lineJoin: .round,
-                    miterLimit: 0
-                )
-                return strokedPath.contains(offsetPoint)
-            }) {
-                canvasVM.remove(line: line)
-            }
+            handleEraseStroke(offsetPoint)
         case .select:
-            handleMoveChanged(value, offsetPoint)
+            handleSelectStroke(value, offsetPoint)
         case .line:
             canvasVM.newLine(point: offsetPoint)
+        case .arrow:
+            canvasVM.newArrow(point: offsetPoint)
         case .rectangle:
             canvasVM.newRectangle(point: offsetPoint)
+        case .elipse:
+            canvasVM.newEllipse(point: offsetPoint)
         case .pan:
             // Handle panning
             let newOffset = CGSize(
@@ -173,6 +183,7 @@ struct CanvasView: View {
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     private func handleDragEnded(_ value: DragGesture.Value) {
         let offsetPoint = CGPoint(
                 x: value.location.x - modeVM.currentPanOffset.width,
@@ -189,8 +200,12 @@ struct CanvasView: View {
             canvasVM.isMoving = false
         case .line:
             canvasVM.endLine(point: offsetPoint)
+        case .arrow:
+            canvasVM.endArrow(point: offsetPoint)
         case .rectangle:
             canvasVM.endRectangle(point: offsetPoint)
+        case .elipse:
+            canvasVM.endEllipse(point: offsetPoint)
         case .pan:
             modeVM.panOffset.width += value.translation.width
             modeVM.panOffset.height += value.translation.height
@@ -201,7 +216,7 @@ struct CanvasView: View {
         }
     }
 
-    fileprivate func handleMoveChanged(_ value: DragGesture.Value, _ offsetPoint: CGPoint) {
+    fileprivate func handleSelectStroke(_ value: DragGesture.Value, _ offsetPoint: CGPoint) {
         if !canvasVM.isMoving {
             canvasVM.currentMoveOffset = value.location
             canvasVM.selectedPath = canvasVM.lines.last(where: { line in
@@ -224,6 +239,29 @@ struct CanvasView: View {
             }
         }
         canvasVM.isMoving = true
+    }
+
+    fileprivate func handleEraseStroke(_ offsetPoint: CGPoint) {
+        if let line = canvasVM.lines.last(where: { line in
+            let strokedPath = line.path.cgPath.copy(
+                strokingWithWidth: line.lineWidth + 20
+                ,
+                lineCap: .round,
+                lineJoin: .round,
+                miterLimit: 0
+            )
+            return strokedPath.contains(offsetPoint)
+        }) {
+            canvasVM.remove(line: line)
+        }
+        if let text = canvasVM.texts.last(where: { text in
+            return  text.position.x - 0.5 * text.width <= offsetPoint.x &&
+            text.position.y - 0.5 * text.height <= offsetPoint.y &&
+            text.position.x + 0.5 * text.width >= offsetPoint.x &&
+            text.position.y + 0.5 * text.height >= offsetPoint.y
+        }) {
+            canvasVM.remove(text: text)
+        }
     }
 
     private func handleScroll(_ deltaX: CGFloat, _ deltaY: CGFloat) {

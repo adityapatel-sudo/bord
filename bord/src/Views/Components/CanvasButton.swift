@@ -11,7 +11,7 @@ struct CanvasButton: View {
     let imageName: String
     var isSelected: Bool
     var onTap: () -> Void
-    var orange: Bool = false
+    var highlighted: Bool = false
     var imageSize: Image.Scale = .large
     var imageFrameSize: CGFloat = 50
     var cornerRadius: CGFloat = 10
@@ -23,11 +23,11 @@ struct CanvasButton: View {
             onTap()
         } label: {
             ZStack {
-                orange ? (
+                highlighted ? (
                     Image(systemName: imageName)
                         .frame(width: imageFrameSize, height: imageFrameSize)
                         .imageScale(imageSize)
-                        .foregroundColor(isHovered ? .gray : .orange)
+                        .foregroundColor(isHovered ? .gray : .green)
                 ) : (
                     Image(systemName: imageName)
                         .frame(width: imageFrameSize, height: imageFrameSize)
@@ -35,7 +35,7 @@ struct CanvasButton: View {
                         .foregroundColor(isHovered ? .gray : .white)
                 )
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(Color.orange.opacity(isSelected ? 0.25 : 0))
+                    .fill(Color.green.opacity(isSelected ? 0.25 : 0))
                     .frame(width: imageFrameSize - 10, height: imageFrameSize - 10)
             }
             .onHover { hovering in

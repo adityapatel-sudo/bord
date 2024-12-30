@@ -41,27 +41,33 @@ struct EditableTextView: View {
                     .foregroundStyle(text.color)
                     .onTapGesture { isFocused = true }
                     .onExitCommand {
-                        isFocused = false
-                        if text.text.isEmpty {
+                        if temporaryText.isEmpty {
                             canvasVM.remove(text: text)
                         }
+                        isFocused = false
                     }
                     .onSubmit {
-                        if text.text.isEmpty {
+                        if temporaryText.isEmpty {
                             canvasVM.remove(text: text)
                         }
+                        text.text = temporaryText
+                        isFocused = false
                     }
                     .textFieldStyle(.plain)
                     .frame(width: text.width)
                     .multilineTextAlignment(.center)
-                    .onChange(of: temporaryText) { _, newValue in
-                        text.text = newValue
-                    }
                     .onChange(of: isFocused) {
-                        if !isFocused && !isDragging && text.text.isEmpty {
+                        if !isFocused && !isDragging && temporaryText.isEmpty {
                             canvasVM.remove(text: text)
                         }
+                        text.text = temporaryText
                     }
+                    .onChange(of: canvasVM.color) { _, color in
+                        if isFocused {
+                            text.setColor(to: color)
+                        }
+                    }
+                    .saveHeight(in: text)
                 if isDragging || isFocused {
                     Circle()
                         .gesture(
@@ -109,8 +115,10 @@ struct EditableTextView: View {
                         imageName: "rotate.right",
                         isSelected: false,
                         onTap: {
-                            text.rotation += 45
-                            text.objectWillChange.send()
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                text.rotation += 45
+                                text.objectWillChange.send()
+                            }
                         },
                         imageSize: .medium,
                         imageFrameSize: 40
@@ -144,7 +152,6 @@ struct EditableTextView: View {
                         imageSize: .medium,
                         imageFrameSize: 40
                     )
-
                 }
                 .background(ColorManager.lighterGrey)
                 .cornerRadius(10)

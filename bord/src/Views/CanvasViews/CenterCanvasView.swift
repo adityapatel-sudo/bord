@@ -18,7 +18,7 @@ struct CenterCanvasView: View {
                 onTap: {
                     canvasModeVM.resetOffset()
                 },
-                orange: true
+                highlighted: true
             )
         }
         .padding(5)

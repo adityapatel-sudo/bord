@@ -11,6 +11,7 @@ import SwiftUI
 class TextModel: CanvasItemModel, ObservableObject {
     @Published var text: String
     @Published var width: CGFloat = 100
+    @Published var height: CGFloat = 100
     var position: CGPoint
     var fontSize: CGFloat = 25
     var rotation: Double = 0
@@ -30,7 +31,12 @@ class TextModel: CanvasItemModel, ObservableObject {
         fontSize -= 5
         objectWillChange.send()
     }
-    
+
+    func setColor(to color: Color) {
+        self.color = color
+        objectWillChange.send()
+    }
+
     func movePosition(by translation: CGSize) {
         position.x += translation.width
         position.y += translation.height

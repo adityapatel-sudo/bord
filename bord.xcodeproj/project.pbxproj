@@ -23,6 +23,8 @@
 		349F09D42D19C0E200FB16E4 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 349F09D32D19C0E200FB16E4 /* Icons.xcassets */; };
 		349F09D72D1B344500FB16E4 /* GridPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D62D1B344500FB16E4 /* GridPickerView.swift */; };
 		349F09D92D1B672400FB16E4 /* CenterCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */; };
+		34D33BA42D223CF8009E8984 /* HeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D33BA32D223CF8009E8984 /* HeightCalculator.swift */; };
+		34D33BA62D22839A009E8984 /* ShapesToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D33BA52D22839A009E8984 /* ShapesToolbar.swift */; };
 		34E538082D1E109800915491 /* CanvasGridMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E538072D1E109800915491 /* CanvasGridMode.swift */; };
 		34E5380C2D1E9F3D00915491 /* bord.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E5380B2D1E9F3D00915491 /* bord.png */; };
 		34E5380E2D1F6BAA00915491 /* ScrollWheelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E5380D2D1F6BAA00915491 /* ScrollWheelModifier.swift */; };
@@ -75,6 +77,8 @@
 		349F09D52D1A65D600FB16E4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		349F09D62D1B344500FB16E4 /* GridPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPickerView.swift; sourceTree = "<group>"; };
 		349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCanvasView.swift; sourceTree = "<group>"; };
+		34D33BA32D223CF8009E8984 /* HeightCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightCalculator.swift; sourceTree = "<group>"; };
+		34D33BA52D22839A009E8984 /* ShapesToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapesToolbar.swift; sourceTree = "<group>"; };
 		34E538072D1E109800915491 /* CanvasGridMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasGridMode.swift; sourceTree = "<group>"; };
 		34E5380B2D1E9F3D00915491 /* bord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bord.png; sourceTree = "<group>"; };
 		34E5380D2D1F6BAA00915491 /* ScrollWheelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollWheelModifier.swift; sourceTree = "<group>"; };
@@ -125,7 +129,6 @@
 			isa = PBXGroup;
 			children = (
 				344596582D1BBD3500EC76D4 /* CanvasButton.swift */,
-				34E5380D2D1F6BAA00915491 /* ScrollWheelModifier.swift */,
 				347665052D21071200D7440B /* EditableTextView.swift */,
 			);
 			path = Components;
@@ -152,8 +155,18 @@
 				349F09D82D1B672400FB16E4 /* CenterCanvasView.swift */,
 				344596552D1BBB3100EC76D4 /* SizePickerView.swift */,
 				3445965A2D1BD14700EC76D4 /* DrawingToolbarView.swift */,
+				34D33BA52D22839A009E8984 /* ShapesToolbar.swift */,
 			);
 			path = CanvasViews;
+			sourceTree = "<group>";
+		};
+		34D33BA22D223CE2009E8984 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				34E5380D2D1F6BAA00915491 /* ScrollWheelModifier.swift */,
+				34D33BA32D223CF8009E8984 /* HeightCalculator.swift */,
+			);
+			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
 		34EA23F82D0FBCF000D392CC = {
@@ -228,6 +241,7 @@
 		34EA24352D0FBD6300D392CC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				34D33BA22D223CE2009E8984 /* ViewModifiers */,
 				349F09D22D19BBAD00FB16E4 /* CanvasViews */,
 				344596572D1BBD1F00EC76D4 /* Components */,
 				34EA24372D0FBE6000D392CC /* CanvasView.swift */,
@@ -412,10 +426,12 @@
 				349F09D72D1B344500FB16E4 /* GridPickerView.swift in Sources */,
 				349F09CD2D18E49C00FB16E4 /* ColorPickerView.swift in Sources */,
 				349F09D92D1B672400FB16E4 /* CenterCanvasView.swift in Sources */,
+				34D33BA62D22839A009E8984 /* ShapesToolbar.swift in Sources */,
 				349F09D12D19BB4E00FB16E4 /* BottomToolbarView.swift in Sources */,
 				349F09C92D154F0100FB16E4 /* ColorManager.swift in Sources */,
 				344596592D1BBD3500EC76D4 /* CanvasButton.swift in Sources */,
 				34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */,
+				34D33BA42D223CF8009E8984 /* HeightCalculator.swift in Sources */,
 				3445965D2D1C77E400EC76D4 /* CanvasItemModel.swift in Sources */,
 				34E5380E2D1F6BAA00915491 /* ScrollWheelModifier.swift in Sources */,
 				34EA24052D0FBCF000D392CC /* BordApp.swift in Sources */,

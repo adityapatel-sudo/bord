@@ -43,21 +43,28 @@ struct ContentView: View {
             }
 
             VStack {
-                let colorPickerVisible = modeVM.mode == .pan || modeVM.mode == .erase || modeVM.mode == .select
-                ColorPickerView(canvasVM: canvasVM)
-                    .padding(10)
-                    .offset(y: colorPickerVisible ? -100 : 0)
-                    .animation(.easeInOut, value: colorPickerVisible)
+                let colorPickerInvisible = modeVM.mode == .pan || modeVM.mode == .erase || modeVM.mode == .select
+                HStack {
+                    Spacer()
+                    if !colorPickerInvisible {
+                        ColorPickerView(canvasVM: canvasVM)
+                            .padding(10)
+                    }
+                    let sizePickerVisible = modeVM.mode == .draw || modeVM.mode == .line ||
+                        modeVM.mode == .rectangle
+                    if sizePickerVisible {
+                        SizePickerView(canvasVM: canvasVM)
+                    }
+                    Spacer()
+                }
                 Spacer()
 
                 ZStack(alignment: .bottom) {
-                    HStack(alignment: .bottom, spacing: 10) {
-                        let sizePickerVisible = modeVM.mode == .draw || modeVM.mode == .line ||
-                            modeVM.mode == .rectangle
-                        if sizePickerVisible {
-                            SizePickerView(canvasVM: canvasVM)
-                        }
+                    LazyHStack(alignment: .bottom, spacing: 10) {
                         DrawingToolbarView(canvasModeVM: modeVM, canvasVM: canvasVM)
+                        if modeVM.shapesEnabled {
+                            ShapesToolbar(canvasVM: canvasVM, modeVM: modeVM)
+                        }
                         BottomToolbarView(canvasModeVM: modeVM, canvasVM: canvasVM)
                     }
                     .padding(10)

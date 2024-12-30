@@ -34,6 +34,7 @@ class CanvasItemsViewModel: ObservableObject {
 
     func reset() {
         lines.removeAll()
+        texts.removeAll()
         currentLine = LineModel()
     }
 
@@ -156,7 +157,137 @@ class CanvasItemsViewModel: ObservableObject {
         objectWillChange.send()
 
     }
-pr
+
+    func newArrow(point: CGPoint) {
+        if !drawing {
+            drawing = true
+            currentLine = LineModel()
+            lines.append(currentLine)
+            currentLine.path.move(to: point)
+            currentLine.color = color
+            currentLine.lineWidth = size
+            currentLine.points.append(point)
+        } else {
+            if currentLine.points.count == 1 {
+                currentLine.points.append(point)
+            } else {
+                currentLine.points[currentLine.points.count - 1] = point
+            }
+            currentLine.path = Path()
+            let startPoint = currentLine.points.first!
+            let endPoint = currentLine.points.last!
+
+            // Draw the main line
+            currentLine.path.move(to: startPoint)
+            currentLine.path.addLine(to: endPoint)
+
+            // Add the arrowhead
+            let arrowLength: CGFloat = 15.0
+            let arrowAngle: CGFloat = .pi / 6 // 30 degrees
+
+            let angle = atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x)
+            let arrowPoint1 = CGPoint(
+                x: endPoint.x - arrowLength * cos(angle - arrowAngle),
+                y: endPoint.y - arrowLength * sin(angle - arrowAngle)
+            )
+            let arrowPoint2 = CGPoint(
+                x: endPoint.x - arrowLength * cos(angle + arrowAngle),
+                y: endPoint.y - arrowLength * sin(angle + arrowAngle)
+            )
+
+            currentLine.path.move(to: endPoint)
+            currentLine.path.addLine(to: arrowPoint1)
+            currentLine.path.move(to: endPoint)
+            currentLine.path.addLine(to: arrowPoint2)
+        }
+        objectWillChange.send()
+    }
+
+    func endArrow(point: CGPoint) {
+        if currentLine.points.count > 0 {
+            currentLine.points.append(point)
+            currentLine.path = Path()
+
+            let startPoint = currentLine.points.first!
+            let endPoint = currentLine.points.last!
+            // Draw the main line
+            currentLine.path.move(to: startPoint)
+            currentLine.path.addLine(to: endPoint)
+            // Add the arrowhead
+            let arrowLength: CGFloat = 15.0
+            let arrowAngle: CGFloat = .pi / 6 // 30 degrees
+
+            let angle = atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x)
+            let arrowPoint1 = CGPoint(
+                x: endPoint.x - arrowLength * cos(angle - arrowAngle),
+                y: endPoint.y - arrowLength * sin(angle - arrowAngle)
+            )
+            let arrowPoint2 = CGPoint(
+                x: endPoint.x - arrowLength * cos(angle + arrowAngle),
+                y: endPoint.y - arrowLength * sin(angle + arrowAngle)
+            )
+
+            currentLine.path.move(to: endPoint)
+            currentLine.path.addLine(to: arrowPoint1)
+            currentLine.path.move(to: endPoint)
+            currentLine.path.addLine(to: arrowPoint2)
+
+            objectWillChange.send()
+        }
+        drawing = false
+    }
+
+    func newEllipse(point: CGPoint) {
+        if !drawing {
+            drawing = true
+            currentLine = LineModel()
+            lines.append(currentLine)
+            currentLine.color = color
+            currentLine.lineWidth = size
+            currentLine.points.append(point) // Store the starting point (top-left corner of the bounding box)
+        } else {
+            if currentLine.points.count == 1 {
+                currentLine.points.append(point) // Add the second point (current drag point)
+            } else {
+                currentLine.points[currentLine.points.count - 1] = point
+            }
+            currentLine.path = Path()
+
+            let startPoint = currentLine.points.first!
+            let endPoint = currentLine.points.last!
+
+            let rect = CGRect(
+                x: min(startPoint.x, endPoint.x),
+                y: min(startPoint.y, endPoint.y),
+                width: abs(endPoint.x - startPoint.x),
+                height: abs(endPoint.y - startPoint.y)
+            )
+            currentLine.path.addEllipse(in: rect)
+        }
+        objectWillChange.send()
+    }
+
+    func endEllipse(point: CGPoint) {
+        if currentLine.points.count > 0 {
+            currentLine.points.append(point)
+            currentLine.path = Path()
+
+            let startPoint = currentLine.points.first!
+            let endPoint = currentLine.points.last!
+
+            let rect = CGRect(
+                x: min(startPoint.x, endPoint.x),
+                y: min(startPoint.y, endPoint.y),
+                width: abs(endPoint.x - startPoint.x),
+                height: abs(endPoint.y - startPoint.y)
+            )
+            currentLine.path.addEllipse(in: rect)
+
+            objectWillChange.send()
+        }
+        drawing = false
+    }
+
     func endRectangle(point: CGPoint) {
         drawing = false
     }

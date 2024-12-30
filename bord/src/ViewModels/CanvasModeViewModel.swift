@@ -9,10 +9,13 @@ import Foundation
 
 class CanvasModeViewModel: ObservableObject {
     @Published var mode: CanvasMode = .draw
-    @Published var gridMode: CanvasGridMode = .none
+    @Published var gridMode: CanvasGridMode = .grid
 
     @Published var currentPanOffset: CGSize = .zero
     @Published var panOffset: CGSize = .zero
+    
+    @Published var shapesEnabled: Bool = false
+    
     var defaultOffset: CGSize = .zero
 
     init() {}
