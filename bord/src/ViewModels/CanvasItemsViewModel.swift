@@ -156,13 +156,13 @@ class CanvasItemsViewModel: ObservableObject {
         objectWillChange.send()
 
     }
-
+pr
     func endRectangle(point: CGPoint) {
         drawing = false
     }
 
     func newText(at point: CGPoint) {
-        let text = TextModel(text: "Text", position: point, color: color)
+        let text = TextModel(text: "", position: point, color: color)
         texts.append(text)
     }
 

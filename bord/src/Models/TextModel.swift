@@ -30,4 +30,10 @@ class TextModel: CanvasItemModel, ObservableObject {
         fontSize -= 5
         objectWillChange.send()
     }
+    
+    func movePosition(by translation: CGSize) {
+        position.x += translation.width
+        position.y += translation.height
+        objectWillChange.send()
+    }
 }

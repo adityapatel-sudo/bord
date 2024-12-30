@@ -58,7 +58,7 @@ struct EditableTextView: View {
                         text.text = newValue
                     }
                     .onChange(of: isFocused) {
-                        if !isFocused && text.text.isEmpty {
+                        if !isFocused && !isDragging && text.text.isEmpty {
                             canvasVM.remove(text: text)
                         }
                     }
@@ -128,10 +128,7 @@ struct EditableTextView: View {
                                 .onChanged { value in
                                     isFocused = false
                                     isDragging = true
-                                    print("dragging box to \(value.translation)")
-                                    text.position.x += value.translation.width
-                                    text.position.y += value.translation.height
-                                    text.objectWillChange.send()
+                                    text.movePosition(by: value.translation)
                                 }
                                 .onEnded { _ in
                                     isFocused = true
