@@ -163,7 +163,7 @@ struct CanvasView: View {
             case .arrow:
                 canvasVM.newDrawnArrow(point: offsetPoint)
             case .twoEndArrow:
-                canvasVM.newDrawnArrow(point: offsetPoint)
+                canvasVM.newTwpDrawnArrow(point: offsetPoint)
             }
         case .erase:
             handleEraseStroke(offsetPoint)
@@ -199,7 +199,14 @@ struct CanvasView: View {
             )
         switch modeVM.mode {
         case .draw:
-            canvasVM.endDraw()
+            switch canvasVM.drawEndMode {
+            case .plain:
+                canvasVM.endDraw()
+            case .arrow:
+                canvasVM.endDrawnArrow()
+            case .twoEndArrow:
+                canvasVM.endTwoDrawnArrow()
+            }
         case .erase:
             for line in canvasVM.lines where line.path.contains(offsetPoint) {
                 canvasVM.remove(line: line)

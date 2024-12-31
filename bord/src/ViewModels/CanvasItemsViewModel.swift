@@ -8,22 +8,30 @@
 import Foundation
 import SwiftUI
 
+// swiftlint:disable type_body_length
+
 /**
     * The view model for the canvas items. This class is responsible for managing the canvas items and their properties.
  */
 class CanvasItemsViewModel: ObservableObject {
     @Published var lines: [LineModel] = []
     @Published var texts: [TextModel] = []
-    @Published var zoomScale: CGFloat = 1.0
 
     @Published var selectedPath: CanvasItemModel?
     @Published var isMoving = false
     @Published var currentMoveOffset: CGPoint = .zero
-    @Published var drawEndMode: DrawEndMode = .plain
 
+    // used for arrow heads while drawing
+    // Line models will be saved in lines while drawing, then be combined with the drawn line on end
+    @Published var drawEndMode: DrawEndMode = .plain
+    var arrowStart: LineModel = LineModel()
+    var arrowEnd: LineModel = LineModel()
+
+    // new items attributes
     var color: Color = .white
     var currentLine: LineModel = LineModel()
     var size: Double = 1.5
+
     var drawing: Bool = false
 
     func setColor(newColor: Color) {
@@ -100,7 +108,9 @@ class CanvasItemsViewModel: ObservableObject {
         if !drawing {
             drawing = true
             currentLine = LineModel(color: color, lineWidth: size)
+            arrowEnd = LineModel(color: color, lineWidth: size)
             lines.append(currentLine)
+            lines.append(arrowEnd)
             currentLine.path.move(to: point)
         } else {
             let prev = currentLine.points.last!
@@ -109,12 +119,15 @@ class CanvasItemsViewModel: ObservableObject {
                 y: (prev.y + point.y) / 2
             )
             currentLine.path.addQuadCurve(to: midPoint, control: prev)
+            arrowEnd.path = Path()
+            addArrow(in: arrowEnd, from: currentLine.points[currentLine.points.count-1], to: point)
         }
         currentLine.points.append(point)
         objectWillChange.send()
     }
 
     func endDrawnArrow() {
+        lines.removeLast()
         if currentLine.points.count > 1 {
             let prev = currentLine.points[currentLine.points.count - 2]
             let cur = currentLine.points.last!
@@ -123,6 +136,7 @@ class CanvasItemsViewModel: ObservableObject {
                 y: (prev.y + cur.y) / 2
             )
             currentLine.path.addQuadCurve(to: cur, control: midPoint)
+            addArrow(in: currentLine, from: prev, to: cur)
             objectWillChange.send()
         } else if currentLine.points.count == 1 {
             currentLine.path.addLine(to: currentLine.points.last!)
@@ -131,7 +145,54 @@ class CanvasItemsViewModel: ObservableObject {
         drawing = false
     }
 
-    private func addArrow(from start: CGPoint, to end: CGPoint) {
+    func newTwpDrawnArrow(point: CGPoint) {
+        if !drawing {
+            drawing = true
+            currentLine = LineModel(color: color, lineWidth: size)
+            arrowStart = LineModel(color: color, lineWidth: size)
+            arrowEnd = LineModel(color: color, lineWidth: size)
+            lines.append(currentLine)
+            lines.append(arrowStart)
+            lines.append(arrowEnd)
+            currentLine.path.move(to: point)
+        } else {
+            if currentLine.points.count == 4 {
+                arrowStart.path = Path()
+                addArrow(in: arrowStart, from: point, to: currentLine.points[0])
+            }
+            let prev = currentLine.points.last!
+            let midPoint = CGPoint(
+                x: (prev.x + point.x) / 2,
+                y: (prev.y + point.y) / 2
+            )
+            currentLine.path.addQuadCurve(to: midPoint, control: prev)
+            arrowEnd.path = Path()
+            addArrow(in: arrowEnd, from: currentLine.points[currentLine.points.count-1], to: point)
+        }
+        currentLine.points.append(point)
+        objectWillChange.send()
+    }
+
+    func endTwoDrawnArrow() {
+        lines.removeLast()
+        if currentLine.points.count > 1 {
+            let prev = currentLine.points[currentLine.points.count - 2]
+            let cur = currentLine.points.last!
+            let midPoint = CGPoint(
+                x: (prev.x + cur.x) / 2,
+                y: (prev.y + cur.y) / 2
+            )
+            currentLine.path.addQuadCurve(to: cur, control: midPoint)
+            addArrow(in: currentLine, from: prev, to: cur)
+            objectWillChange.send()
+        } else if currentLine.points.count == 1 {
+            currentLine.path.addLine(to: currentLine.points.last!)
+            objectWillChange.send()
+        }
+        drawing = false
+    }
+
+    private func addArrow(in arrow: LineModel, from start: CGPoint, to end: CGPoint) {
         let arrowLength: CGFloat = 15.0
         let arrowAngle: CGFloat = .pi / 6.0
 
@@ -151,11 +212,11 @@ class CanvasItemsViewModel: ObservableObject {
         )
 
         // Draw the arrowhead
-        currentLine.path.move(to: end)
-        currentLine.path.addLine(to: point1)
-        currentLine.path.move(to: end)
-        currentLine.path.addLine(to: point2)
-        currentLine.path.move(to: end)
+        arrow.path.move(to: end)
+        arrow.path.addLine(to: point1)
+        arrow.path.move(to: end)
+        arrow.path.addLine(to: point2)
+        arrow.path.move(to: end)
     }
 
 
@@ -219,6 +280,7 @@ class CanvasItemsViewModel: ObservableObject {
 
     }
 
+/// Adds an arrow to the current line, pointing from the start to the end. This is a STRAIGHT line.
     func newArrow(point: CGPoint) {
         if !drawing {
             drawing = true
