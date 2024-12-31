@@ -8,7 +8,9 @@
 import Foundation
 import SwiftUI
 
-class TextModel: CanvasItemModel, ObservableObject {
+class TextModel: CanvasItem, ObservableObject {
+    var id: UUID = UUID()
+    var color: Color
     @Published var text: String
     @Published var width: CGFloat = 100
     @Published var height: CGFloat = 100
@@ -16,10 +18,14 @@ class TextModel: CanvasItemModel, ObservableObject {
     var fontSize: CGFloat = 25
     var rotation: Double = 0
 
-    init(text: String, position: CGPoint, color: Color) {
+    init(text: String, color: Color, position: CGPoint) {
         self.text = text
+        self.color = color
         self.position = position
-        super.init(color: color)
+    }
+
+    static func == (lhs: TextModel, rhs: TextModel) -> Bool {
+        return lhs.id == rhs.id
     }
 
     func increaseSize() {

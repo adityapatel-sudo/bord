@@ -79,9 +79,10 @@ struct CanvasView: View {
         // Draw the lines, translated by the current pan offset
         context.translateBy(x: modeVM.currentPanOffset.width, y: modeVM.currentPanOffset.height)
         for line in canvasVM.lines {
-            let strokeStyle = line == canvasVM.selectedPath ?
-                StrokeStyle(lineWidth: line.lineWidth, lineCap: .round, dash: [line.lineWidth * 5]) :
-                StrokeStyle(lineWidth: line.lineWidth, lineCap: .round)
+            var strokeStyle = StrokeStyle(lineWidth: line.lineWidth, lineCap: .round)
+            if line.id == canvasVM.selectedPath?.id {
+                strokeStyle = StrokeStyle(lineWidth: line.lineWidth, lineCap: .round, dash: [line.lineWidth * 5])
+            }
             context.stroke(
                 line.path,
                 with: .color(line.color),
@@ -209,7 +210,7 @@ struct CanvasView: View {
             }
         case .erase:
             for line in canvasVM.lines where line.path.contains(offsetPoint) {
-                canvasVM.remove(line: line)
+                canvasVM.remove(drawable: line)
             }
         case .select:
             canvasVM.isMoving = false
@@ -267,7 +268,7 @@ struct CanvasView: View {
             )
             return strokedPath.contains(offsetPoint)
         }) {
-            canvasVM.remove(line: line)
+            canvasVM.remove(drawable: line)
         }
         if let text = canvasVM.texts.last(where: { text in
             return  text.position.x - 0.5 * text.width <= offsetPoint.x &&

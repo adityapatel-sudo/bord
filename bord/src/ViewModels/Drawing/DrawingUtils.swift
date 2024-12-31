@@ -5,7 +5,7 @@
 //  Created by Aditya Patel on 12/31/24.
 //
 
-import Foundation
+import SwiftUI
 
 struct DrawingUtils {
     static func getMidPoint(_ prev: CGPoint, _ cur: CGPoint) -> CGPoint {

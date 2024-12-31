@@ -8,16 +8,25 @@
 import Foundation
 import SwiftUI
 
-class LineModel: CanvasItemModel {
+class LineModel: DrawableModel {
+    var id: UUID = UUID()
+    var lineWidth: Double
+    var path: Path = Path()
+    var height: CGFloat = 0
+    var width: CGFloat = 0
+    var color: Color
     var points = [CGPoint]()
-    var path = Path()
-    var lineWidth: Double = 1.0
 
-    override init() {
-        super.init()
+    init() {
+        self.color = Color.white
+        self.lineWidth = 5
     }
+
     init(color: Color, lineWidth: Double) {
-        super.init(color: color)
+        self.color = color
         self.lineWidth = lineWidth
+    }
+    static func == (lhs: LineModel, rhs: LineModel) -> Bool {
+        lhs.id == rhs.id
     }
 }
