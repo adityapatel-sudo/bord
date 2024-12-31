@@ -163,7 +163,7 @@ struct CanvasView: View {
             case .arrow:
                 canvasVM.newDrawnArrow(point: offsetPoint)
             case .twoEndArrow:
-                canvasVM.newTwpDrawnArrow(point: offsetPoint)
+                canvasVM.newTwoDrawnArrow(point: offsetPoint)
             }
         case .erase:
             handleEraseStroke(offsetPoint)
