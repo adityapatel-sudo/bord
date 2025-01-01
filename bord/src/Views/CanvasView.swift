@@ -46,9 +46,16 @@ struct CanvasView: View {
             }
             .gesture(
                 DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                    .onChanged(handleDragChanged)
-                    .onEnded(handleDragEnded)
+                    .modifiers(.command.intersection(.shift))
+                    .onChanged {value in handleDragChanged(value, isCMDPressed: true)}
+                    .onEnded {value in handleDragEnded(value, isCMDPressed: true)}
             )
+            .gesture(
+                DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                    .onChanged {value in handleDragChanged(value)}
+                    .onEnded {value in handleDragEnded(value)}
+            )
+
             .onChange(of: modeVM.mode) { _, newValue in
                 if newValue != .select {
                     canvasVM.isMoving = false
@@ -67,6 +74,10 @@ struct CanvasView: View {
         }
     }
 
+    /// Draws the grid or lines based on the current grid mode.
+    /// - Parameters:
+    ///   - context: The graphics context to draw the grid or lines.
+    ///   - screenSize: The size of the screen.
     fileprivate func drawGridOrLines(_ context: GraphicsContext, _ screenSize: CGSize) {
         if modeVM.gridMode == .grid {
             drawGrid(context, screenSize)
@@ -75,12 +86,14 @@ struct CanvasView: View {
         }
     }
 
+    /// Draws the drawn lines on the canvas. Includes selected lines with a dashed line style.
+    /// - Parameter context: The graphics context to draw the lines.
     private func drawLines(_ context: inout GraphicsContext) {
         // Draw the lines, translated by the current pan offset
         context.translateBy(x: modeVM.currentPanOffset.width, y: modeVM.currentPanOffset.height)
-        for line in canvasVM.lines {
+        for line in canvasVM.drawn {
             var strokeStyle = StrokeStyle(lineWidth: line.lineWidth, lineCap: .round)
-            if line.id == canvasVM.selectedPath?.id {
+            if line.isSelected {
                 strokeStyle = StrokeStyle(lineWidth: line.lineWidth, lineCap: .round, dash: [line.lineWidth * 5])
             }
             context.stroke(
@@ -151,7 +164,7 @@ struct CanvasView: View {
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    private func handleDragChanged(_ value: DragGesture.Value) {
+    private func handleDragChanged(_ value: DragGesture.Value, isCMDPressed: Bool = false) {
         let offsetPoint = CGPoint(
                 x: value.location.x - modeVM.currentPanOffset.width,
                 y: value.location.y - modeVM.currentPanOffset.height
@@ -169,7 +182,7 @@ struct CanvasView: View {
         case .erase:
             handleEraseStroke(offsetPoint)
         case .select:
-            handleSelectStroke(value, offsetPoint)
+            handleSelectStroke(value, offsetPoint, isCMDPressed: isCMDPressed)
         case .line:
             canvasVM.newLine(point: offsetPoint)
         case .arrow:
@@ -193,7 +206,7 @@ struct CanvasView: View {
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    private func handleDragEnded(_ value: DragGesture.Value) {
+    private func handleDragEnded(_ value: DragGesture.Value, isCMDPressed: Bool = false) {
         let offsetPoint = CGPoint(
                 x: value.location.x - modeVM.currentPanOffset.width,
                 y: value.location.y - modeVM.currentPanOffset.height
@@ -209,7 +222,7 @@ struct CanvasView: View {
                 canvasVM.endTwoDrawnArrow()
             }
         case .erase:
-            for line in canvasVM.lines where line.path.contains(offsetPoint) {
+            for line in canvasVM.drawn where line.path.contains(offsetPoint) {
                 canvasVM.remove(drawable: line)
             }
         case .select:
@@ -232,10 +245,10 @@ struct CanvasView: View {
         }
     }
 
-    fileprivate func handleSelectStroke(_ value: DragGesture.Value, _ offsetPoint: CGPoint) {
+    fileprivate func handleSelectStroke(_ value: DragGesture.Value, _ offsetPoint: CGPoint, isCMDPressed: Bool) {
         if !canvasVM.isMoving {
             canvasVM.currentMoveOffset = value.location
-            canvasVM.selectedPath = canvasVM.lines.last(where: { line in
+            let selectedPath = canvasVM.drawn.last(where: { line in
                 let strokedPath = line.path.cgPath.copy(
                     strokingWithWidth: line.lineWidth + 20,
                     lineCap: .round,
@@ -244,21 +257,39 @@ struct CanvasView: View {
                 )
                 return strokedPath.contains(offsetPoint)
             })
+            if selectedPath == nil {
+                if !isCMDPressed {
+                    canvasVM.unselectAll()
+                }
+            } else {
+                if selectedPath!.isSelected && isCMDPressed {
+
+                } else if selectedPath!.isSelected && !isCMDPressed {
+                    canvasVM.unselectAll()
+                    selectedPath!.isSelected = true
+                } else if !selectedPath!.isSelected && isCMDPressed {
+                    selectedPath!.isSelected = true
+                } else if !selectedPath!.isSelected && !isCMDPressed {
+                    canvasVM.unselectAll()
+                    selectedPath!.isSelected = true
+                }
+            }
         } else {
-            if let line = canvasVM.selectedPath as? LineModel {
-                let curDiff = CGSize(
-                    width: value.location.x - canvasVM.currentMoveOffset.x,
-                    height: value.location.y - canvasVM.currentMoveOffset.y
-                )
-                canvasVM.currentMoveOffset = value.location
-                canvasVM.moveLine(line, by: curDiff)
+            let curDiff = CGSize(
+                width: value.location.x - canvasVM.currentMoveOffset.x,
+                height: value.location.y - canvasVM.currentMoveOffset.y
+            )
+            canvasVM.currentMoveOffset = value.location
+
+            for drawnPath in canvasVM.drawn where drawnPath.isSelected {
+                canvasVM.movePath(drawnPath, by: curDiff)
             }
         }
         canvasVM.isMoving = true
     }
 
     fileprivate func handleEraseStroke(_ offsetPoint: CGPoint) {
-        if let line = canvasVM.lines.last(where: { line in
+        if let line = canvasVM.drawn.last(where: { line in
             let strokedPath = line.path.cgPath.copy(
                 strokingWithWidth: line.lineWidth + 20
                 ,

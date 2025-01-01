@@ -12,7 +12,7 @@ extension CanvasItemsViewModel {
         if !drawing {
             drawing = true
             currentLine = LineModel(color: color, lineWidth: size)
-            lines.append(currentLine)
+            drawn.append(currentLine)
             currentLine.path.move(to: point)
         } else {
             let prev = currentLine.points.last!
@@ -42,8 +42,8 @@ extension CanvasItemsViewModel {
             drawing = true
             currentLine = LineModel(color: color, lineWidth: size)
             arrowEnd = LineModel(color: color, lineWidth: size)
-            lines.append(currentLine)
-            lines.append(arrowEnd)
+            drawn.append(currentLine)
+            drawn.append(arrowEnd)
             currentLine.path.move(to: point)
         } else {
             let prev = currentLine.points.last!
@@ -57,7 +57,7 @@ extension CanvasItemsViewModel {
     }
 
     func endDrawnArrow() {
-        lines.removeLast()
+        drawn.removeLast()
         if currentLine.points.count > 1 {
             let prev = currentLine.points[currentLine.points.count - 2]
             let cur = currentLine.points.last!
@@ -78,9 +78,9 @@ extension CanvasItemsViewModel {
             currentLine = LineModel(color: color, lineWidth: size)
             arrowStart = LineModel(color: color, lineWidth: size)
             arrowEnd = LineModel(color: color, lineWidth: size)
-            lines.append(currentLine)
-            lines.append(arrowStart)
-            lines.append(arrowEnd)
+            drawn.append(currentLine)
+            drawn.append(arrowStart)
+            drawn.append(arrowEnd)
             currentLine.path.move(to: point)
         } else {
             if currentLine.points.count == 4 {
@@ -98,7 +98,7 @@ extension CanvasItemsViewModel {
     }
 
     func endTwoDrawnArrow() {
-        lines.removeSubrange(lines.count-2...lines.count-1)
+        drawn.removeSubrange(drawn.count-2...drawn.count-1)
         if currentLine.points.count > 1 {
             let prev = currentLine.points[currentLine.points.count - 2]
             let cur = currentLine.points.last!

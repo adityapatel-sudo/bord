@@ -8,12 +8,14 @@
 import Foundation
 import SwiftUI
 
-class LineModel: DrawableModel {
+class LineModel: DrawableModel, ObservableObject {
+    @Published var isSelected: Bool = false
+    @Published var height: CGFloat = 0
+    @Published var width: CGFloat = 0
+
     var id: UUID = UUID()
     var lineWidth: Double
     var path: Path = Path()
-    var height: CGFloat = 0
-    var width: CGFloat = 0
     var color: Color
     var points = [CGPoint]()
 
@@ -28,5 +30,8 @@ class LineModel: DrawableModel {
     }
     static func == (lhs: LineModel, rhs: LineModel) -> Bool {
         lhs.id == rhs.id
+    }
+    func updatePath(with newPath: Path) {
+        path = newPath
     }
 }

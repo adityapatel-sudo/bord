@@ -12,7 +12,7 @@ extension CanvasItemsViewModel {
         if !drawing {
             drawing = true
             currentLine = LineModel(color: color, lineWidth: size)
-            lines.append(currentLine)
+            drawn.append(currentLine)
             currentLine.path.move(to: point)
             currentLine.points.append(point)
         } else {
@@ -41,7 +41,7 @@ extension CanvasItemsViewModel {
         if !drawing {
             drawing = true
             currentLine = LineModel()
-            lines.append(currentLine)
+            drawn.append(currentLine)
             currentLine.path.move(to: point)
             currentLine.color = color
             currentLine.lineWidth = size

@@ -14,7 +14,7 @@ The view model for the canvas items. This class is responsible for managing the 
  - lines: An array of LineModel objects representing the lines on the canvas.
  */
 class CanvasItemsViewModel: ObservableObject {
-    @Published var lines: [any DrawableModel] = []
+    @Published var drawn: [any DrawableModel] = []
     @Published var texts: [TextModel] = []
 
     @Published var selectedPath: (any DrawableModel)?
@@ -30,9 +30,15 @@ class CanvasItemsViewModel: ObservableObject {
     // new items attributes
     var color: Color = .white
     var currentLine: LineModel = LineModel()
+    var currentRect: RectangleModel = RectangleModel()
+    var currentEllipse: EllipseModel = EllipseModel()
     var size: Double = 1.5
 
     var drawing: Bool = false
+
+    var selectedDrawnCount: Int {
+        drawn.filter { $0.isSelected }.count
+    }
 
     func setColor(newColor: Color) {
         color = newColor
@@ -45,14 +51,14 @@ class CanvasItemsViewModel: ObservableObject {
     }
 
     func reset() {
-        lines.removeAll()
+        drawn.removeAll()
         texts.removeAll()
         currentLine = LineModel()
     }
 
     func remove(drawable: any DrawableModel) {
-        for (index, line) in lines.enumerated() where line.id == drawable.id {
-            lines.remove(at: index)
+        for (index, line) in drawn.enumerated() where line.id == drawable.id {
+            drawn.remove(at: index)
             objectWillChange.send()
         }
     }
@@ -67,6 +73,18 @@ class CanvasItemsViewModel: ObservableObject {
     func moveLine(_ line: LineModel, by value: CGSize) {
         line.path = line.path.applying(.init(translationX: value.width, y: value.height))
         objectWillChange.send()
+    }
+
+    func movePath(_ path: any DrawableModel, by value: CGSize) {
+        let newPath = path.path.offsetBy(dx: value.width, dy: value.height)
+        path.updatePath(with: newPath)
+        objectWillChange.send()
+    }
+
+    func unselectAll() {
+        for drawnItem in drawn where drawnItem.isSelected {
+            drawnItem.isSelected = false
+        }
     }
 
     func addArrow(in arrow: LineModel, from start: CGPoint, to end: CGPoint) {
@@ -100,8 +118,8 @@ class CanvasItemsViewModel: ObservableObject {
     }
 
     func undo() {
-        if lines.count > 0 {
-            lines.removeLast()
+        if drawn.count > 0 {
+            drawn.removeLast()
         }
     }
 }

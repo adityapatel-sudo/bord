@@ -1,19 +1,14 @@
 //
-//  RectangleModel.swift
+//  EllipseModel.swift
 //  bord
 //
-//  Created by Aditya Patel on 12/31/24.
+//  Created by Aditya Patel on 1/1/25.
 //
 
 import Foundation
 import SwiftUI
 
-/// A model for a rectangle object
-/// - Parameters:
-///  - position: The top left corner position of the rectangle.
-///  - width: The width of the rectangle. Can be negative if start is to the right of the end.
-///  - height: The height of the rectangle. Can be negative if start is to the right of the end.
-class RectangleModel: DrawableModel, ObservableObject {
+class EllipseModel: DrawableModel, ObservableObject {
     @Published var isSelected: Bool = false
     @Published var width: CGFloat = 0.0
     @Published var height: CGFloat = 0.0
@@ -25,7 +20,7 @@ class RectangleModel: DrawableModel, ObservableObject {
     var position: CGPoint = CGPoint(x: 0, y: 0)
     var endPosition: CGPoint = CGPoint(x: 0, y: 0)
 
-    static func == (lhs: RectangleModel, rhs: RectangleModel) -> Bool {
+    static func == (lhs: EllipseModel, rhs: EllipseModel) -> Bool {
         lhs.id == rhs.id
     }
 

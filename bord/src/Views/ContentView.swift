@@ -22,6 +22,8 @@ struct ContentView: View {
         )
     )
 
+    @State var invisible = false
+
     var body: some View {
         ZStack {
             CanvasView(canvasVM: canvasVM, modeVM: modeVM)
@@ -35,10 +37,26 @@ struct ContentView: View {
                 }
             VStack {
                 HStack {
-                    GridPickerView(modeVM: modeVM)
-                        .padding(10)
+                    HStack(spacing: 0) {
+                        CanvasButton(
+                            imageName: "eye.slash",
+                            isSelected: invisible,
+                            onTap: {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                    invisible.toggle()
+                                }
+                            },
+                            highlightSize: 35
+                        )
+                    }
+                    .background(ColorManager.lighterGrey)
+                    .cornerRadius(15)
+                    if !invisible {
+                        GridPickerView(modeVM: modeVM)
+                    }
                     Spacer()
                 }
+                .padding(10)
                 Spacer()
             }
 
@@ -84,6 +102,8 @@ struct ContentView: View {
                     }
                 }
             }
+            .opacity(!invisible ? 1 : 0)
+            .allowsHitTesting(!invisible)
         }
     }
 }
