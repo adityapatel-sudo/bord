@@ -31,21 +31,23 @@ class RectangleModel: DrawableModel, ObservableObject {
     var id: UUID = UUID()
     var color: Color = .white
     var transform: CGAffineTransform = .identity
+    var isEllipse: Bool
 
     static func == (lhs: RectangleModel, rhs: RectangleModel) -> Bool {
         lhs.id == rhs.id
     }
 
-    init(position point: CGPoint) {
+    init(position point: CGPoint, isEllipse: Bool = false) {
         xMin = point.x
         xMax = point.x
         yMin = point.y
         yMax = point.y
         start = point
         end = point
+        self.isEllipse = isEllipse
     }
 
-    init(color: Color, lineWidth: Double, at point: CGPoint) {
+    init(color: Color, lineWidth: Double, at point: CGPoint, isEllipse: Bool = false) {
         self.color = color
         self.lineWidth = lineWidth
 
@@ -55,6 +57,8 @@ class RectangleModel: DrawableModel, ObservableObject {
         yMax = point.y
         start = point
         end = point
+
+        self.isEllipse = isEllipse
     }
 
     init(copyOf copy: RectangleModel) {
@@ -69,6 +73,7 @@ class RectangleModel: DrawableModel, ObservableObject {
         self.yMin = copy.yMin + 50
         self.start = copy.start.applying(.init(translationX: 50, y: 50))
         self.end = copy.end.applying(.init(translationX: 50, y: 50))
+        self.isEllipse = copy.isEllipse
     }
 
     func movePathBounds(by value: CGSize) {

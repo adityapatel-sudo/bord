@@ -38,7 +38,11 @@ struct EditableTextView: View {
                 }
                 TextField("", text: $temporaryText, axis: .vertical)
                     .focused($isFocused, equals: true)
-                    .font(.system(size: text.fontSize, weight: .bold))
+                    .font(.system(
+                        size: text.fontSize,
+                        weight: text.isBold ? .heavy : .bold)
+                    )
+                    .italic(text.isItalics)
                     .foregroundStyle(text.color)
                     .onTapGesture { isFocused = true }
                     .onExitCommand {
@@ -55,7 +59,9 @@ struct EditableTextView: View {
                         isFocused = false
                     }
                     .textFieldStyle(.plain)
-                    .frame(width: text.width)
+                    .frame(
+                        width: max(50, text.width)
+                    )
                     .multilineTextAlignment(.center)
                     .onChange(of: isFocused) {
                         if !isFocused && !isDragging && temporaryText.isEmpty {
@@ -92,8 +98,7 @@ struct EditableTextView: View {
             }
             .rotationEffect(.degrees(text.rotation))
         }
-        .onChange(of: text.isFocused) { newValue, _ in
-            print("isFocused: \(newValue)")
+        .onChange(of: text.isFocused) { _, _ in
             isFocused = text.isFocused
         }
         .overlay(alignment: .top) {
@@ -195,7 +200,32 @@ struct EditableTextView: View {
                                 imageSize: .medium,
                                 imageFrameSize: 40
                             )
-
+                            CanvasButton(
+                                imageName: "italic",
+                                isSelected: text.isItalics,
+                                onTap: {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                        text.isItalics.toggle()
+                                        text.objectWillChange.send()
+                                    }
+                                },
+                                imageSize: .medium,
+                                imageFrameSize: 40,
+                                highlightSize: 35
+                            )
+                            CanvasButton(
+                                imageName: "bold",
+                                isSelected: text.isBold,
+                                onTap: {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                        text.isBold.toggle()
+                                        text.objectWillChange.send()
+                                    }
+                                },
+                                imageSize: .medium,
+                                imageFrameSize: 40,
+                                highlightSize: 35
+                            )
                         }
                         .background(ColorManager.lighterGrey)
                         .cornerRadius(10)

@@ -62,7 +62,7 @@ struct ContentView: View {
 
             VStack {
                 let colorPickerInvisible =
-                    modeVM.mode == .pan || modeVM.mode == .erase || modeVM.mode == .select
+                    modeVM.mode == .pan || modeVM.mode == .erase
                 let drawModesVisible = modeVM.mode == .draw
                 HStack(alignment: .top, spacing: 0) {
                     Spacer()

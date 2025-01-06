@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+/// DEPRACATED
+/// Using RectangleModel with a boolean isEllipse to determine if it is an ellipse or not
+///  simpler than refactoring two sets of code every time editing one or the other
 extension CanvasItemsViewModel {
     func newEllipse(point: CGPoint) {
         if !drawing {

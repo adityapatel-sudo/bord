@@ -36,7 +36,6 @@ extension CanvasView {
                 with: .color(line.color),
                 style: strokeStyle
             )
-            
         }
     }
 

@@ -16,8 +16,11 @@ class TextModel: CanvasItem, ObservableObject {
     @Published var height: CGFloat = 100
     @Published var isFocused: Bool = false
     var position: CGPoint
+
     var fontSize: CGFloat = 25
     var rotation: Double = 0
+    var isItalics: Bool = false
+    var isBold: Bool = false
 
     init(text: String, color: Color, position: CGPoint) {
         self.text = text

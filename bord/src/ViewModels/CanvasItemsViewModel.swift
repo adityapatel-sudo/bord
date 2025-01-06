@@ -143,7 +143,13 @@ class CanvasItemsViewModel: ObservableObject {
         objectWillChange.send()
     }
 
-    fileprivate func checkRectBounds(_ maxX: inout CGFloat?, _ rect: RectangleModel, _ minX: inout CGFloat?, _ maxY: inout CGFloat?, _ minY: inout CGFloat?) {
+    fileprivate func checkRectBounds(
+        _ maxX: inout CGFloat?,
+        _ rect: RectangleModel,
+        _ minX: inout CGFloat?,
+        _ maxY: inout CGFloat?,
+        _ minY: inout CGFloat?
+    ) {
         if maxX == nil || rect.xMax > maxX! {
             maxX = rect.xMax
         }
@@ -157,8 +163,14 @@ class CanvasItemsViewModel: ObservableObject {
             minY = rect.yMin
         }
     }
-    
-    fileprivate func checkEllipseBounds(_ maxX: inout CGFloat?, _ circle: EllipseModel, _ minX: inout CGFloat?, _ maxY: inout CGFloat?, _ minY: inout CGFloat?) {
+
+    fileprivate func checkEllipseBounds(
+        _ maxX: inout CGFloat?,
+        _ circle: EllipseModel,
+        _ minX: inout CGFloat?,
+        _ maxY: inout CGFloat?,
+        _ minY: inout CGFloat?
+    ) {
         if maxX == nil || circle.xMax > maxX! {
             maxX = circle.xMax
         }
@@ -172,8 +184,14 @@ class CanvasItemsViewModel: ObservableObject {
             minY = circle.yMin
         }
     }
-    
-    fileprivate func checkLineBounds(_ maxX: inout CGFloat?, _ line: LineModel, _ minX: inout CGFloat?, _ maxY: inout CGFloat?, _ minY: inout CGFloat?) {
+
+    fileprivate func checkLineBounds(
+        _ maxX: inout CGFloat?,
+        _ line: LineModel,
+        _ minX: inout CGFloat?,
+        _ maxY: inout CGFloat?,
+        _ minY: inout CGFloat?
+    ) {
         if maxX == nil || line.xMax > maxX! {
             maxX = line.xMax
         }
@@ -187,7 +205,7 @@ class CanvasItemsViewModel: ObservableObject {
             minY = line.yMin
         }
     }
-    
+
     func updateSelectedSizeAndPos() {
         var maxX: CGFloat?
         var minX: CGFloat?

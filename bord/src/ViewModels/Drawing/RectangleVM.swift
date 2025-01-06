@@ -8,10 +8,10 @@
 import SwiftUI
 
 extension CanvasItemsViewModel {
-    func newRectangle(point: CGPoint) {
+    func newRectangle(point: CGPoint, isEllipse: Bool) {
         if !drawing {
             drawing = true
-            currentRect = RectangleModel(color: color, lineWidth: size, at: point)
+            currentRect = RectangleModel(color: color, lineWidth: size, at: point, isEllipse: isEllipse)
             drawn.append(currentRect)
             currentRect.path.move(to: point)
         } else {
@@ -24,10 +24,14 @@ extension CanvasItemsViewModel {
                 height: currentRect.yMax - currentRect.yMin
             )
             let circum = rect.size.width + rect.size.height
-            currentRect.path.addRoundedRect(
-                in: rect,
-                cornerSize: CGSize(width: circum/100, height: circum/100)
-            )
+            if currentRect.isEllipse {
+                currentRect.path.addEllipse(in: rect)
+            } else {
+                currentRect.path.addRoundedRect(
+                    in: rect,
+                    cornerSize: CGSize(width: circum/100, height: circum/100)
+                )
+            }
         }
         objectWillChange.send()
     }
@@ -36,12 +40,16 @@ extension CanvasItemsViewModel {
         drawing = false
         if true {
             currentRect.linkedText = TextModel(
-                text: "",
+                text: "default text",
                 color: color,
-                position: CGPoint(x: (currentRect.xMin + currentRect.xMax)/2, y: (currentRect.yMin + currentRect.yMax)/2)
+                position: CGPoint(
+                    x: (currentRect.xMin + currentRect.xMax)/2,
+                    y: (currentRect.yMin + currentRect.yMax)/2
+                )
             )
             texts.append(currentRect.linkedText!)
             currentRect.linkedText?.isFocused = true
+            currentRect.linkedText?.width = currentRect.xMax - currentRect.xMin - 50
         }
         currentRect.addPoint(point: point)
         objectWillChange.send()

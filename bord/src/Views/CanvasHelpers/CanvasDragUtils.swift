@@ -34,9 +34,9 @@ extension CanvasView {
         case .arrow:
             canvasVM.newArrow(point: offsetPoint)
         case .rectangle:
-            canvasVM.newRectangle(point: offsetPoint)
+            canvasVM.newRectangle(point: offsetPoint, isEllipse: false)
         case .elipse:
-            canvasVM.newEllipse(point: offsetPoint)
+            canvasVM.newRectangle(point: offsetPoint, isEllipse: true)
         case .pan:
             // Handle panning
             let newOffset = CGSize(
@@ -81,7 +81,7 @@ extension CanvasView {
         case .rectangle:
             canvasVM.endRectangle(point: offsetPoint)
         case .elipse:
-            canvasVM.endEllipse(point: offsetPoint)
+            canvasVM.endRectangle(point: offsetPoint)
         case .pan:
             modeVM.panOffset.width += value.translation.width
             modeVM.panOffset.height += value.translation.height
