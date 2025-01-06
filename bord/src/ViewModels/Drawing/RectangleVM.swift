@@ -38,7 +38,7 @@ extension CanvasItemsViewModel {
 
     func endRectangle(point: CGPoint) {
         drawing = false
-        if true {
+        if isTextInShapes && currentRect.xMax - currentRect.xMin > 50  && currentRect.yMax - currentRect.yMin > 20 {
             currentRect.linkedText = TextModel(
                 text: "default text",
                 color: color,

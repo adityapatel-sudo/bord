@@ -48,6 +48,10 @@ class CanvasItemsViewModel: ObservableObject {
 
     func setColor(newColor: Color) {
         color = newColor
+
+        for index in 0..<drawn.count where drawn[index].isSelected {
+            drawn[index].color = newColor
+        }
         objectWillChange.send()
     }
 
@@ -237,6 +241,11 @@ class CanvasItemsViewModel: ObservableObject {
                 drawn.append(LineModel(copyOf: line))
             } else if let rectangle = item as? RectangleModel {
                 drawn.append(RectangleModel(copyOf: rectangle))
+                if rectangle.linkedText != nil {
+                    if let last = drawn.last as? RectangleModel {
+                        texts.append(last.linkedText!)
+                    }
+                }
             } else if let ellipse = item as? EllipseModel {
                 drawn.append(EllipseModel(copyOf: ellipse))
             }

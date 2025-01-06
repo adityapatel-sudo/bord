@@ -74,6 +74,11 @@ class RectangleModel: DrawableModel, ObservableObject {
         self.start = copy.start.applying(.init(translationX: 50, y: 50))
         self.end = copy.end.applying(.init(translationX: 50, y: 50))
         self.isEllipse = copy.isEllipse
+
+        if copy.linkedText != nil {
+            let copy = TextModel(copyOf: copy.linkedText!)
+            self.linkedText = copy
+        }
     }
 
     func movePathBounds(by value: CGSize) {

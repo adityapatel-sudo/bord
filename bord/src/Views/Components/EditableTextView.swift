@@ -111,7 +111,9 @@ struct EditableTextView: View {
                             extraDetails.toggle()
                         },
                         imageSize: .medium,
-                        imageFrameSize: 40
+                        imageFrameSize: 40,
+                        highlightSize: 35,
+                        cornerRadius: 8
                     )
                     CanvasButton(
                         imageName: "textformat.size.smaller",
@@ -211,7 +213,8 @@ struct EditableTextView: View {
                                 },
                                 imageSize: .medium,
                                 imageFrameSize: 40,
-                                highlightSize: 35
+                                highlightSize: 35,
+                                cornerRadius: 8
                             )
                             CanvasButton(
                                 imageName: "bold",
@@ -224,7 +227,8 @@ struct EditableTextView: View {
                                 },
                                 imageSize: .medium,
                                 imageFrameSize: 40,
-                                highlightSize: 35
+                                highlightSize: 35,
+                                cornerRadius: 8
                             )
                         }
                         .background(ColorManager.lighterGrey)
