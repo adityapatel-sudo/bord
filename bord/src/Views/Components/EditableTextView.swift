@@ -15,6 +15,7 @@ struct EditableTextView: View {
     @State var temporaryText: String
     @FocusState var isFocused: Bool
     @State var isDragging: Bool = false
+    @State var extraDetails: Bool = false
 
     var body: some View {
         VStack {
@@ -61,6 +62,7 @@ struct EditableTextView: View {
                             canvasVM.remove(text: text)
                         }
                         text.text = temporaryText
+                        text.isFocused = isFocused
                     }
                     .onChange(of: canvasVM.color) { _, color in
                         if isFocused {
@@ -90,9 +92,22 @@ struct EditableTextView: View {
             }
             .rotationEffect(.degrees(text.rotation))
         }
+        .onChange(of: text.isFocused) { newValue, _ in
+            print("isFocused: \(newValue)")
+            isFocused = text.isFocused
+        }
         .overlay(alignment: .top) {
             if isFocused || isDragging {
                 HStack(spacing: 0) {
+                    CanvasButton(
+                        imageName: "chevron.up",
+                        isSelected: extraDetails,
+                        onTap: {
+                            extraDetails.toggle()
+                        },
+                        imageSize: .medium,
+                        imageFrameSize: 40
+                    )
                     CanvasButton(
                         imageName: "textformat.size.smaller",
                         isSelected: false,
@@ -111,19 +126,6 @@ struct EditableTextView: View {
                         imageSize: .medium,
                         imageFrameSize: 40
                     )
-                    CanvasButton(
-                        imageName: "rotate.right",
-                        isSelected: false,
-                        onTap: {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                                text.rotation += 45
-                                text.objectWillChange.send()
-                            }
-                        },
-                        imageSize: .medium,
-                        imageFrameSize: 40
-                    )
-
                     CanvasButton(
                         imageName: "arrow.up.and.down.and.arrow.left.and.right",
                         isSelected: false,
@@ -144,6 +146,15 @@ struct EditableTextView: View {
                                 }
                         )
                     CanvasButton(
+                        imageName: "doc.on.doc",
+                        isSelected: false,
+                        onTap: {
+                            canvasVM.duplicateText(text: text)
+                        },
+                        imageSize: .medium,
+                        imageFrameSize: 40
+                    )
+                    CanvasButton(
                         imageName: "clear",
                         isSelected: false,
                         onTap: {
@@ -157,6 +168,41 @@ struct EditableTextView: View {
                 .cornerRadius(10)
                 .padding(5)
                 .offset(y: -50)
+                .overlay(alignment: .topLeading) {
+                    if (isFocused || isDragging) && extraDetails {
+                        HStack(spacing: 0) {
+                            CanvasButton(
+                                imageName: "rotate.left",
+                                isSelected: false,
+                                onTap: {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                        text.rotation -= 45
+                                        text.objectWillChange.send()
+                                    }
+                                },
+                                imageSize: .medium,
+                                imageFrameSize: 40
+                            )
+                            CanvasButton(
+                                imageName: "rotate.right",
+                                isSelected: false,
+                                onTap: {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                        text.rotation += 45
+                                        text.objectWillChange.send()
+                                    }
+                                },
+                                imageSize: .medium,
+                                imageFrameSize: 40
+                            )
+
+                        }
+                        .background(ColorManager.lighterGrey)
+                        .cornerRadius(10)
+                        .padding(5)
+                        .offset(y: -100)
+                    }
+                }
             }
         }
         .position(

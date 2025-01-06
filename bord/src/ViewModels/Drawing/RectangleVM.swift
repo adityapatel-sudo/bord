@@ -34,6 +34,16 @@ extension CanvasItemsViewModel {
 
     func endRectangle(point: CGPoint) {
         drawing = false
+        if true {
+            currentRect.linkedText = TextModel(
+                text: "",
+                color: color,
+                position: CGPoint(x: (currentRect.xMin + currentRect.xMax)/2, y: (currentRect.yMin + currentRect.yMax)/2)
+            )
+            texts.append(currentRect.linkedText!)
+            currentRect.linkedText?.isFocused = true
+        }
         currentRect.addPoint(point: point)
+        objectWillChange.send()
     }
 }

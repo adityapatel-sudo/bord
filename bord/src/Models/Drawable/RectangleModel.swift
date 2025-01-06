@@ -24,6 +24,8 @@ class RectangleModel: DrawableModel, ObservableObject {
     var start: CGPoint
     var end: CGPoint
 
+    var linkedText: TextModel?
+
     var lineWidth: Double = 5
     var path: Path = Path()
     var id: UUID = UUID()

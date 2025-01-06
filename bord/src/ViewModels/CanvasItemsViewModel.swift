@@ -40,6 +40,8 @@ class CanvasItemsViewModel: ObservableObject {
 
     var drawing: Bool = false
 
+    var isTextInShapes: Bool = true
+
     var selectedDrawnCount: Int {
         drawn.filter { $0.isSelected }.count
     }
@@ -141,6 +143,51 @@ class CanvasItemsViewModel: ObservableObject {
         objectWillChange.send()
     }
 
+    fileprivate func checkRectBounds(_ maxX: inout CGFloat?, _ rect: RectangleModel, _ minX: inout CGFloat?, _ maxY: inout CGFloat?, _ minY: inout CGFloat?) {
+        if maxX == nil || rect.xMax > maxX! {
+            maxX = rect.xMax
+        }
+        if minX == nil || rect.xMin < minX! {
+            minX = rect.xMin
+        }
+        if maxY == nil || rect.yMax > maxY! {
+            maxY = rect.yMax
+        }
+        if minY == nil || rect.yMin < minY! {
+            minY = rect.yMin
+        }
+    }
+    
+    fileprivate func checkEllipseBounds(_ maxX: inout CGFloat?, _ circle: EllipseModel, _ minX: inout CGFloat?, _ maxY: inout CGFloat?, _ minY: inout CGFloat?) {
+        if maxX == nil || circle.xMax > maxX! {
+            maxX = circle.xMax
+        }
+        if minX == nil || circle.xMin < minX! {
+            minX = circle.xMin
+        }
+        if maxY == nil || circle.yMax > maxY! {
+            maxY = circle.yMax
+        }
+        if minY == nil || circle.yMin < minY! {
+            minY = circle.yMin
+        }
+    }
+    
+    fileprivate func checkLineBounds(_ maxX: inout CGFloat?, _ line: LineModel, _ minX: inout CGFloat?, _ maxY: inout CGFloat?, _ minY: inout CGFloat?) {
+        if maxX == nil || line.xMax > maxX! {
+            maxX = line.xMax
+        }
+        if minX == nil || line.xMin < minX! {
+            minX = line.xMin
+        }
+        if maxY == nil || line.yMax > maxY! {
+            maxY = line.yMax
+        }
+        if minY == nil || line.yMin < minY! {
+            minY = line.yMin
+        }
+    }
+    
     func updateSelectedSizeAndPos() {
         var maxX: CGFloat?
         var minX: CGFloat?
@@ -149,45 +196,13 @@ class CanvasItemsViewModel: ObservableObject {
 
         for item in getSelected() {
             if let line = item as? LineModel {
-                if maxX == nil || line.xMax > maxX! {
-                    maxX = line.xMax
-                }
-                if minX == nil || line.xMin < minX! {
-                    minX = line.xMin
-                }
-                if maxY == nil || line.yMax > maxY! {
-                    maxY = line.yMax
-                }
-                if minY == nil || line.yMin < minY! {
-                    minY = line.yMin
-                }
+                checkLineBounds(&maxX, line, &minX, &maxY, &minY)
             } else if let rect = item as? RectangleModel {
-                if maxX == nil || rect.xMax > maxX! {
-                    maxX = rect.xMax
-                }
-                if minX == nil || rect.xMin < minX! {
-                    minX = rect.xMin
-                }
-                if maxY == nil || rect.yMax > maxY! {
-                    maxY = rect.yMax
-                }
-                if minY == nil || rect.yMin < minY! {
-                    minY = rect.yMin
-                }
+                checkRectBounds(&maxX, rect, &minX, &maxY, &minY)
             } else if let circle = item as? EllipseModel {
-                if maxX == nil || circle.xMax > maxX! {
-                    maxX = circle.xMax
-                }
-                if minX == nil || circle.xMin < minX! {
-                    minX = circle.xMin
-                }
-                if maxY == nil || circle.yMax > maxY! {
-                    maxY = circle.yMax
-                }
-                if minY == nil || circle.yMin < minY! {
-                    minY = circle.yMin
-                }
-            }         }
+                checkEllipseBounds(&maxX, circle, &minX, &maxY, &minY)
+            }
+        }
         if minX != nil && minY != nil {
             selectedPos = CGPoint(x: minX!, y: minY!)
             selectedSize = CGSize(width: maxX! - minX!, height: maxY! - minY!)
@@ -208,5 +223,8 @@ class CanvasItemsViewModel: ObservableObject {
                 drawn.append(EllipseModel(copyOf: ellipse))
             }
         }
+    }
+    func duplicateText(text: TextModel) {
+        texts.append(TextModel(copyOf: text))
     }
 }

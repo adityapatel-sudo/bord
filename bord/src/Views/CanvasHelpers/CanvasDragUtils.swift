@@ -133,6 +133,11 @@ extension CanvasView {
 
             for inex in canvasVM.drawn.indices where canvasVM.drawn[inex].isSelected {
                 canvasVM.movePath(&canvasVM.drawn[inex], by: curDiff)
+                if let rect = canvasVM.drawn[inex] as? RectangleModel {
+                    if canvasVM.isTextInShapes && rect.linkedText != nil {
+                        rect.linkedText?.movePosition(by: curDiff)
+                    }
+                }
             }
         }
         canvasVM.isMoving = true
