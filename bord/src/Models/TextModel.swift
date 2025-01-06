@@ -12,7 +12,7 @@ class TextModel: CanvasItem, ObservableObject {
     var id: UUID = UUID()
     var color: Color
     @Published var text: String
-    @Published var width: CGFloat = 100
+    @Published var width: CGFloat = 150
     @Published var height: CGFloat = 100
     var position: CGPoint
     var fontSize: CGFloat = 25

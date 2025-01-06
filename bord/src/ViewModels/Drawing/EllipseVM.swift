@@ -14,19 +14,14 @@ extension CanvasItemsViewModel {
             currentEllipse = EllipseModel(position: point, color: color, lineWidth: size)
             drawn.append(currentEllipse)
         } else {
-            currentEllipse.endPosition = point
+            currentEllipse.addPoint(point: point)
             currentEllipse.path = Path()
 
             let rect = CGRect(
-                x: min(currentEllipse.position.x, currentEllipse.endPosition.x),
-                y: min(currentEllipse.position.y, currentEllipse.endPosition.y),
-                width: abs(currentEllipse.endPosition.x - currentEllipse.position.x),
-                height: abs(currentEllipse.endPosition.y - currentEllipse.position.y)
-            )
-
-            currentEllipse.setDimensions(
-                width: currentEllipse.endPosition.x - currentEllipse.position.x,
-                height: currentEllipse.endPosition.y - currentEllipse.position.y
+                x: currentEllipse.xMin,
+                y: currentEllipse.yMin,
+                width: (currentEllipse.xMax) - (currentEllipse.xMin),
+                height: (currentEllipse.yMax) - (currentEllipse.yMin)
             )
             currentEllipse.path.addEllipse(in: rect)
         }
@@ -36,14 +31,14 @@ extension CanvasItemsViewModel {
     func endEllipse(point: CGPoint) {
         drawing = false
 
-        currentEllipse.endPosition = point
+        currentEllipse.addPoint(point: point)
         currentEllipse.path = Path()
 
         let rect = CGRect(
-            x: min(currentEllipse.position.x, currentEllipse.endPosition.x),
-            y: min(currentEllipse.position.y, currentEllipse.endPosition.y),
-            width: abs(currentEllipse.endPosition.x - currentEllipse.position.x),
-            height: abs(currentEllipse.endPosition.y - currentEllipse.position.y)
+            x: currentEllipse.xMin,
+            y: currentEllipse.yMin,
+            width: (currentEllipse.xMax) - (currentEllipse.xMin),
+            height: (currentEllipse.yMax) - (currentEllipse.yMin)
         )
         currentEllipse.path.addEllipse(in: rect)
 

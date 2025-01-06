@@ -14,5 +14,9 @@ protocol DrawableModel: CanvasItem {
     var path: Path { get set }
     var transform: CGAffineTransform { get set }
 
+    var xMin: CGFloat {get set}
+    var xMax: CGFloat {get set}
+    var yMin: CGFloat {get set}
+    var yMax: CGFloat {get set}
     func movePathBounds(by value: CGSize)
 }

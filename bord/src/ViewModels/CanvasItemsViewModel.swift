@@ -24,15 +24,19 @@ class CanvasItemsViewModel: ObservableObject {
     // used for arrow heads while drawing
     // Line models will be saved in lines while drawing, then be combined with the drawn line on end
     @Published var drawEndMode: DrawEndMode = .plain
-    var arrowStart: LineModel = LineModel()
-    var arrowEnd: LineModel = LineModel()
+    var arrowStart: LineModel = LineModel(color: .black, lineWidth: 0, at: .zero)
+    var arrowEnd: LineModel = LineModel(color: .black, lineWidth: 0, at: .zero)
 
     // new items attributes
     var color: Color = .white
-    var currentLine: LineModel = LineModel()
-    var currentRect: RectangleModel = RectangleModel()
-    var currentEllipse: EllipseModel = EllipseModel()
+    var currentLine: LineModel = LineModel(color: .black, lineWidth: 0, at: .zero)
+    var currentRect: RectangleModel = RectangleModel(position: .zero)
+    var currentEllipse: EllipseModel = EllipseModel(position: .zero)
     var size: Double = 1.5
+
+    // selected item view
+    @Published var selectedSize: CGSize = .zero
+    @Published var selectedPos: CGPoint = .zero
 
     var drawing: Bool = false
 
@@ -53,7 +57,7 @@ class CanvasItemsViewModel: ObservableObject {
     func reset() {
         drawn.removeAll()
         texts.removeAll()
-        currentLine = LineModel()
+        currentLine = LineModel(color: .background, lineWidth: 0, at: .zero)
     }
 
     func remove(drawable: any DrawableModel) {
@@ -132,23 +136,77 @@ class CanvasItemsViewModel: ObservableObject {
         let percentage = (amount + 500) / 500
         transform = CGAffineTransform.init(scaleX: percentage, y: 1)
         let transformedPath = path.path.applying(transform)
+        path.path = transformedPath
         path.movePathBounds(by: .zero)
         objectWillChange.send()
     }
 
-    func rotatePath(_ path: inout any DrawableModel, amount: CGFloat, around center: CGPoint) {
-        let before = path.transform
-        let transform = CGAffineTransform(rotationAngle: amount * .pi / 180)
-        // Create a translation transform to move the path center to the origin
-        let translationToOrigin = CGAffineTransform(translationX: -center.x, y: -center.y)
-        // Create a translation transform to move the path back after rotation
-        let translationBack = CGAffineTransform(translationX: center.x, y: center.y)
-        // Apply the transformations (translate to origin, rotate, and translate back)
-        let finalTransform = before
-            .concatenating(translationToOrigin)
-            .concatenating(transform)
-            .concatenating(translationBack)
-        path.transform = finalTransform
+    func updateSelectedSizeAndPos() {
+        var maxX: CGFloat?
+        var minX: CGFloat?
+        var maxY: CGFloat?
+        var minY: CGFloat?
+
+        for item in getSelected() {
+            if let line = item as? LineModel {
+                if maxX == nil || line.xMax > maxX! {
+                    maxX = line.xMax
+                }
+                if minX == nil || line.xMin < minX! {
+                    minX = line.xMin
+                }
+                if maxY == nil || line.yMax > maxY! {
+                    maxY = line.yMax
+                }
+                if minY == nil || line.yMin < minY! {
+                    minY = line.yMin
+                }
+            } else if let rect = item as? RectangleModel {
+                if maxX == nil || rect.xMax > maxX! {
+                    maxX = rect.xMax
+                }
+                if minX == nil || rect.xMin < minX! {
+                    minX = rect.xMin
+                }
+                if maxY == nil || rect.yMax > maxY! {
+                    maxY = rect.yMax
+                }
+                if minY == nil || rect.yMin < minY! {
+                    minY = rect.yMin
+                }
+            } else if let circle = item as? EllipseModel {
+                if maxX == nil || circle.xMax > maxX! {
+                    maxX = circle.xMax
+                }
+                if minX == nil || circle.xMin < minX! {
+                    minX = circle.xMin
+                }
+                if maxY == nil || circle.yMax > maxY! {
+                    maxY = circle.yMax
+                }
+                if minY == nil || circle.yMin < minY! {
+                    minY = circle.yMin
+                }
+            }         }
+        if minX != nil && minY != nil {
+            selectedPos = CGPoint(x: minX!, y: minY!)
+            selectedSize = CGSize(width: maxX! - minX!, height: maxY! - minY!)
+        } else {
+            selectedPos = .zero
+            selectedSize = .zero
+        }
         objectWillChange.send()
+    }
+
+    func duplicateSelected() {
+        for item in getSelected() {
+            if let line = item as? LineModel {
+                drawn.append(LineModel(copyOf: line))
+            } else if let rectangle = item as? RectangleModel {
+                drawn.append(RectangleModel(copyOf: rectangle))
+            } else if let ellipse = item as? EllipseModel {
+                drawn.append(EllipseModel(copyOf: ellipse))
+            }
+        }
     }
 }

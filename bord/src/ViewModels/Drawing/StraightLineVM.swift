@@ -11,7 +11,7 @@ extension CanvasItemsViewModel {
     func newLine(point: CGPoint) {
         if !drawing {
             drawing = true
-            currentLine = LineModel(color: color, lineWidth: size)
+            currentLine = LineModel(color: color, lineWidth: size, at: point)
             drawn.append(currentLine)
             currentLine.path.move(to: point)
             currentLine.addPoint(point: point)
@@ -45,11 +45,9 @@ extension CanvasItemsViewModel {
     func newArrow(point: CGPoint) {
         if !drawing {
             drawing = true
-            currentLine = LineModel()
+            currentLine = LineModel(color: color, lineWidth: size, at: point)
             drawn.append(currentLine)
             currentLine.path.move(to: point)
-            currentLine.color = color
-            currentLine.lineWidth = size
             currentLine.addPoint(point: point)
         } else {
             // using append here because i dont want to set line width/height until final

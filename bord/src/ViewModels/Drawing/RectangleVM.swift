@@ -11,23 +11,18 @@ extension CanvasItemsViewModel {
     func newRectangle(point: CGPoint) {
         if !drawing {
             drawing = true
-            currentRect = RectangleModel(position: point, color: color, lineWidth: size)
+            currentRect = RectangleModel(color: color, lineWidth: size, at: point)
             drawn.append(currentRect)
             currentRect.path.move(to: point)
         } else {
-            let startPoint = currentRect.position
-            currentRect.setDimensions(
-                width: point.x - startPoint.x,
-                height: point.y - startPoint.y
-            )
-            let rect = CGRect(
-                x: min(startPoint.x, point.x),
-                y: min(startPoint.y, point.y),
-                width: abs(point.x - startPoint.x),
-                height: abs(point.y - startPoint.y)
-            )
+            currentRect.addPoint(point: point)
             currentRect.path = Path()
-            currentRect.endPosition = point
+            let rect = CGRect(
+                x: currentRect.xMin,
+                y: currentRect.yMin,
+                width: currentRect.xMax - currentRect.xMin,
+                height: currentRect.yMax - currentRect.yMin
+            )
             let circum = rect.size.width + rect.size.height
             currentRect.path.addRoundedRect(
                 in: rect,
@@ -39,5 +34,6 @@ extension CanvasItemsViewModel {
 
     func endRectangle(point: CGPoint) {
         drawing = false
+        currentRect.addPoint(point: point)
     }
 }

@@ -49,6 +49,7 @@ extension CanvasView {
         default:
             break
         }
+        canvasVM.updateSelectedSizeAndPos()
     }
 
     // swiftlint:disable:next cyclomatic_complexity
