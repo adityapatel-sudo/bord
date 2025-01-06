@@ -19,6 +19,7 @@ class EllipseModel: DrawableModel, ObservableObject {
     var color: Color = .white
     var position: CGPoint = CGPoint(x: 0, y: 0)
     var endPosition: CGPoint = CGPoint(x: 0, y: 0)
+    var transform: CGAffineTransform = .identity
 
     static func == (lhs: EllipseModel, rhs: EllipseModel) -> Bool {
         lhs.id == rhs.id
@@ -50,7 +51,9 @@ class EllipseModel: DrawableModel, ObservableObject {
         objectWillChange.send()
     }
 
-    func updatePath(with newPath: Path) {
-        path = newPath
+    func movePathBounds(by value: CGSize) {
+        width += value.width
+        height += value.height
+        objectWillChange.send()
     }
 }

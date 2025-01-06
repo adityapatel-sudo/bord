@@ -24,6 +24,7 @@ class RectangleModel: DrawableModel, ObservableObject {
     var color: Color = .white
     var position: CGPoint = CGPoint(x: 0, y: 0)
     var endPosition: CGPoint = CGPoint(x: 0, y: 0)
+    var transform: CGAffineTransform = .identity
 
     static func == (lhs: RectangleModel, rhs: RectangleModel) -> Bool {
         lhs.id == rhs.id
@@ -55,7 +56,9 @@ class RectangleModel: DrawableModel, ObservableObject {
         objectWillChange.send()
     }
 
-    func updatePath(with newPath: Path) {
-        path = newPath
+    func movePathBounds(by value: CGSize) {
+        position.x += value.width
+        position.y += value.height
+        objectWillChange.send()
     }
 }

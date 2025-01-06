@@ -14,8 +14,9 @@ extension CanvasItemsViewModel {
             currentLine = LineModel(color: color, lineWidth: size)
             drawn.append(currentLine)
             currentLine.path.move(to: point)
-            currentLine.points.append(point)
+            currentLine.addPoint(point: point)
         } else {
+            // using append here because i dont want to set line width/height until final
             if currentLine.points.count == 1 {
                 currentLine.points.append(point)
             } else {
@@ -31,6 +32,10 @@ extension CanvasItemsViewModel {
     func endLine(point: CGPoint) {
         if currentLine.points.count > 0 {
             currentLine.path.addLine(to: point)
+            currentLine.xMax = max(currentLine.points.first!.x, point.x)
+            currentLine.xMin = min(currentLine.points.first!.x, point.x)
+            currentLine.yMax = max(currentLine.points.first!.y, point.y)
+            currentLine.yMin = min(currentLine.points.first!.y, point.y)
             objectWillChange.send()
         }
         drawing = false
@@ -45,8 +50,9 @@ extension CanvasItemsViewModel {
             currentLine.path.move(to: point)
             currentLine.color = color
             currentLine.lineWidth = size
-            currentLine.points.append(point)
+            currentLine.addPoint(point: point)
         } else {
+            // using append here because i dont want to set line width/height until final
             if currentLine.points.count == 1 {
                 currentLine.points.append(point)
             } else {
@@ -56,7 +62,6 @@ extension CanvasItemsViewModel {
             let startPoint = currentLine.points.first!
             let endPoint = currentLine.points.last!
 
-            // Draw the main line
             currentLine.path.move(to: startPoint)
             currentLine.path.addLine(to: endPoint)
 
@@ -84,7 +89,7 @@ extension CanvasItemsViewModel {
 
     func endArrow(point: CGPoint) {
         if currentLine.points.count > 0 {
-            currentLine.points.append(point)
+            currentLine.addPoint(point: point)
             currentLine.path = Path()
 
             let startPoint = currentLine.points.first!

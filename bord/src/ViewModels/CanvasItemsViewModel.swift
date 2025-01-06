@@ -75,16 +75,20 @@ class CanvasItemsViewModel: ObservableObject {
         objectWillChange.send()
     }
 
-    func movePath(_ path: any DrawableModel, by value: CGSize) {
-        let newPath = path.path.offsetBy(dx: value.width, dy: value.height)
-        path.updatePath(with: newPath)
+    func movePath(_ path: inout any DrawableModel, by value: CGSize) {
+        path.transform = path.transform.concatenating(.init(translationX: value.width, y: value.height))
+        path.movePathBounds(by: value)
         objectWillChange.send()
     }
 
     func unselectAll() {
-        for drawnItem in drawn where drawnItem.isSelected {
-            drawnItem.isSelected = false
+        for index in 0..<drawn.count where drawn[index].isSelected {
+            drawn[index].isSelected = false
         }
+    }
+
+    func getSelected() -> [any DrawableModel] {
+        return drawn.filter { $0.isSelected }
     }
 
     func addArrow(in arrow: LineModel, from start: CGPoint, to end: CGPoint) {
@@ -121,5 +125,30 @@ class CanvasItemsViewModel: ObservableObject {
         if drawn.count > 0 {
             drawn.removeLast()
         }
+    }
+
+    func transformPath(_ path: inout any DrawableModel, amount: CGFloat) {
+        var transform: CGAffineTransform
+        let percentage = (amount + 500) / 500
+        transform = CGAffineTransform.init(scaleX: percentage, y: 1)
+        let transformedPath = path.path.applying(transform)
+        path.movePathBounds(by: .zero)
+        objectWillChange.send()
+    }
+
+    func rotatePath(_ path: inout any DrawableModel, amount: CGFloat, around center: CGPoint) {
+        let before = path.transform
+        let transform = CGAffineTransform(rotationAngle: amount * .pi / 180)
+        // Create a translation transform to move the path center to the origin
+        let translationToOrigin = CGAffineTransform(translationX: -center.x, y: -center.y)
+        // Create a translation transform to move the path back after rotation
+        let translationBack = CGAffineTransform(translationX: center.x, y: center.y)
+        // Apply the transformations (translate to origin, rotate, and translate back)
+        let finalTransform = before
+            .concatenating(translationToOrigin)
+            .concatenating(transform)
+            .concatenating(translationBack)
+        path.transform = finalTransform
+        objectWillChange.send()
     }
 }

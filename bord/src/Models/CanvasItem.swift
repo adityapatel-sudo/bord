@@ -9,6 +9,6 @@ import Foundation
 import SwiftUI
 
 protocol CanvasItem: Identifiable, Equatable {
-    var id: UUID { get }
+    var id: UUID { get set }
     var color: Color { get set }
 }

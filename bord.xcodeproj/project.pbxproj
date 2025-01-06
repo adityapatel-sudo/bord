@@ -15,6 +15,9 @@
 		343244382D24521A00F8F7D0 /* StraightLineVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343244372D24521A00F8F7D0 /* StraightLineVM.swift */; };
 		3432443A2D24526A00F8F7D0 /* RectangleVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343244392D24526A00F8F7D0 /* RectangleVM.swift */; };
 		3432443C2D24F79800F8F7D0 /* EllipseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3432443B2D24F79800F8F7D0 /* EllipseModel.swift */; };
+		3432443F2D26927600F8F7D0 /* CanvasDrawingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3432443E2D26927600F8F7D0 /* CanvasDrawingUtils.swift */; };
+		343244412D26930400F8F7D0 /* CanvasDragUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343244402D26930400F8F7D0 /* CanvasDragUtils.swift */; };
+		343244432D26946500F8F7D0 /* SelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343244422D26946500F8F7D0 /* SelectView.swift */; };
 		344596562D1BBB3100EC76D4 /* SizePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344596552D1BBB3100EC76D4 /* SizePickerView.swift */; };
 		344596592D1BBD3500EC76D4 /* CanvasButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344596582D1BBD3500EC76D4 /* CanvasButton.swift */; };
 		3445965B2D1BD14700EC76D4 /* DrawingToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3445965A2D1BD14700EC76D4 /* DrawingToolbarView.swift */; };
@@ -78,6 +81,9 @@
 		343244372D24521A00F8F7D0 /* StraightLineVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StraightLineVM.swift; sourceTree = "<group>"; };
 		343244392D24526A00F8F7D0 /* RectangleVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleVM.swift; sourceTree = "<group>"; };
 		3432443B2D24F79800F8F7D0 /* EllipseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipseModel.swift; sourceTree = "<group>"; };
+		3432443E2D26927600F8F7D0 /* CanvasDrawingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasDrawingUtils.swift; sourceTree = "<group>"; };
+		343244402D26930400F8F7D0 /* CanvasDragUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasDragUtils.swift; sourceTree = "<group>"; };
+		343244422D26946500F8F7D0 /* SelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectView.swift; sourceTree = "<group>"; };
 		344596552D1BBB3100EC76D4 /* SizePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePickerView.swift; sourceTree = "<group>"; };
 		344596582D1BBD3500EC76D4 /* CanvasButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasButton.swift; sourceTree = "<group>"; };
 		3445965A2D1BD14700EC76D4 /* DrawingToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingToolbarView.swift; sourceTree = "<group>"; };
@@ -157,11 +163,42 @@
 			path = Drawing;
 			sourceTree = "<group>";
 		};
+		3432443D2D26924E00F8F7D0 /* CanvasHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				3432443E2D26927600F8F7D0 /* CanvasDrawingUtils.swift */,
+				343244402D26930400F8F7D0 /* CanvasDragUtils.swift */,
+			);
+			path = CanvasHelpers;
+			sourceTree = "<group>";
+		};
+		343244442D2B8B9B00F8F7D0 /* Drawable */ = {
+			isa = PBXGroup;
+			children = (
+				34EA243A2D0FDF2900D392CC /* LineModel.swift */,
+				3432442E2D23AA3E00F8F7D0 /* DrawableModel.swift */,
+				343244302D23AD4800F8F7D0 /* RectangleModel.swift */,
+				3432443B2D24F79800F8F7D0 /* EllipseModel.swift */,
+			);
+			path = Drawable;
+			sourceTree = "<group>";
+		};
+		343244452D2B8BD500F8F7D0 /* enums */ = {
+			isa = PBXGroup;
+			children = (
+				34146C7D2D138A19000B7328 /* CanvasMode.swift */,
+				34E538072D1E109800915491 /* CanvasGridMode.swift */,
+				34D33BA92D22AB05009E8984 /* DrawEndMode.swift */,
+			);
+			path = enums;
+			sourceTree = "<group>";
+		};
 		344596572D1BBD1F00EC76D4 /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				344596582D1BBD3500EC76D4 /* CanvasButton.swift */,
 				347665052D21071200D7440B /* EditableTextView.swift */,
+				343244422D26946500F8F7D0 /* SelectView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -276,6 +313,7 @@
 			children = (
 				34D33BA22D223CE2009E8984 /* ViewModifiers */,
 				349F09D22D19BBAD00FB16E4 /* CanvasViews */,
+				3432443D2D26924E00F8F7D0 /* CanvasHelpers */,
 				344596572D1BBD1F00EC76D4 /* Components */,
 				34EA24372D0FBE6000D392CC /* CanvasView.swift */,
 				34EA24062D0FBCF000D392CC /* ContentView.swift */,
@@ -298,15 +336,10 @@
 		34EA24392D0FDF1600D392CC /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				34EA243A2D0FDF2900D392CC /* LineModel.swift */,
-				34146C7D2D138A19000B7328 /* CanvasMode.swift */,
+				343244452D2B8BD500F8F7D0 /* enums */,
+				343244442D2B8B9B00F8F7D0 /* Drawable */,
 				3445965C2D1C77E400EC76D4 /* CanvasItem.swift */,
-				34E538072D1E109800915491 /* CanvasGridMode.swift */,
 				347665032D20F91B00D7440B /* TextModel.swift */,
-				34D33BA92D22AB05009E8984 /* DrawEndMode.swift */,
-				3432442E2D23AA3E00F8F7D0 /* DrawableModel.swift */,
-				343244302D23AD4800F8F7D0 /* RectangleModel.swift */,
-				3432443B2D24F79800F8F7D0 /* EllipseModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -448,10 +481,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				343244432D26946500F8F7D0 /* SelectView.swift in Sources */,
 				34EA243D2D1108BD00D392CC /* CanvasItemsViewModel.swift in Sources */,
 				34EA24112D0FBCF100D392CC /* bord.xcdatamodeld in Sources */,
 				347665042D20F91B00D7440B /* TextModel.swift in Sources */,
 				343244312D23AD4800F8F7D0 /* RectangleModel.swift in Sources */,
+				3432443F2D26927600F8F7D0 /* CanvasDrawingUtils.swift in Sources */,
 				349F09CF2D19B50500FB16E4 /* CustomColorPicker.swift in Sources */,
 				343244342D24513700F8F7D0 /* DrawnLineVM.swift in Sources */,
 				3445965B2D1BD14700EC76D4 /* DrawingToolbarView.swift in Sources */,
@@ -478,6 +513,7 @@
 				3432443A2D24526A00F8F7D0 /* RectangleVM.swift in Sources */,
 				34D33BB22D23726C009E8984 /* DrawingUtils.swift in Sources */,
 				34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */,
+				343244412D26930400F8F7D0 /* CanvasDragUtils.swift in Sources */,
 				34D33BA42D223CF8009E8984 /* HeightCalculator.swift in Sources */,
 				3445965D2D1C77E400EC76D4 /* CanvasItem.swift in Sources */,
 				34E5380E2D1F6BAA00915491 /* ScrollWheelModifier.swift in Sources */,

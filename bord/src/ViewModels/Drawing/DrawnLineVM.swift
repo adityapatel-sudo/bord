@@ -19,7 +19,7 @@ extension CanvasItemsViewModel {
             let midPoint = DrawingUtils.getMidPoint(prev, point)
             currentLine.path.addQuadCurve(to: midPoint, control: prev)
         }
-        currentLine.points.append(point)
+        currentLine.addPoint(point: point)
         objectWillChange.send()
     }
 
@@ -52,7 +52,7 @@ extension CanvasItemsViewModel {
             arrowEnd.path = Path()
             addArrow(in: arrowEnd, from: currentLine.points[currentLine.points.count-1], to: point)
         }
-        currentLine.points.append(point)
+        currentLine.addPoint(point: point)
         objectWillChange.send()
     }
 
@@ -93,7 +93,7 @@ extension CanvasItemsViewModel {
             arrowEnd.path = Path()
             addArrow(in: arrowEnd, from: currentLine.points[currentLine.points.count-1], to: point)
         }
-        currentLine.points.append(point)
+        currentLine.addPoint(point: point)
         objectWillChange.send()
     }
 
