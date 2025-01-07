@@ -16,6 +16,7 @@ struct EditableTextView: View {
     @FocusState var isFocused: Bool
     @State var isDragging: Bool = false
     @State var extraDetails: Bool = false
+    @State var textAlignment: TextAlignment = .center
 
     var body: some View {
         VStack {
@@ -101,6 +102,9 @@ struct EditableTextView: View {
         .onChange(of: text.isFocused) { _, _ in
             isFocused = text.isFocused
         }
+        .onChange(of: isFocused) { _, _ in
+            text.isFocused = isFocused
+        }
         .overlay(alignment: .top) {
             if isFocused || isDragging {
                 HStack(spacing: 0) {
@@ -183,8 +187,7 @@ struct EditableTextView: View {
                                 isSelected: false,
                                 onTap: {
                                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                                        text.rotation -= 45
-                                        text.objectWillChange.send()
+                                        text.rotateLeft()
                                     }
                                 },
                                 imageSize: .medium,
@@ -195,8 +198,7 @@ struct EditableTextView: View {
                                 isSelected: false,
                                 onTap: {
                                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                                        text.rotation += 45
-                                        text.objectWillChange.send()
+                                        text.rotateRight()
                                     }
                                 },
                                 imageSize: .medium,
@@ -223,6 +225,48 @@ struct EditableTextView: View {
                                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                                         text.isBold.toggle()
                                         text.objectWillChange.send()
+                                    }
+                                },
+                                imageSize: .medium,
+                                imageFrameSize: 40,
+                                highlightSize: 35,
+                                cornerRadius: 8
+                            )
+                            CanvasButton(
+                                imageName: "text.alignleft",
+                                isSelected: text.textAlignment == .leading,
+                                onTap: {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                        text.setTextAlignment(to: .leading)
+                                        textAlignment = .leading
+                                    }
+                                },
+                                imageSize: .medium,
+                                imageFrameSize: 40,
+                                highlightSize: 35,
+                                cornerRadius: 8
+                            )
+                            CanvasButton(
+                                imageName: "text.aligncenter",
+                                isSelected: text.textAlignment == .center,
+                                onTap: {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                        text.setTextAlignment(to: .center)
+                                        textAlignment = .center
+                                    }
+                                },
+                                imageSize: .medium,
+                                imageFrameSize: 40,
+                                highlightSize: 35,
+                                cornerRadius: 8
+                            )
+                            CanvasButton(
+                                imageName: "text.alignright",
+                                isSelected: text.textAlignment == .trailing,
+                                onTap: {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                        text.setTextAlignment(to: .trailing)
+                                        textAlignment = .trailing
                                     }
                                 },
                                 imageSize: .medium,

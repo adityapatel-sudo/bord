@@ -32,7 +32,7 @@ class CanvasItemsViewModel: ObservableObject {
     var currentLine: LineModel = LineModel(color: .black, lineWidth: 0, at: .zero)
     var currentRect: RectangleModel = RectangleModel(position: .zero)
     var currentEllipse: EllipseModel = EllipseModel(position: .zero)
-    var size: Double = 1.5
+    var thickness: Double = 1.5
 
     // selected item view
     @Published var selectedSize: CGSize = .zero
@@ -56,7 +56,14 @@ class CanvasItemsViewModel: ObservableObject {
     }
 
     func setSize(newSize: Double) {
-        size = newSize
+        thickness = newSize
+        objectWillChange.send()
+    }
+
+    func updateSelectedThickness() {
+        for index in 0..<drawn.count where drawn[index].isSelected {
+            drawn[index].lineWidth = thickness
+        }
         objectWillChange.send()
     }
 
@@ -86,6 +93,12 @@ class CanvasItemsViewModel: ObservableObject {
     }
 
     func movePath(_ path: inout any DrawableModel, by value: CGSize) {
+        path.transform = path.transform.concatenating(.init(translationX: value.width, y: value.height))
+        path.movePathBounds(by: value)
+        objectWillChange.send()
+    }
+
+    func movePath(_ path: inout RectangleModel, by value: CGSize) {
         path.transform = path.transform.concatenating(.init(translationX: value.width, y: value.height))
         path.movePathBounds(by: value)
         objectWillChange.send()

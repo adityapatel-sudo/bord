@@ -11,7 +11,7 @@ extension CanvasItemsViewModel {
     func newLine(point: CGPoint) {
         if !drawing {
             drawing = true
-            currentLine = LineModel(color: color, lineWidth: size, at: point)
+            currentLine = LineModel(color: color, lineWidth: thickness, at: point)
             drawn.append(currentLine)
             currentLine.path.move(to: point)
             currentLine.addPoint(point: point)
@@ -45,7 +45,7 @@ extension CanvasItemsViewModel {
     func newArrow(point: CGPoint) {
         if !drawing {
             drawing = true
-            currentLine = LineModel(color: color, lineWidth: size, at: point)
+            currentLine = LineModel(color: color, lineWidth: thickness, at: point)
             drawn.append(currentLine)
             currentLine.path.move(to: point)
             currentLine.addPoint(point: point)

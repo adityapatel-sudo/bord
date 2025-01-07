@@ -14,7 +14,7 @@ extension CanvasItemsViewModel {
     func newEllipse(point: CGPoint) {
         if !drawing {
             drawing = true
-            currentEllipse = EllipseModel(position: point, color: color, lineWidth: size)
+            currentEllipse = EllipseModel(position: point, color: color, lineWidth: thickness)
             drawn.append(currentEllipse)
         } else {
             currentEllipse.addPoint(point: point)

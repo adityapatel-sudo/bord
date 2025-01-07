@@ -75,7 +75,8 @@ struct ContentView: View {
                             .padding(10)
                     }
                     let sizePickerVisible = modeVM.mode == .draw || modeVM.mode == .line ||
-                        modeVM.mode == .rectangle || modeVM.mode == .arrow || modeVM.mode == .elipse
+                    modeVM.mode == .rectangle || modeVM.mode == .arrow ||
+                    modeVM.mode == .elipse || modeVM.mode == .select
                     if sizePickerVisible {
                         SizePickerView(canvasVM: canvasVM)
                             .padding(10)

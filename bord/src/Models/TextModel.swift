@@ -15,6 +15,8 @@ class TextModel: CanvasItem, ObservableObject {
     @Published var width: CGFloat = 150
     @Published var height: CGFloat = 100
     @Published var isFocused: Bool = false
+    @Published var textAlignment: TextAlignment = .center
+
     var position: CGPoint
 
     var fontSize: CGFloat = 25
@@ -54,6 +56,21 @@ class TextModel: CanvasItem, ObservableObject {
 
     func setColor(to color: Color) {
         self.color = color
+        objectWillChange.send()
+    }
+
+    func rotateLeft() {
+        self.rotation -= 45
+        objectWillChange.send()
+    }
+
+    func rotateRight() {
+        self.rotation += 45
+        objectWillChange.send()
+    }
+
+    func setTextAlignment(to new: TextAlignment) {
+        self.textAlignment = new
         objectWillChange.send()
     }
 

@@ -11,7 +11,7 @@ extension CanvasItemsViewModel {
     func newRectangle(point: CGPoint, isEllipse: Bool) {
         if !drawing {
             drawing = true
-            currentRect = RectangleModel(color: color, lineWidth: size, at: point, isEllipse: isEllipse)
+            currentRect = RectangleModel(color: color, lineWidth: thickness, at: point, isEllipse: isEllipse)
             drawn.append(currentRect)
             currentRect.path.move(to: point)
         } else {

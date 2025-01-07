@@ -16,7 +16,7 @@ struct SizePickerView: View {
                 // small
                 CanvasButton(
                     imageName: "circle.fill",
-                    isSelected: canvasVM.size == 1.5,
+                    isSelected: canvasVM.thickness == 1.5,
                     onTap: {
                         canvasVM.setSize(newSize: 1.5)
                     },
@@ -26,7 +26,7 @@ struct SizePickerView: View {
                 // medium
                 CanvasButton(
                     imageName: "circle.fill",
-                    isSelected: canvasVM.size == 4,
+                    isSelected: canvasVM.thickness == 4,
                     onTap: {
                         canvasVM.setSize(newSize: 4)
                     },
@@ -36,7 +36,7 @@ struct SizePickerView: View {
                 // large
                 CanvasButton(
                     imageName: "circle.fill",
-                    isSelected: canvasVM.size == 15,
+                    isSelected: canvasVM.thickness == 15,
                     onTap: {
                         canvasVM.setSize(newSize: 15)
                     },
@@ -54,7 +54,7 @@ struct SizePickerView: View {
             .cornerRadius(15)
 
             if sliderVisible {
-                Slider(value: $canvasVM.size, in: 1...30, step: 1)
+                Slider(value: $canvasVM.thickness, in: 1...30, step: 1)
                     .padding()
                     .frame(width: 200)
                     .background(Color.black.cornerRadius(10))

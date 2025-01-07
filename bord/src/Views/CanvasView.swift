@@ -55,13 +55,15 @@ struct CanvasView: View {
                     .onChanged {value in handleDragChanged(value, isCMDPressed: false)}
                     .onEnded {value in handleDragEnded(value, isCMDPressed: false)}
             )
-
             .onChange(of: modeVM.mode) { _, newValue in
                 if newValue != .select {
                     canvasVM.unselectAll()
                     canvasVM.isMoving = false
                     canvasVM.selectedPath = nil
                 }
+            }
+            .onChange(of: canvasVM.thickness) { _, _ in
+                canvasVM.updateSelectedThickness()
             }
             .background(ColorManager.backgroundColor)
             // draw selection boxes
