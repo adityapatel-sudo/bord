@@ -17,6 +17,7 @@ struct CenterCanvasView: View {
                 isSelected: false,
                 onTap: {
                     canvasModeVM.resetOffset()
+                    canvasModeVM.zoom = 1
                 },
                 highlighted: true
             )

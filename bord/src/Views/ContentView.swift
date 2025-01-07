@@ -25,86 +25,93 @@ struct ContentView: View {
     @State var invisible = false
 
     var body: some View {
-        ZStack {
-            CanvasView(canvasVM: canvasVM, modeVM: modeVM)
-                .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                .onHover { inside in
-                    if inside {
-                        NSCursor.crosshair.push()
-                    } else {
-                        NSCursor.pop()
-                    }
-                }
-            VStack {
-                HStack {
-                    HStack(spacing: 0) {
-                        CanvasButton(
-                            imageName: "eye.slash",
-                            isSelected: invisible,
-                            onTap: {
-                                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                                    invisible.toggle()
-                                }
-                            },
-                            highlightSize: 35
-                        )
-                    }
-                    .background(ColorManager.lighterGrey)
-                    .cornerRadius(15)
-                    if !invisible {
-                        GridPickerView(modeVM: modeVM)
-                    }
-                    Spacer()
-                }
-                .padding(10)
-                Spacer()
-            }
-
-            VStack {
-                let colorPickerInvisible =
-                    modeVM.mode == .pan || modeVM.mode == .erase
-                let drawModesVisible = modeVM.mode == .draw
-                HStack(alignment: .top, spacing: 0) {
-                    Spacer()
-                    if drawModesVisible {
-                        DrawOptionsView(canvasVM: canvasVM)
-                            .padding(10)
-                    }
-                    if !colorPickerInvisible {
-                        ColorPickerView(canvasVM: canvasVM)
-                            .padding(10)
-                    }
-                    let sizePickerVisible = modeVM.mode == .draw || modeVM.mode == .line ||
-                    modeVM.mode == .rectangle || modeVM.mode == .arrow ||
-                    modeVM.mode == .elipse || modeVM.mode == .select
-                    if sizePickerVisible {
-                        SizePickerView(canvasVM: canvasVM)
-                            .padding(10)
-                    }
-                    Spacer()
-                }
-                Spacer()
-
-                ZStack(alignment: .bottom) {
-                    LazyHStack(alignment: .bottom, spacing: 10) {
-                        DrawingToolbarView(canvasModeVM: modeVM, canvasVM: canvasVM)
-                        if modeVM.shapesEnabled {
-                            ShapesToolbar(canvasVM: canvasVM, modeVM: modeVM)
+        GeometryReader { geometry in
+            ZStack {
+                CanvasView(canvasVM: canvasVM, modeVM: modeVM)
+                    .onHover { inside in
+                        if inside {
+                            NSCursor.crosshair.push()
+                        } else {
+                            NSCursor.pop()
                         }
-                        BottomToolbarView(canvasModeVM: modeVM, canvasVM: canvasVM)
+                    }
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                VStack {
+                    HStack {
+                        HStack(spacing: 0) {
+                            CanvasButton(
+                                imageName: "eye.slash",
+                                isSelected: invisible,
+                                onTap: {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                        invisible.toggle()
+                                    }
+                                },
+                                highlightSize: 35
+                            )
+                        }
+                        .background(ColorManager.lighterGrey)
+                        .cornerRadius(15)
+                        if !invisible {
+                            GridPickerView(modeVM: modeVM)
+                        }
+                        Spacer()
                     }
                     .padding(10)
-                    HStack(alignment: .bottom) {
-                        if modeVM.isOffCenter() {
-                            CenterCanvasView(canvasModeVM: modeVM)
+                    Spacer()
+                }
+
+                VStack {
+                    let colorPickerInvisible =
+                        modeVM.mode == .pan || modeVM.mode == .erase
+                    let drawModesVisible = modeVM.mode == .draw
+                    HStack(alignment: .top, spacing: 0) {
+                        Spacer()
+                        if drawModesVisible {
+                            DrawOptionsView(canvasVM: canvasVM)
+                                .padding(10)
+                        }
+                        if !colorPickerInvisible {
+                            ColorPickerView(canvasVM: canvasVM)
+                                .padding(10)
+                        }
+                        let sizePickerVisible = modeVM.mode == .draw || modeVM.mode == .line ||
+                        modeVM.mode == .rectangle || modeVM.mode == .arrow ||
+                        modeVM.mode == .elipse || modeVM.mode == .select
+                        if sizePickerVisible {
+                            SizePickerView(canvasVM: canvasVM)
                                 .padding(10)
                         }
                         Spacer()
                     }
+                    Spacer()
+
+                    ZStack(alignment: .bottom) {
+                        LazyHStack(alignment: .bottom, spacing: 10) {
+                            DrawingToolbarView(canvasModeVM: modeVM, canvasVM: canvasVM)
+                            if modeVM.shapesEnabled {
+                                ShapesToolbar(canvasVM: canvasVM, modeVM: modeVM)
+                            }
+                            BottomToolbarView(canvasModeVM: modeVM, canvasVM: canvasVM)
+                        }
+                        .padding(10)
+                        HStack(alignment: .bottom) {
+                            if modeVM.isOffCenter() || modeVM.zoom != 1 {
+                                CenterCanvasView(canvasModeVM: modeVM)
+                                    .padding(10)
+                            }
+                            Spacer()
+                        }
+                    }
                 }
+                .opacity(!invisible ? 1 : 0)
+                .allowsHitTesting(!invisible)
             }
-            .opacity(!invisible ? 1 : 0)
-            .allowsHitTesting(!invisible)
+            .onAppear {
+                modeVM.panOffset = CGSize(
+                    width: geometry.size.width, height: geometry.size.height
+                )
+            }
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class CanvasModeViewModel: ObservableObject {
     @Published var mode: CanvasMode = .draw
@@ -14,6 +15,8 @@ class CanvasModeViewModel: ObservableObject {
     @Published var currentPanOffset: CGSize = .zero
     @Published var panOffset: CGSize = .zero
     @Published var shapesEnabled: Bool = false
+
+    @Published var zoom: CGFloat = 1.0
 
     var defaultOffset: CGSize = .zero
 
@@ -39,5 +42,12 @@ class CanvasModeViewModel: ObservableObject {
 
     func isOffCenter() -> Bool {
         return panOffset != defaultOffset
+    }
+
+    func magnify(by value: MagnifyGesture.Value) {
+        let result = zoom * sqrt(value.magnification)
+        if result > 0.5 && result < 3 {
+            zoom = result
+        }
     }
 }

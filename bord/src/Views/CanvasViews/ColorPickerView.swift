@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ColorPickerView: View {
-    let colors: [Color] = [.black, ColorManager.backgroundColor, .red, .orange, .yellow, .green, .blue, .white]
+    let colors: [Color] = [.black, .red, .orange, .yellow, .green, .blue, .white]
     @ObservedObject var canvasVM: CanvasItemsViewModel
 
     var body: some View {

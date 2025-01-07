@@ -72,8 +72,8 @@ extension CanvasView {
                     path.move(to: startPoint)
                     path.addLine(to: endPoint)
                 },
-                with: .color(.gray),
-                lineWidth: 0.5
+                with: .color(ColorManager.uneditableBackground),
+                lineWidth: 1
             )
         }
     }
@@ -95,8 +95,8 @@ extension CanvasView {
                     path.move(to: startPoint)
                     path.addLine(to: endPoint)
                 },
-                with: .color(.gray),
-                lineWidth: 0.5
+                with: .color(ColorManager.uneditableBackground),
+                lineWidth: 1
             )
         }
     }

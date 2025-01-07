@@ -55,6 +55,9 @@ struct CanvasView: View {
                     .onChanged {value in handleDragChanged(value, isCMDPressed: false)}
                     .onEnded {value in handleDragEnded(value, isCMDPressed: false)}
             )
+            .highPriorityGesture(MagnifyGesture()
+                .onChanged { value in modeVM.magnify(by: value) }
+            )
             .onChange(of: modeVM.mode) { _, newValue in
                 if newValue != .select {
                     canvasVM.unselectAll()
@@ -78,6 +81,9 @@ struct CanvasView: View {
                 )
             }
         }
+        .scaleEffect(modeVM.zoom)
+        .clipped()
+        .frame(width: canvasSize.width, height: canvasSize.height)
     }
 }
 
