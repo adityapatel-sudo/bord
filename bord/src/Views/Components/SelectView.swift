@@ -16,9 +16,8 @@ struct SelectView: View {
         if selected.count == 1 {
             if let rect = selected[0] as? RectangleModel {
                 RectangleSelectView(canvasVM: canvasVM, modeVM: modeVM, rect: rect)
-                
             } else if let line = selected[0] as? LineModel {
-                
+                // TODO: LineSelectView(canvasVM: canvasVM, modeVM: modeVM, line: line) 
             }
         }
     }
