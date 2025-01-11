@@ -59,17 +59,9 @@ class LineModel: DrawableModel, ObservableObject {
 
     func addPoint(point: CGPoint) {
         points.append(point)
-        if point.x < xMin {
-            xMin = point.x
-        }
-        if point.x > xMax {
-            xMax = point.x
-        }
-        if point.y < yMin {
-            yMin = point.y
-        }
-        if point.y > yMax {
-            yMax = point.y
-        }
+        if point.x < xMin { xMin = point.x }
+        if point.x > xMax { xMax = point.x }
+        if point.y < yMin { yMin = point.y }
+        if point.y > yMax { yMax = point.y }
     }
 }

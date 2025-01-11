@@ -60,6 +60,9 @@ struct DrawingToolbarView: View {
                 isSelected: canvasModeVM.shapesEnabled,
                 onTap: {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        if !canvasModeVM.shapesEnabled {
+                            canvasModeVM.mode = .rectangle
+                        }
                         canvasModeVM.shapesEnabled.toggle()
                     }
                 }

@@ -28,7 +28,7 @@ struct EditableTextView: View {
                                 .onChanged { value in
                                     isDragging = true
                                     isFocused = false
-                                    text.width = min(max(20, text.width - value.translation.width), 1500)
+                                    text.width = min(max(80, text.width - value.translation.width), 1500)
                                 }
                                 .onEnded { _ in
                                     isDragging = false
@@ -232,48 +232,48 @@ struct EditableTextView: View {
                                 highlightSize: 35,
                                 cornerRadius: 8
                             )
-                            CanvasButton(
-                                imageName: "text.alignleft",
-                                isSelected: text.textAlignment == .leading,
-                                onTap: {
-                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                                        text.setTextAlignment(to: .leading)
-                                        textAlignment = .leading
-                                    }
-                                },
-                                imageSize: .medium,
-                                imageFrameSize: 40,
-                                highlightSize: 35,
-                                cornerRadius: 8
-                            )
-                            CanvasButton(
-                                imageName: "text.aligncenter",
-                                isSelected: text.textAlignment == .center,
-                                onTap: {
-                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                                        text.setTextAlignment(to: .center)
-                                        textAlignment = .center
-                                    }
-                                },
-                                imageSize: .medium,
-                                imageFrameSize: 40,
-                                highlightSize: 35,
-                                cornerRadius: 8
-                            )
-                            CanvasButton(
-                                imageName: "text.alignright",
-                                isSelected: text.textAlignment == .trailing,
-                                onTap: {
-                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                                        text.setTextAlignment(to: .trailing)
-                                        textAlignment = .trailing
-                                    }
-                                },
-                                imageSize: .medium,
-                                imageFrameSize: 40,
-                                highlightSize: 35,
-                                cornerRadius: 8
-                            )
+//                            CanvasButton(
+//                                imageName: "text.alignleft",
+//                                isSelected: text.textAlignment == .leading,
+//                                onTap: {
+//                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+//                                        text.setTextAlignment(to: .leading)
+//                                        textAlignment = .leading
+//                                    }
+//                                },
+//                                imageSize: .medium,
+//                                imageFrameSize: 40,
+//                                highlightSize: 35,
+//                                cornerRadius: 8
+//                            )
+//                            CanvasButton(
+//                                imageName: "text.aligncenter",
+//                                isSelected: text.textAlignment == .center,
+//                                onTap: {
+//                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+//                                        text.setTextAlignment(to: .center)
+//                                        textAlignment = .center
+//                                    }
+//                                },
+//                                imageSize: .medium,
+//                                imageFrameSize: 40,
+//                                highlightSize: 35,
+//                                cornerRadius: 8
+//                            )
+//                            CanvasButton(
+//                                imageName: "text.alignright",
+//                                isSelected: text.textAlignment == .trailing,
+//                                onTap: {
+//                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+//                                        text.setTextAlignment(to: .trailing)
+//                                        textAlignment = .trailing
+//                                    }
+//                                },
+//                                imageSize: .medium,
+//                                imageFrameSize: 40,
+//                                highlightSize: 35,
+//                                cornerRadius: 8
+//                            )
                         }
                         .background(ColorManager.lighterGrey)
                         .cornerRadius(10)

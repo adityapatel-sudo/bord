@@ -15,40 +15,44 @@ extension CanvasView {
             x: value.location.x - modeVM.currentPanOffset.width,
             y: value.location.y - modeVM.currentPanOffset.height
         )
-        switch modeVM.mode {
-        case .draw:
-            switch canvasVM.drawEndMode {
-            case .plain:
-                canvasVM.newDraw(point: offsetPoint)
-            case .arrow:
-                canvasVM.newDrawnArrow(point: offsetPoint)
-            case .twoEndArrow:
-                canvasVM.newTwoDrawnArrow(point: offsetPoint)
-            }
-        case .erase:
-            handleEraseStroke(offsetPoint)
-        case .select:
-            handleSelectStroke(value, offsetPoint, isCMDPressed: isCMDPressed)
-        case .line:
-            canvasVM.newLine(point: offsetPoint)
-        case .arrow:
-            canvasVM.newArrow(point: offsetPoint)
-        case .rectangle:
-            canvasVM.newRectangle(point: offsetPoint, isEllipse: false)
-        case .elipse:
-            canvasVM.newRectangle(point: offsetPoint, isEllipse: true)
-        case .pan:
-            // Handle panning
-            let newOffset = CGSize(
-                width: modeVM.panOffset.width + value.translation.width,
-                height: modeVM.panOffset.height + value.translation.height
-            )
-            // Clamp the pan offset to the canvas
-            modeVM.currentPanOffset.width = min(max(newOffset.width, -canvasSize.width), canvasSize.width)
-            modeVM.currentPanOffset.height = min(max(newOffset.height, -canvasSize.height), canvasSize.height)
-        default:
-            break
-        }
+         if isCMDPressed && modeVM.mode != .select {
+             handleSelectStroke(value, offsetPoint, isCMDPressed: false)
+         } else {
+             switch modeVM.mode {
+             case .draw:
+                 switch canvasVM.drawEndMode {
+                 case .plain:
+                     canvasVM.newDraw(point: offsetPoint)
+                 case .arrow:
+                     canvasVM.newDrawnArrow(point: offsetPoint)
+                 case .twoEndArrow:
+                     canvasVM.newTwoDrawnArrow(point: offsetPoint)
+                 }
+             case .erase:
+                 handleEraseStroke(offsetPoint)
+             case .select:
+                 handleSelectStroke(value, offsetPoint, isCMDPressed: isCMDPressed)
+             case .line:
+                 canvasVM.newLine(point: offsetPoint)
+             case .arrow:
+                 canvasVM.newArrow(point: offsetPoint)
+             case .rectangle:
+                 canvasVM.newRectangle(point: offsetPoint, isEllipse: false)
+             case .elipse:
+                 canvasVM.newRectangle(point: offsetPoint, isEllipse: true)
+             case .pan:
+                 // Handle panning
+                 let newOffset = CGSize(
+                    width: modeVM.panOffset.width + value.translation.width,
+                    height: modeVM.panOffset.height + value.translation.height
+                 )
+                 // Clamp the pan offset to the canvas
+                 modeVM.currentPanOffset.width = min(max(newOffset.width, -canvasSize.width), canvasSize.width)
+                 modeVM.currentPanOffset.height = min(max(newOffset.height, -canvasSize.height), canvasSize.height)
+             default:
+                 break
+             }
+         }
         canvasVM.updateSelectedSizeAndPos()
     }
 
@@ -58,38 +62,42 @@ extension CanvasView {
             x: value.location.x - modeVM.currentPanOffset.width,
             y: value.location.y - modeVM.currentPanOffset.height
         )
-        switch modeVM.mode {
-        case .draw:
-            switch canvasVM.drawEndMode {
-            case .plain:
-                canvasVM.endDraw()
-            case .arrow:
-                canvasVM.endDrawnArrow()
-            case .twoEndArrow:
-                canvasVM.endTwoDrawnArrow()
-            }
-        case .erase:
-            for line in canvasVM.drawn where line.path.contains(offsetPoint) {
-                canvasVM.remove(drawable: line)
-            }
-        case .select:
-            canvasVM.isMoving = false
-        case .line:
-            canvasVM.endLine(point: offsetPoint)
-        case .arrow:
-            canvasVM.endArrow(point: offsetPoint)
-        case .rectangle:
-            canvasVM.endRectangle(point: offsetPoint)
-        case .elipse:
-            canvasVM.endRectangle(point: offsetPoint)
-        case .pan:
-            modeVM.panOffset.width += value.translation.width
-            modeVM.panOffset.height += value.translation.height
-        case .text:
-            canvasVM.newText(at: offsetPoint)
-        default:
-            break
-        }
+         if isCMDPressed && modeVM.mode != .select {
+             canvasVM.isMoving = false
+         } else {
+             switch modeVM.mode {
+             case .draw:
+                 switch canvasVM.drawEndMode {
+                 case .plain:
+                     canvasVM.endDraw()
+                 case .arrow:
+                     canvasVM.endDrawnArrow()
+                 case .twoEndArrow:
+                     canvasVM.endTwoDrawnArrow()
+                 }
+             case .erase:
+                 for line in canvasVM.drawn where line.path.applying(line.transform).contains(offsetPoint) {
+                     canvasVM.remove(drawable: line)
+                 }
+             case .select:
+                 canvasVM.isMoving = false
+             case .line:
+                 canvasVM.endLine(point: offsetPoint)
+             case .arrow:
+                 canvasVM.endArrow(point: offsetPoint)
+             case .rectangle:
+                 canvasVM.endRectangle(point: offsetPoint)
+             case .elipse:
+                 canvasVM.endRectangle(point: offsetPoint)
+             case .pan:
+                 modeVM.panOffset.width += value.translation.width
+                 modeVM.panOffset.height += value.translation.height
+             case .text:
+                 canvasVM.newText(at: offsetPoint)
+             default:
+                 break
+             }
+         }
     }
 
      func handleSelectStroke(
@@ -132,7 +140,11 @@ extension CanvasView {
             canvasVM.currentMoveOffset = value.location
 
             for inex in canvasVM.drawn.indices where canvasVM.drawn[inex].isSelected {
-                canvasVM.movePath(&canvasVM.drawn[inex], by: curDiff)
+                if let rect = canvasVM.drawn[inex] as? RectangleModel {
+                    rect.movePathBounds(by: curDiff)
+                } else {
+                    canvasVM.movePath(&canvasVM.drawn[inex], by: curDiff)
+                }
                 if let rect = canvasVM.drawn[inex] as? RectangleModel {
                     if canvasVM.isTextInShapes && rect.linkedText != nil {
                         rect.linkedText?.movePosition(by: curDiff)
@@ -145,7 +157,7 @@ extension CanvasView {
 
      func handleEraseStroke(_ offsetPoint: CGPoint) {
         if let line = canvasVM.drawn.last(where: { line in
-            let strokedPath = line.path.cgPath.copy(
+            let strokedPath = line.path.applying(line.transform).cgPath.copy(
                 strokingWithWidth: line.lineWidth + 20
                 ,
                 lineCap: .round,

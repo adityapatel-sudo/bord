@@ -15,23 +15,7 @@ extension CanvasItemsViewModel {
             drawn.append(currentRect)
             currentRect.path.move(to: point)
         } else {
-            currentRect.addPoint(point: point)
-            currentRect.path = Path()
-            let rect = CGRect(
-                x: currentRect.xMin,
-                y: currentRect.yMin,
-                width: currentRect.xMax - currentRect.xMin,
-                height: currentRect.yMax - currentRect.yMin
-            )
-            let circum = rect.size.width + rect.size.height
-            if currentRect.isEllipse {
-                currentRect.path.addEllipse(in: rect)
-            } else {
-                currentRect.path.addRoundedRect(
-                    in: rect,
-                    cornerSize: CGSize(width: circum/100, height: circum/100)
-                )
-            }
+            currentRect.editEnd(point: point)
         }
         objectWillChange.send()
     }
@@ -51,7 +35,40 @@ extension CanvasItemsViewModel {
             currentRect.linkedText?.isFocused = true
             currentRect.linkedText?.width = currentRect.xMax - currentRect.xMin - 50
         }
-        currentRect.addPoint(point: point)
+        currentRect.editEnd(point: point)
         objectWillChange.send()
+    }
+
+    func changeSize(of rectangle: RectangleModel, by value: CGFloat, of side: Side) {
+        switch side {
+        case .top:
+            rectangle.start.y += value
+            rectangle.yMin += value
+        case .bot:
+            rectangle.end.y += value
+            rectangle.yMax += value
+        case .left:
+            rectangle.start.x += value
+            rectangle.xMin += value
+        case .right:
+            rectangle.end.x += value
+            rectangle.xMax += value
+        }
+        let rect = CGRect(
+            x: currentRect.xMin,
+            y: currentRect.yMin,
+            width: currentRect.xMax - currentRect.xMin,
+            height: currentRect.yMax - currentRect.yMin
+        )
+        let circum = rect.size.width + rect.size.height
+        currentRect.path = Path()
+        if currentRect.isEllipse {
+            currentRect.path.addEllipse(in: rect)
+        } else {
+            currentRect.path.addRoundedRect(
+                in: rect,
+                cornerSize: CGSize(width: circum/100, height: circum/100)
+            )
+        }
     }
 }

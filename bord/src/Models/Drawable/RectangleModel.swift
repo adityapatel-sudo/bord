@@ -11,8 +11,11 @@ import SwiftUI
 /// A model for a rectangle object
 /// - Parameters:
 ///  - position: The top left corner position of the rectangle.
-///  - width: The width of the rectangle. Can be negative if start is to the right of the end.
-///  - height: The height of the rectangle. Can be negative if start is to the right of the end.
+///  - isEllipse: A boolean value that determines if the rectangle is an ellipse or not.
+///  - color: The color of the rectangle.
+///  - lineWidth: The width of the stroke of the rectangle.
+///
+///
 class RectangleModel: DrawableModel, ObservableObject {
     @Published var isSelected: Bool = false
 
@@ -91,15 +94,73 @@ class RectangleModel: DrawableModel, ObservableObject {
         xMax = max(start.x, end.x)
         yMin = min(start.y, end.y)
         yMax = max(start.y, end.y)
+        path = Path()
+        let rect = CGRect(
+            x: xMin,
+            y: yMin,
+            width: xMax - xMin,
+            height: yMax - yMin
+        )
+        let circum = rect.size.width + rect.size.height
+        if isEllipse {
+            path.addEllipse(in: rect)
+        } else {
+            path.addRoundedRect(
+                in: rect,
+                cornerSize: CGSize(width: circum/100, height: circum/100)
+            )
+        }
         objectWillChange.send()
     }
 
-    func addPoint(point: CGPoint) {
+    func editEnd(point: CGPoint) {
         end = point
         xMin = min(start.x, end.x)
         xMax = max(start.x, end.x)
         yMin = min(start.y, end.y)
         yMax = max(start.y, end.y)
+        path = Path()
+        let rect = CGRect(
+            x: xMin,
+            y: yMin,
+            width: xMax - xMin,
+            height: yMax - yMin
+        )
+        let circum = rect.size.width + rect.size.height
+        if isEllipse {
+            path.addEllipse(in: rect)
+        } else {
+            path.addRoundedRect(
+                in: rect,
+                cornerSize: CGSize(width: circum/100, height: circum/100)
+            )
+        }
+        objectWillChange.send()
+    }
+
+    func editStart(point: CGPoint) {
+        start = point
+        xMin = min(start.x, end.x)
+        xMax = max(start.x, end.x)
+        yMin = min(start.y, end.y)
+        yMax = max(start.y, end.y)
+        path = Path()
+        let rect = CGRect(
+            x: xMin,
+            y: yMin,
+            width: xMax - xMin,
+            height: yMax - yMin
+        )
+        let circum = rect.size.width + rect.size.height
+        if isEllipse {
+            path.addEllipse(in: rect)
+        } else {
+            path.addRoundedRect(
+                in: rect,
+                cornerSize: CGSize(width: circum/100, height: circum/100)
+            )
+        }
+
         objectWillChange.send()
     }
 }

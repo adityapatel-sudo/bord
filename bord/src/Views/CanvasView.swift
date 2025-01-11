@@ -39,7 +39,7 @@ struct CanvasView: View {
             Canvas { context, screenSize in
                 drawGridOrLines(context, screenSize)
                 drawLines(&context)
-                drawBackground(context, screenSize)
+//                drawBackground(context, screenSize)
             }
             .onScrollWheelUp { deltaX, deltaY in
                 handleScroll(deltaX * 3, deltaY * 3)

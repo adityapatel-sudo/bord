@@ -31,7 +31,6 @@ class CanvasItemsViewModel: ObservableObject {
     var color: Color = .white
     var currentLine: LineModel = LineModel(color: .black, lineWidth: 0, at: .zero)
     var currentRect: RectangleModel = RectangleModel(position: .zero)
-    var currentEllipse: EllipseModel = EllipseModel(position: .zero)
     var thickness: Double = 1.5
 
     // selected item view
@@ -98,9 +97,8 @@ class CanvasItemsViewModel: ObservableObject {
         objectWillChange.send()
     }
 
-    func movePath(_ path: inout RectangleModel, by value: CGSize) {
-        path.transform = path.transform.concatenating(.init(translationX: value.width, y: value.height))
-        path.movePathBounds(by: value)
+    func movePath(path rect: inout RectangleModel, by value: CGSize) {
+        rect.movePathBounds(by: value)
         objectWillChange.send()
     }
 
@@ -181,27 +179,6 @@ class CanvasItemsViewModel: ObservableObject {
         }
     }
 
-    fileprivate func checkEllipseBounds(
-        _ maxX: inout CGFloat?,
-        _ circle: EllipseModel,
-        _ minX: inout CGFloat?,
-        _ maxY: inout CGFloat?,
-        _ minY: inout CGFloat?
-    ) {
-        if maxX == nil || circle.xMax > maxX! {
-            maxX = circle.xMax
-        }
-        if minX == nil || circle.xMin < minX! {
-            minX = circle.xMin
-        }
-        if maxY == nil || circle.yMax > maxY! {
-            maxY = circle.yMax
-        }
-        if minY == nil || circle.yMin < minY! {
-            minY = circle.yMin
-        }
-    }
-
     fileprivate func checkLineBounds(
         _ maxX: inout CGFloat?,
         _ line: LineModel,
@@ -234,8 +211,6 @@ class CanvasItemsViewModel: ObservableObject {
                 checkLineBounds(&maxX, line, &minX, &maxY, &minY)
             } else if let rect = item as? RectangleModel {
                 checkRectBounds(&maxX, rect, &minX, &maxY, &minY)
-            } else if let circle = item as? EllipseModel {
-                checkEllipseBounds(&maxX, circle, &minX, &maxY, &minY)
             }
         }
         if minX != nil && minY != nil {
@@ -259,8 +234,6 @@ class CanvasItemsViewModel: ObservableObject {
                         texts.append(last.linkedText!)
                     }
                 }
-            } else if let ellipse = item as? EllipseModel {
-                drawn.append(EllipseModel(copyOf: ellipse))
             }
         }
     }

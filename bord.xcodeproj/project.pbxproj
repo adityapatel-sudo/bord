@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3409AF442D2F880100746A82 /* Side.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3409AF432D2F880100746A82 /* Side.swift */; };
+		3409AF462D31687F00746A82 /* RectangleSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3409AF452D31687F00746A82 /* RectangleSelectView.swift */; };
 		34146C7E2D138A19000B7328 /* CanvasMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34146C7D2D138A19000B7328 /* CanvasMode.swift */; };
 		3432442F2D23AA3E00F8F7D0 /* DrawableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3432442E2D23AA3E00F8F7D0 /* DrawableModel.swift */; };
 		343244312D23AD4800F8F7D0 /* RectangleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343244302D23AD4800F8F7D0 /* RectangleModel.swift */; };
 		343244342D24513700F8F7D0 /* DrawnLineVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343244332D24513700F8F7D0 /* DrawnLineVM.swift */; };
-		343244362D24515C00F8F7D0 /* EllipseVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343244352D24515C00F8F7D0 /* EllipseVM.swift */; };
 		343244382D24521A00F8F7D0 /* StraightLineVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343244372D24521A00F8F7D0 /* StraightLineVM.swift */; };
 		3432443A2D24526A00F8F7D0 /* RectangleVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343244392D24526A00F8F7D0 /* RectangleVM.swift */; };
-		3432443C2D24F79800F8F7D0 /* EllipseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3432443B2D24F79800F8F7D0 /* EllipseModel.swift */; };
 		3432443F2D26927600F8F7D0 /* CanvasDrawingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3432443E2D26927600F8F7D0 /* CanvasDrawingUtils.swift */; };
 		343244412D26930400F8F7D0 /* CanvasDragUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343244402D26930400F8F7D0 /* CanvasDragUtils.swift */; };
 		343244432D26946500F8F7D0 /* SelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343244422D26946500F8F7D0 /* SelectView.swift */; };
@@ -73,14 +73,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3409AF432D2F880100746A82 /* Side.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Side.swift; sourceTree = "<group>"; };
+		3409AF452D31687F00746A82 /* RectangleSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleSelectView.swift; sourceTree = "<group>"; };
 		34146C7D2D138A19000B7328 /* CanvasMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasMode.swift; sourceTree = "<group>"; };
 		3432442E2D23AA3E00F8F7D0 /* DrawableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawableModel.swift; sourceTree = "<group>"; };
 		343244302D23AD4800F8F7D0 /* RectangleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleModel.swift; sourceTree = "<group>"; };
 		343244332D24513700F8F7D0 /* DrawnLineVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawnLineVM.swift; sourceTree = "<group>"; };
-		343244352D24515C00F8F7D0 /* EllipseVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipseVM.swift; sourceTree = "<group>"; };
 		343244372D24521A00F8F7D0 /* StraightLineVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StraightLineVM.swift; sourceTree = "<group>"; };
 		343244392D24526A00F8F7D0 /* RectangleVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleVM.swift; sourceTree = "<group>"; };
-		3432443B2D24F79800F8F7D0 /* EllipseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipseModel.swift; sourceTree = "<group>"; };
 		3432443E2D26927600F8F7D0 /* CanvasDrawingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasDrawingUtils.swift; sourceTree = "<group>"; };
 		343244402D26930400F8F7D0 /* CanvasDragUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasDragUtils.swift; sourceTree = "<group>"; };
 		343244422D26946500F8F7D0 /* SelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectView.swift; sourceTree = "<group>"; };
@@ -156,7 +156,6 @@
 			children = (
 				34D33BB12D23726C009E8984 /* DrawingUtils.swift */,
 				343244332D24513700F8F7D0 /* DrawnLineVM.swift */,
-				343244352D24515C00F8F7D0 /* EllipseVM.swift */,
 				343244372D24521A00F8F7D0 /* StraightLineVM.swift */,
 				343244392D24526A00F8F7D0 /* RectangleVM.swift */,
 			);
@@ -178,7 +177,6 @@
 				34EA243A2D0FDF2900D392CC /* LineModel.swift */,
 				3432442E2D23AA3E00F8F7D0 /* DrawableModel.swift */,
 				343244302D23AD4800F8F7D0 /* RectangleModel.swift */,
-				3432443B2D24F79800F8F7D0 /* EllipseModel.swift */,
 			);
 			path = Drawable;
 			sourceTree = "<group>";
@@ -189,6 +187,7 @@
 				34146C7D2D138A19000B7328 /* CanvasMode.swift */,
 				34E538072D1E109800915491 /* CanvasGridMode.swift */,
 				34D33BA92D22AB05009E8984 /* DrawEndMode.swift */,
+				3409AF432D2F880100746A82 /* Side.swift */,
 			);
 			path = enums;
 			sourceTree = "<group>";
@@ -317,6 +316,7 @@
 				344596572D1BBD1F00EC76D4 /* Components */,
 				34EA24372D0FBE6000D392CC /* CanvasView.swift */,
 				34EA24062D0FBCF000D392CC /* ContentView.swift */,
+				3409AF452D31687F00746A82 /* RectangleSelectView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -488,6 +488,7 @@
 				343244312D23AD4800F8F7D0 /* RectangleModel.swift in Sources */,
 				3432443F2D26927600F8F7D0 /* CanvasDrawingUtils.swift in Sources */,
 				349F09CF2D19B50500FB16E4 /* CustomColorPicker.swift in Sources */,
+				3409AF442D2F880100746A82 /* Side.swift in Sources */,
 				343244342D24513700F8F7D0 /* DrawnLineVM.swift in Sources */,
 				3445965B2D1BD14700EC76D4 /* DrawingToolbarView.swift in Sources */,
 				34D33BA82D22AA99009E8984 /* DrawOptionsView.swift in Sources */,
@@ -504,9 +505,9 @@
 				34D33BAA2D22AB05009E8984 /* DrawEndMode.swift in Sources */,
 				349F09CD2D18E49C00FB16E4 /* ColorPickerView.swift in Sources */,
 				349F09D92D1B672400FB16E4 /* CenterCanvasView.swift in Sources */,
+				3409AF462D31687F00746A82 /* RectangleSelectView.swift in Sources */,
 				343244382D24521A00F8F7D0 /* StraightLineVM.swift in Sources */,
 				34D33BA62D22839A009E8984 /* ShapesToolbar.swift in Sources */,
-				343244362D24515C00F8F7D0 /* EllipseVM.swift in Sources */,
 				349F09D12D19BB4E00FB16E4 /* BottomToolbarView.swift in Sources */,
 				349F09C92D154F0100FB16E4 /* ColorManager.swift in Sources */,
 				344596592D1BBD3500EC76D4 /* CanvasButton.swift in Sources */,
@@ -517,7 +518,6 @@
 				34D33BA42D223CF8009E8984 /* HeightCalculator.swift in Sources */,
 				3445965D2D1C77E400EC76D4 /* CanvasItem.swift in Sources */,
 				34E5380E2D1F6BAA00915491 /* ScrollWheelModifier.swift in Sources */,
-				3432443C2D24F79800F8F7D0 /* EllipseModel.swift in Sources */,
 				34EA24052D0FBCF000D392CC /* BordApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

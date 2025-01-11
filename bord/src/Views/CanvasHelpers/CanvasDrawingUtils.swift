@@ -64,7 +64,11 @@ extension CanvasView {
         // Draw horizontal lines
         drawHorizontalLines(context, size, gridSpacing)
         // Draw vertical lines
-        for xLines in stride(from: modeVM.currentPanOffset.width, through: size.width, by: gridSpacing) {
+        for xLines in stride(
+            from: modeVM.currentPanOffset.width.truncatingRemainder(dividingBy: size.width / gridSpacing),
+            through: size.width,
+            by: gridSpacing
+        ) {
             let startPoint = CGPoint(x: xLines, y: 0)
             let endPoint = CGPoint(x: xLines, y: size.height)
             context.stroke(
@@ -84,7 +88,7 @@ extension CanvasView {
         _ gridSpacing: CGFloat.Stride = CGFloat.Stride(50)
     ) {
         for yLines in stride(
-            from: modeVM.currentPanOffset.height,
+            from: modeVM.currentPanOffset.height.truncatingRemainder(dividingBy: size.height / gridSpacing),
             through: size.height,
             by: gridSpacing
         ) {

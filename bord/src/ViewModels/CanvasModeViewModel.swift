@@ -46,7 +46,7 @@ class CanvasModeViewModel: ObservableObject {
 
     func magnify(by value: MagnifyGesture.Value) {
         let result = zoom * sqrt(value.magnification)
-        if result > 0.5 && result < 3 {
+        if result > 0.34 && result < 3 {
             zoom = result
         }
     }
