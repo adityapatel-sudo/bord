@@ -14,6 +14,7 @@ The view model for the canvas items. This class is responsible for managing the 
  - lines: An array of LineModel objects representing the lines on the canvas.
  */
 class CanvasItemsViewModel: ObservableObject {
+    @Published var images: [ClipboardImageModel] = []
     @Published var drawn: [any DrawableModel] = []
     @Published var texts: [TextModel] = []
 

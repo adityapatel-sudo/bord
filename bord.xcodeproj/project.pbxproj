@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34078BAD2D9ECB7E00F6F5F4 /* ClipboardImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34078BAC2D9ECB7E00F6F5F4 /* ClipboardImageModel.swift */; };
+		34078BAF2DA221B400F6F5F4 /* ClipboardImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34078BAE2DA221AE00F6F5F4 /* ClipboardImageViewModel.swift */; };
+		34078BB12DA2222000F6F5F4 /* ClipboardImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34078BB02DA2221D00F6F5F4 /* ClipboardImageView.swift */; };
 		3409AF442D2F880100746A82 /* Side.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3409AF432D2F880100746A82 /* Side.swift */; };
 		3409AF462D31687F00746A82 /* RectangleSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3409AF452D31687F00746A82 /* RectangleSelectView.swift */; };
 		34146C7E2D138A19000B7328 /* CanvasMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34146C7D2D138A19000B7328 /* CanvasMode.swift */; };
@@ -73,6 +76,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		34078BAC2D9ECB7E00F6F5F4 /* ClipboardImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardImageModel.swift; sourceTree = "<group>"; };
+		34078BAE2DA221AE00F6F5F4 /* ClipboardImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardImageViewModel.swift; sourceTree = "<group>"; };
+		34078BB02DA2221D00F6F5F4 /* ClipboardImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardImageView.swift; sourceTree = "<group>"; };
 		3409AF432D2F880100746A82 /* Side.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Side.swift; sourceTree = "<group>"; };
 		3409AF452D31687F00746A82 /* RectangleSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleSelectView.swift; sourceTree = "<group>"; };
 		34146C7D2D138A19000B7328 /* CanvasMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasMode.swift; sourceTree = "<group>"; };
@@ -154,6 +160,7 @@
 		343244322D24512200F8F7D0 /* Drawing */ = {
 			isa = PBXGroup;
 			children = (
+				34078BAE2DA221AE00F6F5F4 /* ClipboardImageViewModel.swift */,
 				34D33BB12D23726C009E8984 /* DrawingUtils.swift */,
 				343244332D24513700F8F7D0 /* DrawnLineVM.swift */,
 				343244372D24521A00F8F7D0 /* StraightLineVM.swift */,
@@ -216,6 +223,7 @@
 		349F09D22D19BBAD00FB16E4 /* CanvasViews */ = {
 			isa = PBXGroup;
 			children = (
+				34078BB02DA2221D00F6F5F4 /* ClipboardImageView.swift */,
 				349F09CC2D18E49C00FB16E4 /* ColorPickerView.swift */,
 				349F09CE2D19B50500FB16E4 /* CustomColorPicker.swift */,
 				349F09D02D19BB4E00FB16E4 /* BottomToolbarView.swift */,
@@ -339,6 +347,7 @@
 				343244452D2B8BD500F8F7D0 /* enums */,
 				343244442D2B8B9B00F8F7D0 /* Drawable */,
 				3445965C2D1C77E400EC76D4 /* CanvasItem.swift */,
+				34078BAC2D9ECB7E00F6F5F4 /* ClipboardImageModel.swift */,
 				347665032D20F91B00D7440B /* TextModel.swift */,
 			);
 			path = Models;
@@ -515,10 +524,13 @@
 				34D33BB22D23726C009E8984 /* DrawingUtils.swift in Sources */,
 				34EA24072D0FBCF000D392CC /* ContentView.swift in Sources */,
 				343244412D26930400F8F7D0 /* CanvasDragUtils.swift in Sources */,
+				34078BB12DA2222000F6F5F4 /* ClipboardImageView.swift in Sources */,
 				34D33BA42D223CF8009E8984 /* HeightCalculator.swift in Sources */,
 				3445965D2D1C77E400EC76D4 /* CanvasItem.swift in Sources */,
+				34078BAD2D9ECB7E00F6F5F4 /* ClipboardImageModel.swift in Sources */,
 				34E5380E2D1F6BAA00915491 /* ScrollWheelModifier.swift in Sources */,
 				34EA24052D0FBCF000D392CC /* BordApp.swift in Sources */,
+				34078BAF2DA221B400F6F5F4 /* ClipboardImageViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

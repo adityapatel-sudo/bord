@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 /**
  A view that displays the canvas and handles user interactions.
@@ -28,7 +29,7 @@ import SwiftUI
 struct CanvasView: View {
     @ObservedObject var canvasVM: CanvasItemsViewModel
     @ObservedObject var modeVM: CanvasModeViewModel
-
+    @StateObject private var clipboardImagesViewModel = ClipboardImageViewModel()
     var canvasSize: CGSize = CGSize(
         width: (NSScreen.main?.frame.width ?? 1600) * 3,
         height: (NSScreen.main?.frame.height ?? 900) * 3
@@ -36,10 +37,22 @@ struct CanvasView: View {
 
     var body: some View {
         ZStack {
-            Canvas { context, screenSize in
-                drawGridOrLines(context, screenSize)
+            Canvas { context, size in
+//                context.translateBy(x: modeVM.currentPanOffset.width, y: modeVM.currentPanOffset.height)
+                drawBackground(context, size) // for external background outside drawing limits
+                drawGridOrLines(context, size)
+            }
+            .background(ColorManager.backgroundColor) // for internal background within drawing limits
+            .allowsHitTesting(false)
+
+            ForEach($clipboardImagesViewModel.images) { $image in
+                ClipboardImageView(imageModel: $image)
+                    .offset(x: modeVM.currentPanOffset.width, y: modeVM.currentPanOffset.height)
+            }
+
+            Canvas { context, _ in
+//                context.translateBy(x: modeVM.currentPanOffset.width, y: modeVM.currentPanOffset.height)
                 drawLines(&context)
-//                drawBackground(context, screenSize)
             }
             .onScrollWheelUp { deltaX, deltaY in
                 handleScroll(deltaX * 3, deltaY * 3)
@@ -68,7 +81,6 @@ struct CanvasView: View {
             .onChange(of: canvasVM.thickness) { _, _ in
                 canvasVM.updateSelectedThickness()
             }
-            .background(ColorManager.backgroundColor)
             // draw selection boxes
             SelectView(canvasVM: canvasVM, modeVM: modeVM)
             // draw texts
@@ -84,9 +96,18 @@ struct CanvasView: View {
         .scaleEffect(modeVM.zoom)
         .clipped()
         .frame(width: canvasSize.width, height: canvasSize.height)
+        .onAppear {
+            NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+                print("Key pressed: \(event)")
+                if event.modifierFlags.contains(.command) && event.characters == "v" {
+                    clipboardImagesViewModel.pasteImageFromClipboard()
+                    return nil
+                }
+                return event
+            }
+        }
     }
 }
-
 #Preview {
     CanvasView(canvasVM: CanvasItemsViewModel(), modeVM: CanvasModeViewModel(panOffset: .zero))
 }
